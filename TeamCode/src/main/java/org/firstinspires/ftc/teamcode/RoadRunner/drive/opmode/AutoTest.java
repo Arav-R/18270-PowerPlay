@@ -16,7 +16,7 @@ public class AutoTest extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
-        Pose2d startPose = new Pose2d(35, -62, Math.toRadians(90));
+        Pose2d startPose = new Pose2d(35, -63, Math.toRadians(90));
 
         drive.setPoseEstimate(startPose);
 
