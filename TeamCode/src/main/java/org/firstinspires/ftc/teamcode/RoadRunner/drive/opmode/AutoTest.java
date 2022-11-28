@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.RoadRunner.drive.opmode;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.outoftheboxrobotics.photoncore.PhotonCore;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -20,6 +21,8 @@ public class AutoTest extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
+
+        PhotonCore.enable(); // Enable PhotonCore
 
         // Initialize the hardware variables.
         slide1 = hardwareMap.dcMotor.get("slide1");
