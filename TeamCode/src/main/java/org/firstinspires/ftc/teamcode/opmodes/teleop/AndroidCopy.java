@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 @TeleOp
 
-public class SkandaDebug extends LinearOpMode {
+public class AndroidCopy extends LinearOpMode {
 
     private Blinker control_Hub;
     private Blinker expansion_Hub_2;
@@ -26,7 +26,7 @@ public class SkandaDebug extends LinearOpMode {
     private DcMotor slide2;
     double LFPower, RFPower, LBPower, RBPower;
 
-    public static final int intakePosition = 1350;
+    public static final int intakePosition = 1450;
     public static final int hoverPosition = 1150;
     public static final int vertPosition = 700;
     public static final int outakePosition = 0;
@@ -124,24 +124,28 @@ public class SkandaDebug extends LinearOpMode {
 
 
             if (slidePosition == 3) {
-                movetopos(slide1, highPosition, 1);
+                movetopos(slide1, highPosition, 0.7);
+                movetopos(slide2, highPosition, 0.7);
             } else if (slidePosition == 2) {
                 movetopos(slide1, midPosition, 1);
+                movetopos(slide2, midPosition, 1);
             } else if (slidePosition == 1) {
                 movetopos(slide1, lowPosition, 1);
+                movetopos(slide2, lowPosition, 1);
             } else {
-                movetopos(slide1, retractPosition, 1);
+                movetopos(slide1, retractPosition, 0.7);
+                movetopos(slide2, retractPosition, 0.7);
             }
 
 
-            if (runtime.milliseconds() < 1000 && on_or_not == 1) {
+            if (runtime.milliseconds() < 750 && on_or_not == 1) { //less than 700ms
                 movetopos(arm, intakePosition, 1);
                 intakePower = -1; //intake
-            } else if (runtime.milliseconds() < 2000 && on_or_not == 1) {
+            } else if (runtime.milliseconds() < 1500 && on_or_not == 1) { //
                 movetopos(arm, outakePosition, 1);
-            } else if (runtime.milliseconds() < 3000 && on_or_not == 1) {
+            } else if (runtime.milliseconds() < 2000 && on_or_not == 1) {
                 intakePower = 1;
-            } else if (runtime.milliseconds() < 4000 && on_or_not == 1) {
+            } else if (runtime.milliseconds() < 3000 && on_or_not == 1) {
                 movetopos(arm, hoverPosition, 1);
                 intakePower = 0;
             } else {
@@ -172,8 +176,8 @@ public class SkandaDebug extends LinearOpMode {
             //moveMec(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x/2);
 
 
-            double y = -gamepad1.left_stick_y; // Remember, this is reversed!
-            double x = gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
+            double y = gamepad1.left_stick_y; // Remember, this is reversed!
+            double x = -gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
             double rx = gamepad1.right_stick_x;
 
             // Denominator is the largest motor power (absolute value) or 1
