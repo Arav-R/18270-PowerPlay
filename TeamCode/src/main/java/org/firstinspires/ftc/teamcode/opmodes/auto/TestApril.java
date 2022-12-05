@@ -279,13 +279,23 @@ public class TestApril extends LinearOpMode
         slide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         slide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        slide1.setPower(0.5);
-        slide2.setPower(-0.5);
+        slide1.setPower(0.7);
+        slide2.setPower(-0.7);
 
         sleep(120);
 
 
         PIDMotors(2600, 0, 1210);
+
+        slide1.setTargetPosition(0); //intake pos
+        slide2.setTargetPosition(0); //intake pos
+
+        slide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        slide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        slide1.setPower(0.7);
+        slide2.setPower(-0.7);
+        sleep(1000);
 
 //        armMotor.setTargetPosition(0); //stored pos
 //
