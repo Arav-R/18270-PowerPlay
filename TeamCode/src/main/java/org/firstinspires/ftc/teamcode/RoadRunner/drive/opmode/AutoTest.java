@@ -30,7 +30,7 @@ public class AutoTest extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        PhotonCore.enable(); // Enable PhotonCore
+        //PhotonCore.enable(); // Enable PhotonCore
 
         // Initialize the hardware variables.
         slide1 = hardwareMap.dcMotor.get("slide1");
