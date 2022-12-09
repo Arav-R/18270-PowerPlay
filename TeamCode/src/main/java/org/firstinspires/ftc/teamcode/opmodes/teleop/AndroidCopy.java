@@ -162,7 +162,9 @@ public class AndroidCopy extends LinearOpMode {
                 intakePower = -1; //intake
             } else if (runtime.milliseconds() < 2000 && ground == 1) {
                 movetopos(arm, hoverPosition, 1);
-            }  else {
+            }  else if (runtime.milliseconds() < 2500 && ground == 1) {
+                intakePower = 1; //outtake
+            } else {
                 ground = 0;
             }
 
