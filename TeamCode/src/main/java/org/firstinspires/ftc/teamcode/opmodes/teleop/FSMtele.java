@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 @TeleOp
 
-public class AndroidCopy extends LinearOpMode {
+public class FSMtele extends LinearOpMode {
 
     private Blinker control_Hub;
     private Blinker expansion_Hub_2;
@@ -29,10 +29,10 @@ public class AndroidCopy extends LinearOpMode {
     public static final int intakePosition = 1450;
     public static final int hoverPosition = 1150;
     public static final int vertPosition = 700;
-    public static final int outakePosition = 80;
+    public static final int outakePosition = 0;
 
     public static final int retractPosition = 0;
-    public static final int lowPosition = 285;
+    public static final int lowPosition = 300;
     public static final int midPosition = 600;
     public static final int highPosition = 900;
 
@@ -82,107 +82,8 @@ public class AndroidCopy extends LinearOpMode {
         double intakePower = 0;
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-            //CR servo control====================================================
-            if (gamepad1.right_bumper) {
-                intakePower = 1;
-            }
-            if (gamepad1.right_trigger > 0.5) {
-                intakePower = 0;
-            }
-            //end CR servo control================================================
 
-
-            //begin arm control===================================================
-            if (gamepad1.x) {
-                //hover
-                movetopos(arm, hoverPosition, 1);
-                //intakePower=1;
-                /*slide1.setPower(-0.5);
-                slide2.setPower(-0.5);*/
-            } else if (gamepad1.dpad_left) {
-                movetopos(arm, retractPosition, 1);
-            }
-
-
-
-            if (gamepad1.b) {
-                runtime.reset();
-                on_or_not = 1;
-
-            }
-            //end arm control=====================================================
-            //begin lift control==================================================
-            if (gamepad1.y) {
-                slidePosition = 3;
-            }
-            if (gamepad1.dpad_up) {
-                slidePosition = 2;
-            }
-            if (gamepad1.dpad_right) {
-                slidePosition = 1;
-            }
-            if (gamepad1.a) {
-                slidePosition = 0;
-            }
-
-
-            if (slidePosition == 3) {
-                movetopos(slide1, highPosition, 0.7);
-                movetopos(slide2, highPosition, 0.7);
-            } else if (slidePosition == 2) {
-                movetopos(slide1, midPosition, 1);
-                movetopos(slide2, midPosition, 1);
-            } else if (slidePosition == 1) {
-                movetopos(slide1, lowPosition, 1);
-                movetopos(slide2, lowPosition, 1);
-            } else {
-                movetopos(slide1, retractPosition, 0.7);
-                movetopos(slide2, retractPosition, 0.7);
-            }
-
-
-            if (runtime.milliseconds() < 750 && on_or_not == 1) { //less than 700ms
-                movetopos(arm, intakePosition, 1);
-                intakePower = -1; //intake
-            } else if (runtime.milliseconds() < 1500 && on_or_not == 1) { //
-                movetopos(arm, outakePosition, 1);
-            } else if (runtime.milliseconds() < 2000 && on_or_not == 1) {
-                intakePower = 1;
-            } else if (runtime.milliseconds() < 3000 && on_or_not == 1) {
-                movetopos(arm, hoverPosition, 1);
-                intakePower = 0;
-            } else {
-                on_or_not = 0;
-            }
-
-            if(gamepad1.dpad_down) {
-                runtime.reset();
-                ground = 1;
-            }
-
-            if (runtime.milliseconds() < 1000 && ground == 1) {
-                movetopos(arm, -50, 1);
-                intakePower = -1; //intake
-            } else if (runtime.milliseconds() < 2000 && ground == 1) {
-                movetopos(arm, intakePosition - 100, 1);
-            }  else if (runtime.milliseconds() < 2500 && ground == 1) {
-                intakePower = 1; //outtake
-            } else if (runtime.milliseconds() < 2600 && ground == 1) {
-                intakePower = 0; //outtake
-                movetopos(arm, hoverPosition - 100, 1);
-            }else {
-                ground = 0;
-            }
-
-
-            intake1.setPower(-intakePower);
-            intake2.setPower(intakePower);
-
-
-            //arm.setPower(gamepad1.right_trigger-gamepad1.left_trigger);
-
-            //moveMec(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x/2);
-
+            // Drive Code
 
             double y = gamepad1.left_stick_y; // Remember, this is reversed!
             double x = -gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
@@ -213,27 +114,13 @@ public class AndroidCopy extends LinearOpMode {
             }
 
 
-            telemetry.addData("slide1 Pos:", slide1.getCurrentPosition());
-            telemetry.addData("slide2 Pos:", arm.getCurrentPosition());
-            telemetry.addData("arm Pos:", arm.getCurrentPosition());
-            telemetry.addData("runtime:", runtime.milliseconds());
+            // FSM Code
 
-
-            telemetry.update();
 
         }
     }
     //helper functions===================================================
-    public void moveMec ( double forward, double strafe, double turn){
-        LFPower = forward + turn + strafe;
-        RFPower = forward - turn - strafe;
-        LBPower = forward + turn - strafe;
-        RBPower = forward - turn + strafe;
-        frontleft.setPower(LFPower);
-        frontright.setPower(RFPower);
-        backleft.setPower(LBPower);
-        backright.setPower(RBPower);
-    }
+
     public void movetopos (DcMotor motortomove,int pos, double speed){
         motortomove.setTargetPosition(pos);
         motortomove.setMode(DcMotor.RunMode.RUN_TO_POSITION);

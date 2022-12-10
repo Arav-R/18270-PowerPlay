@@ -212,7 +212,8 @@ public class rrApril extends LinearOpMode
                 })
                 //.waitSeconds(2)
 
-                .forward(52)
+                .forward(59) //.forward(52)
+                .back(7)
                 .turn(Math.toRadians(-135))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     slide1.setTargetPosition(900); //intake pos
@@ -226,7 +227,7 @@ public class rrApril extends LinearOpMode
                 })
                 .waitSeconds(2)
 
-                .back(12)
+                .back(14)
                 //score cone
                 .waitSeconds(1)
 
@@ -241,11 +242,11 @@ public class rrApril extends LinearOpMode
                     slide2.setPower(-0.7);
                 })
 
-                .forward(12)
+                //.forward(12)
 
-                .waitSeconds(1)
+                //.waitSeconds(1)
                 .splineTo(new Vector2d(58, -11.9), Math.toRadians(-2))
-                .waitSeconds(1.5)//intake cone
+                //.waitSeconds(1.5)//intake cone
 
 
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
@@ -261,7 +262,7 @@ public class rrApril extends LinearOpMode
                     intake2.setPower(-1);
 
                 })
-                .waitSeconds(2)
+                .waitSeconds(1.5)
 
 
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
@@ -303,11 +304,11 @@ public class rrApril extends LinearOpMode
                     slide1.setPower(0.5);
                     slide2.setPower(-0.5);
                 })
-                .waitSeconds(2)
+                //.waitSeconds(1)
                 .setReversed(true)
                 .splineTo(new Vector2d(26, -1), Math.toRadians(135))
 
-                .waitSeconds(1)
+                .waitSeconds(.5)
 
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     slide1.setTargetPosition(0); //intake pos
@@ -320,6 +321,91 @@ public class rrApril extends LinearOpMode
                     slide2.setPower(-0.7);
                 })
 
+
+
+                // 1+2
+
+                .splineTo(new Vector2d(58, -11.9), Math.toRadians(-2))
+                //.waitSeconds(1.5)//intake cone
+
+
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    armMotor.setTargetPosition(1250); //intake pos
+
+
+                    armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+
+                    armMotor.setPower(0.5);
+
+                    intake1.setPower(1);
+                    intake2.setPower(-1);
+
+                })
+                .waitSeconds(1.5)
+
+
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    armMotor.setTargetPosition(0); //intake pos
+
+
+                    armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+
+                    armMotor.setPower(0.5);
+
+
+                })
+                .waitSeconds(2)
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    intake1.setPower(-1);
+                    intake2.setPower(1);
+                    armMotor.setTargetPosition(700); //intake pos
+
+
+                    armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+
+                    armMotor.setPower(0.5);
+
+                })
+                .waitSeconds(1)
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+
+                    intake1.setPower(0);
+                    intake2.setPower(0);
+
+                    slide1.setTargetPosition(900); //intake pos
+                    slide2.setTargetPosition(-900); //intake pos
+
+                    slide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    slide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+                    slide1.setPower(0.5);
+                    slide2.setPower(-0.5);
+                })
+                //.waitSeconds(1)
+                .setReversed(true)
+                .splineTo(new Vector2d(26, -1), Math.toRadians(135))
+
+                .waitSeconds(.5)
+
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    slide1.setTargetPosition(0); //intake pos
+                    slide2.setTargetPosition(0); //intake pos
+
+                    slide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    slide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+                    slide1.setPower(0.7);
+                    slide2.setPower(-0.7);
+                })
+
+
+
+
+
+                // before park
                 .forward(14)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     armMotor.setTargetPosition(0); //intake pos
@@ -347,7 +433,7 @@ public class rrApril extends LinearOpMode
                 .build();
 
         Trajectory leftApril = drive.trajectoryBuilder(trajSeq.end())
-                .lineToLinearHeading(new Pose2d(6, -14, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(6, -11, Math.toRadians(0)))
                 .build();
         Trajectory midApril = drive.trajectoryBuilder(trajSeq.end())
                 .lineToLinearHeading(new Pose2d(35.4, -12.5, Math.toRadians(0)))
