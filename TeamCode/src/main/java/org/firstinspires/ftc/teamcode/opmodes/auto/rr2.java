@@ -21,6 +21,8 @@
 
 package org.firstinspires.ftc.teamcode.opmodes.auto;
 
+import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.outoftheboxrobotics.photoncore.PhotonCore;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -31,29 +33,18 @@ import com.qualcomm.robotcore.hardware.Gyroscope;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.opmodes.auto.vision.AprilTagDetectionPipeline;
 import org.openftc.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
-
-
-import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.geometry.Vector2d;
-import com.outoftheboxrobotics.photoncore.PhotonCore;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.DcMotor;
-
-import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
-import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.TrajectorySequence;
-
 import java.util.ArrayList;
 
 @Autonomous
-public class rrApril extends LinearOpMode
+public class rr2 extends LinearOpMode
 {
 
 
@@ -231,21 +222,18 @@ public class rrApril extends LinearOpMode
                 //score cone
                 .waitSeconds(1)
 
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                .UNSTABLE_addTemporalMarkerOffset(.1, () -> {
                     slide1.setTargetPosition(0); //intake pos
                     slide2.setTargetPosition(0); //intake pos
 
                     slide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     slide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-                    slide1.setPower(0.7);
-                    slide2.setPower(-0.7);
+                    slide1.setPower(0.9);
+                    slide2.setPower(-0.9);
                 })
 
-                //.forward(12)
-
-                //.waitSeconds(1)
-                .splineTo(new Vector2d(58, -11.9), Math.toRadians(-2))
+                .splineTo(new Vector2d(58, -11), Math.toRadians(-2))
                 //.waitSeconds(1.5)//intake cone
 
 
@@ -306,7 +294,7 @@ public class rrApril extends LinearOpMode
                 })
                 //.waitSeconds(1)
                 .setReversed(true)
-                .splineTo(new Vector2d(26, -1), Math.toRadians(135))
+                .splineTo(new Vector2d(24, -1), Math.toRadians(135))
 
                 .waitSeconds(.5)
 
@@ -317,88 +305,8 @@ public class rrApril extends LinearOpMode
                     slide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     slide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-                    slide1.setPower(0.7);
-                    slide2.setPower(-0.7);
-                })
-
-
-
-                // 1+2
-
-                .splineTo(new Vector2d(58, -11.9), Math.toRadians(-2))
-                //.waitSeconds(1.5)//intake cone
-
-
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    armMotor.setTargetPosition(1250); //intake pos
-
-
-                    armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-
-                    armMotor.setPower(0.5);
-
-                    intake1.setPower(1);
-                    intake2.setPower(-1);
-
-                })
-                .waitSeconds(1.5)
-
-
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    armMotor.setTargetPosition(0); //intake pos
-
-
-                    armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-
-                    armMotor.setPower(0.5);
-
-
-                })
-                .waitSeconds(2)
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    intake1.setPower(-1);
-                    intake2.setPower(1);
-                    armMotor.setTargetPosition(700); //intake pos
-
-
-                    armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-
-                    armMotor.setPower(0.5);
-
-                })
-                .waitSeconds(1)
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-
-                    intake1.setPower(0);
-                    intake2.setPower(0);
-
-                    slide1.setTargetPosition(900); //intake pos
-                    slide2.setTargetPosition(-900); //intake pos
-
-                    slide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    slide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-                    slide1.setPower(0.5);
-                    slide2.setPower(-0.5);
-                })
-                //.waitSeconds(1)
-                .setReversed(true)
-                .splineTo(new Vector2d(26, -1), Math.toRadians(135))
-
-                .waitSeconds(.5)
-
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    slide1.setTargetPosition(0); //intake pos
-                    slide2.setTargetPosition(0); //intake pos
-
-                    slide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    slide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-                    slide1.setPower(0.7);
-                    slide2.setPower(-0.7);
+                    slide1.setPower(1);
+                    slide2.setPower(-1);
                 })
 
 
@@ -418,6 +326,12 @@ public class rrApril extends LinearOpMode
 
 
                 })
+
+                //.setReversed(false)
+
+                //.waitSeconds(1)
+
+
                 //.lineToLinearHeading(new Pose2d(6, -14, Math.toRadians(0)))
 
 
@@ -433,7 +347,7 @@ public class rrApril extends LinearOpMode
                 .build();
 
         Trajectory leftApril = drive.trajectoryBuilder(trajSeq.end())
-                .lineToLinearHeading(new Pose2d(6, -11, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(7, -11, Math.toRadians(0)))
                 .build();
         Trajectory midApril = drive.trajectoryBuilder(trajSeq.end())
                 .lineToLinearHeading(new Pose2d(35.4, -12.5, Math.toRadians(0)))
@@ -555,7 +469,7 @@ public class rrApril extends LinearOpMode
             //trajectory
 
             drive.followTrajectory(rightApril);
-            
+
         }
 
         /*

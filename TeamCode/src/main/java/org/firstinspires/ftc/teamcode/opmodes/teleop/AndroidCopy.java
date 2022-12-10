@@ -130,11 +130,11 @@ public class AndroidCopy extends LinearOpMode {
                 movetopos(slide1, highPosition, 0.7);
                 movetopos(slide2, highPosition, 0.7);
             } else if (slidePosition == 2) {
-                movetopos(slide1, midPosition, 1);
-                movetopos(slide2, midPosition, 1);
+                movetopos(slide1, midPosition, .7);
+                movetopos(slide2, midPosition, .7);
             } else if (slidePosition == 1) {
-                movetopos(slide1, lowPosition, 1);
-                movetopos(slide2, lowPosition, 1);
+                movetopos(slide1, lowPosition, .7);
+                movetopos(slide2, lowPosition, .7);
             } else {
                 movetopos(slide1, retractPosition, 0.7);
                 movetopos(slide2, retractPosition, 0.7);
