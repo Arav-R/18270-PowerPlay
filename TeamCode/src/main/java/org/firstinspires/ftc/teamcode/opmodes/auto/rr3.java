@@ -254,6 +254,7 @@ public class rr3 extends LinearOpMode
 
 
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+
                     armMotor.setTargetPosition(0); //intake pos
 
 
