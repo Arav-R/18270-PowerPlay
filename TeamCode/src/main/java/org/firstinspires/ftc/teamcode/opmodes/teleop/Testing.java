@@ -116,12 +116,14 @@ public class Testing extends LinearOpMode {
 
 
             if (currentGamepad1.left_bumper && !previousGamepad1.left_bumper) {
-                outtake.setTurretLeft();
+                slidePos -= 10;
 
             } else if (currentGamepad1.right_bumper && !previousGamepad1.right_bumper) {
-                outtake.setTurretRight();
+                slidePos += 10;
 
             }
+
+            outtake.moveTurret(slidePos, 0.7);
 
 
 

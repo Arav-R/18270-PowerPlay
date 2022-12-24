@@ -16,14 +16,14 @@ public class Intake {
     double clawOpen = .75;
 
     double flip1Down = .08;
-    double flip1Flip = .6;
+    double flip1Flip = .7;
 
     double flip2Down = .97;
-    double flip2Flip = .5;
+    double flip2Flip = .4;
 
 
     int slideOut = 360;
-    int slideIn = 20;
+    int slideIn = 95;
 
     public void init(HardwareMap hardwareMap){
         intakeSlide = hardwareMap.dcMotor.get("intakeslide");
@@ -56,10 +56,28 @@ public class Intake {
         intakeSlide.setPower(0.7);
     }
 
+    public void readyPosition (){
+        intakeSlide.setTargetPosition(slideOut - 200);
+        intakeSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        intakeSlide.setPower(0.7);
+    }
+
     public void transferPosition (){
         intakeSlide.setTargetPosition(slideIn);
         intakeSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        intakeSlide.setPower(0.7);
+        intakeSlide.setPower(0.4);
+    }
+
+    public int intakeOutDiff(){
+
+        return Math.abs(intakeSlide.getCurrentPosition() - slideOut);
+
+    }
+
+    public int intakeInDiff(){
+
+        return Math.abs(intakeSlide.getCurrentPosition() - slideIn);
+
     }
 
 

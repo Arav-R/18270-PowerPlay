@@ -10,18 +10,23 @@ public class Outtake {
     private DcMotor outtakeSlide1, outtakeSlide2, turret;
     private Servo depositServo;
 
-    double transferPos = 0;
-    double scorePos = 0.8;
+    double transferPos = 0.04;
+    double midPos = 0.4;
+    double scorePos = 0.75;
 
-    int turretPos = 140;
+    int turretPos = 218;
 
-    int fullExtend = 980;
+    int fullExtend = 865;
 
     public void init(HardwareMap hardwareMap){
         outtakeSlide1 = hardwareMap.dcMotor.get("outtake1");
         outtakeSlide2 = hardwareMap.dcMotor.get("outtake2");
         turret = hardwareMap.dcMotor.get("turret");
         depositServo = hardwareMap.servo.get("deposit");
+
+
+        outtakeSlide1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        outtakeSlide2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
 
         turret.setDirection(DcMotor.Direction.REVERSE);
@@ -55,6 +60,17 @@ public class Outtake {
         turret.setPower(speed);
     }
 
+    public void nudgeLeft (){
+        turretPos -= 2;
+    }
+    public void nudgeRight (){
+        turretPos += 2;
+    }
+
+    public int getTurret (){
+        return turretPos;
+    }
+
     public void moveSlide (int pos, double speed){
         outtakeSlide1.setTargetPosition(pos);
         outtakeSlide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -68,11 +84,29 @@ public class Outtake {
     public void extendSlide (){
         outtakeSlide1.setTargetPosition(fullExtend);
         outtakeSlide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        outtakeSlide1.setPower(0.5);
+        outtakeSlide1.setPower(0.7);
 
         outtakeSlide2.setTargetPosition(fullExtend);
         outtakeSlide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        outtakeSlide2.setPower(0.5);
+        outtakeSlide2.setPower(0.7);
+    }
+
+    public void moreExtend (){
+        fullExtend += 5;
+    }
+
+    public void lessExtend (){
+        fullExtend -= 5;
+    }
+
+    public int getExtend (){
+        return fullExtend;
+    }
+
+    public int slideOutDiff(){
+
+        return Math.abs(outtakeSlide1.getCurrentPosition() - fullExtend);
+
     }
 
     public void retractSlide (){
@@ -88,13 +122,13 @@ public class Outtake {
     public void setTurretLeft (){
         turret.setTargetPosition(-turretPos);
         turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        turret.setPower(0.4);
+        turret.setPower(0.7);
     }
 
     public void setTurretRight (){
         turret.setTargetPosition(turretPos);
         turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        turret.setPower(0.4);
+        turret.setPower(0.7);
     }
 
 
