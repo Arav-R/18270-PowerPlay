@@ -136,6 +136,10 @@ public class Outtake {
         depositServo.setPosition(transferPos);
     }
 
+    public void midDeposit(){
+        depositServo.setPosition(midPos);
+    }
+
     public void scoreDeposit(){
         depositServo.setPosition(scorePos);
     }

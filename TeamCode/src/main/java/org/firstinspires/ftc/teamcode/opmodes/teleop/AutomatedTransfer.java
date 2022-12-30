@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmodes.teleop;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
@@ -26,14 +28,21 @@ public class AutomatedTransfer extends LinearOpMode {
 
     }
 
+
+
     ScoreState scoreState = ScoreState.READY;
 
 
+
+
     ElapsedTime scoreTimer = new ElapsedTime();
+    ElapsedTime readyTimer = new ElapsedTime();
 
     Drivetrain drive = new Drivetrain();
     Intake intake = new Intake();
     Outtake outtake = new Outtake();
+
+
 
 
 
@@ -44,10 +53,15 @@ public class AutomatedTransfer extends LinearOpMode {
         Gamepad currentGamepad1 = new Gamepad();
         Gamepad previousGamepad1 = new Gamepad();
 
+        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
+
+
 
         drive.init(hardwareMap);
         intake.init(hardwareMap);
         outtake.init(hardwareMap);
+
+        boolean expansionToggle = false;
 
 
         scoreTimer.reset();
@@ -133,6 +147,7 @@ public class AutomatedTransfer extends LinearOpMode {
                     break;
                 case EXTEND_INTAKE:
                     if (scoreTimer.seconds() >= .25) {
+                        outtake.midDeposit();
                         outtake.setTurretLeft();
                         outtake.extendSlide();
 
@@ -140,7 +155,7 @@ public class AutomatedTransfer extends LinearOpMode {
                     }
                     break;
                 case EXTEND_OUTTAKE:
-                    if (outtake.slideOutDiff() < 20) {
+                    if (outtake.slideOutDiff() < 10) {
 
                         scoreState = ScoreState.READY;
                     }
@@ -155,15 +170,37 @@ public class AutomatedTransfer extends LinearOpMode {
 
             // Ready Position
 
-            if (gamepad1.b) {
+
+
+            // Rising edge detector
+            if (currentGamepad1.b && !previousGamepad1.b) {
+                // This will set intakeToggle to true if it was previously false
+                // and intakeToggle to false if it was previously true,
+                // providing a toggling behavior.
+                expansionToggle = !expansionToggle;
+            }
+
+            // Using the toggle variable to control the robot.
+            if (expansionToggle) {
                 intake.readyPosition();
                 intake.openClaw();
                 intake.dropArm();
 
                 outtake.extendSlide();
                 outtake.setTurretLeft();
+                outtake.midDeposit();
+            }
+            else {
+                intake.transferPosition();
+                intake.openClaw();
+                intake.flipArm();
+
+                outtake.retractSlide();
+                outtake.moveTurret(0,0.4);
                 outtake.transferDeposit();
             }
+
+
 
 
             if (currentGamepad1.dpad_left && !previousGamepad1.dpad_left) {
