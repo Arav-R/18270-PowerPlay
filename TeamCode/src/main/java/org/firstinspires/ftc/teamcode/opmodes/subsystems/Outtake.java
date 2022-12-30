@@ -11,10 +11,11 @@ public class Outtake {
     private Servo depositServo;
 
     double transferPos = 0.04;
-    double midPos = 0.4;
+    double midPos = 0.2;
     double scorePos = 0.75;
 
-    int turretPos = 218;
+    int leftHigh = 530;
+    int turretTransfer = 315;
 
     int fullExtend = 865;
 
@@ -29,7 +30,7 @@ public class Outtake {
         outtakeSlide2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
 
-        turret.setDirection(DcMotor.Direction.REVERSE);
+        //turret.setDirection(DcMotor.Direction.REVERSE);
 
         outtakeSlide2.setDirection(DcMotor.Direction.REVERSE);
 
@@ -61,14 +62,14 @@ public class Outtake {
     }
 
     public void nudgeLeft (){
-        turretPos -= 2;
+        leftHigh += 2;
     }
     public void nudgeRight (){
-        turretPos += 2;
+        leftHigh -= 2;
     }
 
     public int getTurret (){
-        return turretPos;
+        return leftHigh;
     }
 
     public void moveSlide (int pos, double speed){
@@ -120,13 +121,19 @@ public class Outtake {
     }
 
     public void setTurretLeft (){
-        turret.setTargetPosition(-turretPos);
+        turret.setTargetPosition(leftHigh);
+        turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        turret.setPower(0.7);
+    }
+
+    public void setTurretMiddle (){
+        turret.setTargetPosition(turretTransfer);
         turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         turret.setPower(0.7);
     }
 
     public void setTurretRight (){
-        turret.setTargetPosition(turretPos);
+        turret.setTargetPosition(leftHigh);
         turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         turret.setPower(0.7);
     }

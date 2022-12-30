@@ -101,7 +101,7 @@ public class AutomatedTransfer extends LinearOpMode {
                     if (scoreTimer.seconds() >= .7) {
                         outtake.transferDeposit();
                         outtake.retractSlide();
-                        outtake.moveTurret(0,0.4);
+                        outtake.setTurretMiddle();
 
                         intake.openClaw();
                         intake.intakePosition();
@@ -177,9 +177,18 @@ public class AutomatedTransfer extends LinearOpMode {
                 // This will set intakeToggle to true if it was previously false
                 // and intakeToggle to false if it was previously true,
                 // providing a toggling behavior.
-                expansionToggle = !expansionToggle;
+
+                intake.readyPosition();
+                intake.openClaw();
+                intake.dropArm();
+
+                outtake.extendSlide();
+                outtake.setTurretLeft();
+                outtake.midDeposit();
+                //expansionToggle = !expansionToggle;
             }
 
+            /*
             // Using the toggle variable to control the robot.
             if (expansionToggle) {
                 intake.readyPosition();
@@ -199,6 +208,8 @@ public class AutomatedTransfer extends LinearOpMode {
                 outtake.moveTurret(0,0.4);
                 outtake.transferDeposit();
             }
+
+             */
 
 
 

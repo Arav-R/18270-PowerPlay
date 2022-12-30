@@ -53,7 +53,7 @@ public class Intake {
     public void intakePosition (){
         intakeSlide.setTargetPosition(slideOut);
         intakeSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        intakeSlide.setPower(0.7);
+        intakeSlide.setPower(1);
     }
 
     public void readyPosition (){
