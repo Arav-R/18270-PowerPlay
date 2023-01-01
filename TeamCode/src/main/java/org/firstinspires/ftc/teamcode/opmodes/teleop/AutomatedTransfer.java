@@ -16,6 +16,14 @@ import org.firstinspires.ftc.teamcode.opmodes.subsystems.Outtake;
 public class AutomatedTransfer extends LinearOpMode {
 
     // States
+
+    public enum RobotState {
+        CONTRACT,
+        LEFT,
+        RIGHT
+
+    }
+
     public enum ScoreState {
         READY,
         DEPOSIT,
@@ -28,9 +36,10 @@ public class AutomatedTransfer extends LinearOpMode {
 
     }
 
-
+    RobotState robotState = RobotState.CONTRACT;
 
     ScoreState scoreState = ScoreState.READY;
+
 
 
 
@@ -87,106 +96,88 @@ public class AutomatedTransfer extends LinearOpMode {
 
             // State machine
 
-            switch (scoreState) {
-                case READY:
-                    if (gamepad1.a) {
-
-                        outtake.scoreDeposit();
-                        scoreTimer.reset();
-
-                        scoreState = ScoreState.DEPOSIT;
-                    }
-                    break;
-                case DEPOSIT:
-                    if (scoreTimer.seconds() >= .7) {
-                        outtake.transferDeposit();
-                        outtake.retractSlide();
-                        outtake.setTurretMiddle();
-
-                        intake.openClaw();
-                        intake.intakePosition();
+            switch (robotState) {
+                case CONTRACT:
 
 
-                        scoreState = ScoreState.PREPARE;
-                    }
-                    break;
-                case PREPARE:
-                    if (intake.intakeOutDiff() < 20) {
-                        intake.closeClaw();
+                    // Rising edge detector
+                    if (currentGamepad1.x && !previousGamepad1.x) {
 
-
-                        scoreTimer.reset();
-                        scoreState = ScoreState.GRAB;
-                    }
-                    break;
-                case GRAB:
-                    if (scoreTimer.seconds() >= .5) {
-                        intake.transferPosition();
-                        intake.flipArm();
-
-                        scoreTimer.reset();
-                        scoreState = ScoreState.RETRACT_INTAKE;
-                    }
-                    break;
-                case RETRACT_INTAKE:
-                    if (intake.intakeInDiff() < 5) {
-                        intake.openClaw();
-
-                        scoreTimer.reset();
-                        scoreState = ScoreState.FLIP;
-                    }
-                    break;
-                case FLIP:
-                    if (scoreTimer.seconds() >= .75) {
                         intake.readyPosition();
+                        intake.openClaw();
                         intake.dropArm();
 
-                        scoreTimer.reset();
-                        scoreState = ScoreState.EXTEND_INTAKE;
-                    }
-                    break;
-                case EXTEND_INTAKE:
-                    if (scoreTimer.seconds() >= .25) {
-                        outtake.midDeposit();
-                        outtake.setTurretLeft();
                         outtake.extendSlide();
+                        outtake.setTurretLeft();
+                        outtake.midDeposit();
 
-                        scoreState = ScoreState.EXTEND_OUTTAKE;
+                        robotState = RobotState.LEFT;
+                    }
+
+                    // Rising edge detector
+                    if (currentGamepad1.b && !previousGamepad1.b) {
+
+                        intake.readyPosition();
+                        intake.openClaw();
+                        intake.dropArm();
+
+                        outtake.extendSlide();
+                        outtake.setTurretRight();
+                        outtake.midDeposit();
+
+                        robotState = RobotState.RIGHT;
                     }
                     break;
-                case EXTEND_OUTTAKE:
-                    if (outtake.slideOutDiff() < 10) {
+                case LEFT:
 
-                        scoreState = ScoreState.READY;
+                    cycleLeft();
+
+                    // Adjust Side to Side
+                    if (currentGamepad1.dpad_left && !previousGamepad1.dpad_left) {
+                        outtake.nudgeLeftLeft();
+                    } else if (currentGamepad1.dpad_right && !previousGamepad1.dpad_right) {
+                        outtake.nudgeLeftRight();
                     }
-                    break;
-                default:
-                    // should never be reached, as liftState should never be null
-                    scoreState = ScoreState.READY;
-                    break;
 
+
+
+                    break;
+                case RIGHT:
+
+                    cycleRight();
+
+                    // Adjust Side to Side
+                    if (currentGamepad1.dpad_left && !previousGamepad1.dpad_left) {
+                        outtake.nudgeRightLeft();
+                    } else if (currentGamepad1.dpad_right && !previousGamepad1.dpad_right) {
+                        outtake.nudgeRightRight();
+                    }
+
+                    break;
             }
 
+            if (gamepad1.a) { // Retract
+                outtake.moveToPos(0, 0.5);
+                outtake.moveToPos(0, 0.5);
+                outtake.transferDeposit();
 
-            // Ready Position
-
-
-
-            // Rising edge detector
-            if (currentGamepad1.b && !previousGamepad1.b) {
-                // This will set intakeToggle to true if it was previously false
-                // and intakeToggle to false if it was previously true,
-                // providing a toggling behavior.
-
-                intake.readyPosition();
+                intake.moveToPos(0, 0.5);
                 intake.openClaw();
-                intake.dropArm();
+                intake.flipArm();
 
-                outtake.extendSlide();
-                outtake.setTurretLeft();
-                outtake.midDeposit();
-                //expansionToggle = !expansionToggle;
+                robotState = RobotState.CONTRACT;
             }
+
+
+            // Test Placement
+            if (currentGamepad1.right_bumper && !previousGamepad1.right_bumper) {
+                outtake.scoreDeposit(); // Score
+            } else if (!currentGamepad1.right_bumper && previousGamepad1.right_bumper) { // Falling edge detector
+                outtake.midDeposit(); // Go Back
+            }
+
+
+
 
             /*
             // Using the toggle variable to control the robot.
@@ -213,13 +204,7 @@ public class AutomatedTransfer extends LinearOpMode {
 
 
 
-
-            if (currentGamepad1.dpad_left && !previousGamepad1.dpad_left) {
-                outtake.nudgeLeft();
-            } else if (currentGamepad1.dpad_right && !previousGamepad1.dpad_right) {
-                outtake.nudgeRight();
-            }
-
+            // Adjust Outtake Extension
             if (currentGamepad1.dpad_down && !previousGamepad1.dpad_down) {
                 outtake.lessExtend();
             } else if (currentGamepad1.dpad_up && !previousGamepad1.dpad_up) {
@@ -247,6 +232,172 @@ public class AutomatedTransfer extends LinearOpMode {
             telemetry.update();
         }
     }
+
+    public void cycleLeft() {
+        switch (scoreState) {
+            case READY:
+                if (gamepad1.y) {
+
+                    outtake.scoreDeposit();
+                    scoreTimer.reset();
+
+                    scoreState = ScoreState.DEPOSIT;
+                }
+                break;
+            case DEPOSIT:
+                if (scoreTimer.seconds() >= .7) {
+                    outtake.transferDeposit();
+                    outtake.retractSlide();
+                    outtake.setTurretMiddle();
+
+                    intake.openClaw();
+                    intake.intakePosition();
+
+
+                    scoreState = ScoreState.PREPARE;
+                }
+                break;
+            case PREPARE:
+                if (intake.intakeOutDiff() < 20) {
+                    intake.closeClaw();
+
+
+                    scoreTimer.reset();
+                    scoreState = ScoreState.GRAB;
+                }
+                break;
+            case GRAB:
+                if (scoreTimer.seconds() >= .5) {
+                    intake.transferPosition();
+                    intake.flipArm();
+
+                    scoreTimer.reset();
+                    scoreState = ScoreState.RETRACT_INTAKE;
+                }
+                break;
+            case RETRACT_INTAKE:
+                if (intake.intakeInDiff() < 5) {
+                    intake.openClaw();
+
+                    scoreTimer.reset();
+                    scoreState = ScoreState.FLIP;
+                }
+                break;
+            case FLIP:
+                if (scoreTimer.seconds() >= .75) {
+                    intake.readyPosition();
+                    intake.dropArm();
+
+                    scoreTimer.reset();
+                    scoreState = ScoreState.EXTEND_INTAKE;
+                }
+                break;
+            case EXTEND_INTAKE:
+                if (scoreTimer.seconds() >= .25) {
+                    outtake.midDeposit();
+                    outtake.setTurretLeft();
+                    outtake.extendSlide();
+
+                    scoreState = ScoreState.EXTEND_OUTTAKE;
+                }
+                break;
+            case EXTEND_OUTTAKE:
+                if (outtake.slideOutDiff() < 10) {
+
+                    scoreState = ScoreState.READY;
+                }
+                break;
+            default:
+                // should never be reached, as liftState should never be null
+                scoreState = ScoreState.READY;
+                break;
+
+        }
+    }
+
+    public void cycleRight() {
+        switch (scoreState) {
+            case READY:
+                if (gamepad1.y) {
+
+                    outtake.scoreDeposit();
+                    scoreTimer.reset();
+
+                    scoreState = ScoreState.DEPOSIT;
+                }
+                break;
+            case DEPOSIT:
+                if (scoreTimer.seconds() >= .7) {
+                    outtake.transferDeposit();
+                    outtake.retractSlide();
+                    outtake.setTurretMiddle();
+
+                    intake.openClaw();
+                    intake.intakePosition();
+
+
+                    scoreState = ScoreState.PREPARE;
+                }
+                break;
+            case PREPARE:
+                if (intake.intakeOutDiff() < 20) {
+                    intake.closeClaw();
+
+
+                    scoreTimer.reset();
+                    scoreState = ScoreState.GRAB;
+                }
+                break;
+            case GRAB:
+                if (scoreTimer.seconds() >= .5) {
+                    intake.transferPosition();
+                    intake.flipArm();
+
+                    scoreTimer.reset();
+                    scoreState = ScoreState.RETRACT_INTAKE;
+                }
+                break;
+            case RETRACT_INTAKE:
+                if (intake.intakeInDiff() < 5) {
+                    intake.openClaw();
+
+                    scoreTimer.reset();
+                    scoreState = ScoreState.FLIP;
+                }
+                break;
+            case FLIP:
+                if (scoreTimer.seconds() >= .75) {
+                    intake.readyPosition();
+                    intake.dropArm();
+
+                    scoreTimer.reset();
+                    scoreState = ScoreState.EXTEND_INTAKE;
+                }
+                break;
+            case EXTEND_INTAKE:
+                if (scoreTimer.seconds() >= .25) {
+                    outtake.midDeposit();
+                    outtake.setTurretRight();
+                    outtake.extendSlide();
+
+                    scoreState = ScoreState.EXTEND_OUTTAKE;
+                }
+                break;
+            case EXTEND_OUTTAKE:
+                if (outtake.slideOutDiff() < 10) {
+
+                    scoreState = ScoreState.READY;
+                }
+                break;
+            default:
+                // should never be reached, as liftState should never be null
+                scoreState = ScoreState.READY;
+                break;
+
+        }
+    }
+
+
 
 
 }

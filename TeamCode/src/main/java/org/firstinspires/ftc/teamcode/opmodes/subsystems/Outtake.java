@@ -15,6 +15,7 @@ public class Outtake {
     double scorePos = 0.75;
 
     int leftHigh = 530;
+    int rightHigh = 120;
     int turretTransfer = 315;
 
     int fullExtend = 865;
@@ -61,15 +62,22 @@ public class Outtake {
         turret.setPower(speed);
     }
 
-    public void nudgeLeft (){
+    public void nudgeLeftLeft(){
         leftHigh += 2;
     }
-    public void nudgeRight (){
+    public void nudgeLeftRight(){
         leftHigh -= 2;
     }
 
+    public void nudgeRightLeft(){
+        rightHigh += 2;
+    }
+    public void nudgeRightRight(){
+        rightHigh -= 2;
+    }
+
     public int getTurret (){
-        return leftHigh;
+        return turret.getCurrentPosition();
     }
 
     public void moveSlide (int pos, double speed){
