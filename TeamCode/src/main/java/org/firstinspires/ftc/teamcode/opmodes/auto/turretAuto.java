@@ -288,29 +288,6 @@ public class turretAuto extends LinearOpMode
 
         }
 
-        /*
-        //place
-        slide1.setTargetPosition(0); //intake pos
-        slide2.setTargetPosition(0); //intake pos
-
-        slide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        slide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        slide1.setPower(0.5);
-        slide2.setPower(-0.5);
-
-        sleep(200);
-        //reset arm
-        armTimer.reset();
-        while (armTimer.milliseconds() < 3000) {
-            armMotor.setPower(-0.2);
-        }
-        armTimer.reset();
-        while (armTimer.milliseconds() < 100) {
-            armMotor.setPower(0.1);
-        }
-
-         */
 
 
 
