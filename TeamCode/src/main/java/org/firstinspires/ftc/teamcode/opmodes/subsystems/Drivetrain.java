@@ -20,7 +20,7 @@ public class Drivetrain {
         backright = hardwareMap.dcMotor.get("backright");
 
         frontleft.setDirection(DcMotor.Direction.REVERSE);
-        //backleft.setDirection(DcMotor.Direction.REVERSE);
+        backleft.setDirection(DcMotor.Direction.REVERSE);
 
 
         frontleft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
