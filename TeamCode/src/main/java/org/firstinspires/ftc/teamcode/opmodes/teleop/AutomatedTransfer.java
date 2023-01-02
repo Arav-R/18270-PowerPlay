@@ -45,7 +45,7 @@ public class AutomatedTransfer extends LinearOpMode {
 
 
     ElapsedTime scoreTimer = new ElapsedTime();
-    ElapsedTime readyTimer = new ElapsedTime();
+    //ElapsedTime readyTimer = new ElapsedTime();
 
     Drivetrain drive = new Drivetrain();
     Intake intake = new Intake();
@@ -69,8 +69,6 @@ public class AutomatedTransfer extends LinearOpMode {
         drive.init(hardwareMap);
         intake.init(hardwareMap);
         outtake.init(hardwareMap);
-
-        boolean expansionToggle = false;
 
 
         scoreTimer.reset();
@@ -175,33 +173,6 @@ public class AutomatedTransfer extends LinearOpMode {
             } else if (!currentGamepad1.right_bumper && previousGamepad1.right_bumper) { // Falling edge detector
                 outtake.midDeposit(); // Go Back
             }
-
-
-
-
-            /*
-            // Using the toggle variable to control the robot.
-            if (expansionToggle) {
-                intake.readyPosition();
-                intake.openClaw();
-                intake.dropArm();
-
-                outtake.extendSlide();
-                outtake.setTurretLeft();
-                outtake.midDeposit();
-            }
-            else {
-                intake.transferPosition();
-                intake.openClaw();
-                intake.flipArm();
-
-                outtake.retractSlide();
-                outtake.moveTurret(0,0.4);
-                outtake.transferDeposit();
-            }
-
-             */
-
 
 
             // Adjust Outtake Extension

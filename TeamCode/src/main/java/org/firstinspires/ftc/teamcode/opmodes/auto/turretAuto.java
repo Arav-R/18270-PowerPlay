@@ -21,24 +21,21 @@
 
 package org.firstinspires.ftc.teamcode.opmodes.auto;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.outoftheboxrobotics.photoncore.PhotonCore;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Gyroscope;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.opmodes.auto.vision.AprilTagDetectionPipeline;
-import org.firstinspires.ftc.teamcode.opmodes.subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.opmodes.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.opmodes.subsystems.Outtake;
+import org.firstinspires.ftc.teamcode.opmodes.teleop.AutomatedTransfer;
 import org.openftc.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
@@ -46,12 +43,10 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.ArrayList;
 
+@Config
 @Autonomous
 public class turretAuto extends LinearOpMode
 {
-
-
-    ElapsedTime armTimer = new ElapsedTime();
 
     OpenCvCamera camera;
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
@@ -77,14 +72,45 @@ public class turretAuto extends LinearOpMode
 
     AprilTagDetection tagOfInterest = null;
 
+
+    // ROBOT STUFF
+
+    public static double expansionDelay = 1.5;
+
+    public static int cycles = 3;
+    public static double cycleDelay = 0.5;
+
+
+    int currentCycle = 0;
+
+
+    // States
+
+    public enum ScoreState {
+        READY,
+        DEPOSIT,
+        PREPARE,
+        GRAB,
+        RETRACT_INTAKE,
+        FLIP,
+        EXTEND_INTAKE,
+        EXTEND_OUTTAKE
+
+    }
+
+    ScoreState scoreState = ScoreState.READY;
+
+
+
+
+
     ElapsedTime scoreTimer = new ElapsedTime();
-    ElapsedTime readyTimer = new ElapsedTime();
+    //ElapsedTime readyTimer = new ElapsedTime();
 
     //Drivetrain drive = new Drivetrain();
     Intake intake = new Intake();
     Outtake outtake = new Outtake();
 
-    // Claw Arm Positions
 
 
 
@@ -269,6 +295,107 @@ public class turretAuto extends LinearOpMode
         /* Actually do something useful */
 
         drive.followTrajectorySequence(trajSeq);
+
+        scoreTimer.reset();
+        while (scoreTimer.seconds() <= expansionDelay) {
+            // Expand
+            intake.readyPosition();
+            intake.openClaw();
+            intake.dropArm();
+
+            outtake.extendSlide();
+            outtake.setTurretLeft();
+            outtake.midDeposit();
+        }
+
+
+
+        scoreTimer.reset();
+        while (currentCycle < cycles) {
+            switch (scoreState) {
+                case READY:
+                    if (scoreTimer.seconds() >= cycleDelay) {
+
+                        outtake.scoreDeposit();
+                        scoreTimer.reset();
+
+                        scoreState = ScoreState.DEPOSIT;
+                        currentCycle++;
+                    }
+                    break;
+                case DEPOSIT:
+                    if (scoreTimer.seconds() >= .7) {
+                        outtake.transferDeposit();
+                        outtake.retractSlide();
+                        outtake.setTurretMiddle();
+
+                        intake.openClaw();
+                        intake.intakePosition();
+
+
+                        scoreState = ScoreState.PREPARE;
+                    }
+                    break;
+                case PREPARE:
+                    if (intake.intakeOutDiff() < 20) {
+                        intake.closeClaw();
+
+
+                        scoreTimer.reset();
+                        scoreState = ScoreState.GRAB;
+                    }
+                    break;
+                case GRAB:
+                    if (scoreTimer.seconds() >= .5) {
+                        intake.transferPosition();
+                        intake.flipArm();
+
+                        scoreTimer.reset();
+                        scoreState = ScoreState.RETRACT_INTAKE;
+                    }
+                    break;
+                case RETRACT_INTAKE:
+                    if (intake.intakeInDiff() < 5) {
+                        intake.openClaw();
+
+                        scoreTimer.reset();
+                        scoreState = ScoreState.FLIP;
+                    }
+                    break;
+                case FLIP:
+                    if (scoreTimer.seconds() >= .75) {
+                        intake.readyPosition();
+                        intake.dropArm();
+
+                        scoreTimer.reset();
+                        scoreState = ScoreState.EXTEND_INTAKE;
+                    }
+                    break;
+                case EXTEND_INTAKE:
+                    if (scoreTimer.seconds() >= .25) {
+                        outtake.midDeposit();
+                        outtake.setTurretLeft();
+                        outtake.extendSlide();
+
+                        scoreState = ScoreState.EXTEND_OUTTAKE;
+                    }
+                    break;
+                case EXTEND_OUTTAKE:
+                    if (outtake.slideOutDiff() < 10) {
+
+                        scoreTimer.reset();
+                        scoreState = ScoreState.READY;
+                    }
+                    break;
+                default:
+                    // should never be reached, as liftState should never be null
+                    scoreState = ScoreState.READY;
+                    break;
+
+            }
+        }
+
+
 
 
         if(tagOfInterest == null || tagOfInterest.id == LEFT){
