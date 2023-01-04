@@ -35,7 +35,6 @@ import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.TrajectorySe
 import org.firstinspires.ftc.teamcode.opmodes.auto.vision.AprilTagDetectionPipeline;
 import org.firstinspires.ftc.teamcode.opmodes.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.opmodes.subsystems.Outtake;
-import org.firstinspires.ftc.teamcode.opmodes.teleop.AutomatedTransfer;
 import org.openftc.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
@@ -303,7 +302,7 @@ public class turretAuto extends LinearOpMode
             intake.openClaw();
             intake.dropArm();
 
-            outtake.extendSlide();
+            outtake.extendSlideLeft();
             outtake.setTurretLeft();
             outtake.midDeposit();
         }
@@ -375,7 +374,7 @@ public class turretAuto extends LinearOpMode
                     if (scoreTimer.seconds() >= .25) {
                         outtake.midDeposit();
                         outtake.setTurretLeft();
-                        outtake.extendSlide();
+                        outtake.extendSlideLeft();
 
                         scoreState = ScoreState.EXTEND_OUTTAKE;
                     }

@@ -1,10 +1,12 @@
 package org.firstinspires.ftc.teamcode.opmodes.subsystems;
 
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+@Config
 public class Intake {
 
     private DcMotor intakeSlide;
@@ -21,9 +23,18 @@ public class Intake {
     double flip2Down = .97;
     double flip2Flip = .4;
 
+    // Auto Servo Positions
+
+    double flip1_5 = 0.25;
+    double flip1_4 = 0.22;
+    double flip1_3 = 0.19;
+    double flip1_2 = 0.13;
+    double flip1_1 = 0.08;
+
+
 
     int slideOut = 360;
-    int slideIn = 95;
+    public static int slideIn = 65;
 
     public void init(HardwareMap hardwareMap){
         intakeSlide = hardwareMap.dcMotor.get("intakeslide");
@@ -65,7 +76,7 @@ public class Intake {
     public void transferPosition (){
         intakeSlide.setTargetPosition(slideIn);
         intakeSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        intakeSlide.setPower(0.4);
+        intakeSlide.setPower(0.7);
     }
 
     public int intakeOutDiff(){

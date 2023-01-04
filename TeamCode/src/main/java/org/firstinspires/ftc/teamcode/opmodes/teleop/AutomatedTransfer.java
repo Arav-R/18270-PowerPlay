@@ -24,6 +24,12 @@ public class AutomatedTransfer extends LinearOpMode {
 
     }
 
+    public enum RetractState {
+        OUTTAKE,
+        INTAKE,
+        DONE
+    }
+
     public enum ScoreState {
         READY,
         DEPOSIT,
@@ -37,6 +43,8 @@ public class AutomatedTransfer extends LinearOpMode {
     }
 
     RobotState robotState = RobotState.CONTRACT;
+
+    RetractState retractState = RetractState.DONE;
 
     ScoreState scoreState = ScoreState.READY;
 
@@ -105,7 +113,7 @@ public class AutomatedTransfer extends LinearOpMode {
                         intake.openClaw();
                         intake.dropArm();
 
-                        outtake.extendSlide();
+                        outtake.extendSlideLeft();
                         outtake.setTurretLeft();
                         outtake.midDeposit();
 
@@ -119,7 +127,7 @@ public class AutomatedTransfer extends LinearOpMode {
                         intake.openClaw();
                         intake.dropArm();
 
-                        outtake.extendSlide();
+                        outtake.extendSlideLeft();
                         outtake.setTurretRight();
                         outtake.midDeposit();
 
@@ -155,8 +163,7 @@ public class AutomatedTransfer extends LinearOpMode {
             }
 
             if (gamepad1.a) { // Retract
-                outtake.moveToPos(0, 0.5);
-                outtake.moveToPos(0, 0.5);
+                outtake.moveSlide(0, 0.5);
                 outtake.transferDeposit();
 
                 intake.moveToPos(0, 0.5);
@@ -204,6 +211,28 @@ public class AutomatedTransfer extends LinearOpMode {
         }
     }
 
+    public void contract() {
+        switch (retractState) {
+            case OUTTAKE:
+                outtake.moveSlide(0, 0.5);
+                outtake.transferDeposit();
+
+                retractState = RetractState.INTAKE;
+                break;
+            case INTAKE:
+
+                intake.moveToPos(0, 0.5);
+                intake.openClaw();
+                intake.flipArm();
+
+                retractState = RetractState.DONE;
+                break;
+            case DONE:
+                robotState = RobotState.CONTRACT;
+                break;
+        }
+
+    }
     public void cycleLeft() {
         switch (scoreState) {
             case READY:
@@ -247,7 +276,7 @@ public class AutomatedTransfer extends LinearOpMode {
                 }
                 break;
             case RETRACT_INTAKE:
-                if (intake.intakeInDiff() < 5) {
+                if (scoreTimer.seconds() >= .75) {
                     intake.openClaw();
 
                     scoreTimer.reset();
@@ -255,7 +284,7 @@ public class AutomatedTransfer extends LinearOpMode {
                 }
                 break;
             case FLIP:
-                if (scoreTimer.seconds() >= .75) {
+                if (scoreTimer.seconds() >= .5) {
                     intake.readyPosition();
                     intake.dropArm();
 
@@ -267,7 +296,7 @@ public class AutomatedTransfer extends LinearOpMode {
                 if (scoreTimer.seconds() >= .25) {
                     outtake.midDeposit();
                     outtake.setTurretLeft();
-                    outtake.extendSlide();
+                    outtake.extendSlideLeft();
 
                     scoreState = ScoreState.EXTEND_OUTTAKE;
                 }
@@ -329,7 +358,7 @@ public class AutomatedTransfer extends LinearOpMode {
                 }
                 break;
             case RETRACT_INTAKE:
-                if (intake.intakeInDiff() < 5) {
+                if (scoreTimer.seconds() >= .6) {
                     intake.openClaw();
 
                     scoreTimer.reset();
@@ -349,7 +378,9 @@ public class AutomatedTransfer extends LinearOpMode {
                 if (scoreTimer.seconds() >= .25) {
                     outtake.midDeposit();
                     outtake.setTurretRight();
-                    outtake.extendSlide();
+                    outtake.extendSlideRight();
+
+
 
                     scoreState = ScoreState.EXTEND_OUTTAKE;
                 }

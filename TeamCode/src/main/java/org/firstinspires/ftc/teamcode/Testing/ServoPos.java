@@ -21,11 +21,15 @@ public class ServoPos extends LinearOpMode {
 
     public static double servoPos = 0;
 
+    Intake intake = new Intake();
+
 
     @Override
     public void runOpMode() throws InterruptedException {
 
-        Servo servo = hardwareMap.servo.get("deposit");
+        Servo servo = hardwareMap.servo.get("flip1");
+        intake.init(hardwareMap);
+
 
 
 
@@ -37,6 +41,11 @@ public class ServoPos extends LinearOpMode {
 
             servo.setPosition(servoPos);
 
+            if(gamepad1.a){
+                intake.closeClaw();
+            } else if (gamepad1.b){
+                intake.openClaw();
+            }
 
 
 

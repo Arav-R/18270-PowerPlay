@@ -24,25 +24,13 @@ package org.firstinspires.ftc.teamcode.Testing;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
-import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.outoftheboxrobotics.photoncore.PhotonCore;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
-import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.TrajectorySequence;
-import org.firstinspires.ftc.teamcode.opmodes.auto.vision.AprilTagDetectionPipeline;
 import org.firstinspires.ftc.teamcode.opmodes.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.opmodes.subsystems.Outtake;
-import org.openftc.apriltag.AprilTagDetection;
-import org.openftc.easyopencv.OpenCvCamera;
-import org.openftc.easyopencv.OpenCvCameraFactory;
-import org.openftc.easyopencv.OpenCvCameraRotation;
-
-import java.util.ArrayList;
 
 @Config
 @Autonomous
@@ -110,6 +98,7 @@ public class CycleTest extends LinearOpMode
         outtake.init(hardwareMap);
 
 
+        telemetry.addLine("Ready to start");
         waitForStart();
 
         scoreTimer.reset();
@@ -119,7 +108,7 @@ public class CycleTest extends LinearOpMode
             intake.openClaw();
             intake.dropArm();
 
-            outtake.extendSlide();
+            outtake.extendSlideLeft();
             outtake.setTurretLeft();
             outtake.midDeposit();
         }
@@ -191,7 +180,7 @@ public class CycleTest extends LinearOpMode
                     if (scoreTimer.seconds() >= .25) {
                         outtake.midDeposit();
                         outtake.setTurretLeft();
-                        outtake.extendSlide();
+                        outtake.extendSlideLeft();
 
                         scoreState = ScoreState.EXTEND_OUTTAKE;
                     }

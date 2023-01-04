@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.Testing;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -132,7 +131,7 @@ public class Testing extends LinearOpMode {
 
             } else if (currentGamepad1.right_stick_button && !previousGamepad1.right_stick_button) {
 
-                outtake.extendSlide();
+                outtake.extendSlideLeft();
             }
 
 
