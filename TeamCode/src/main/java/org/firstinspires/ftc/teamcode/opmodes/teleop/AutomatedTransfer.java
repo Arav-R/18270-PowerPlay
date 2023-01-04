@@ -15,12 +15,18 @@ import org.firstinspires.ftc.teamcode.opmodes.subsystems.Outtake;
 @TeleOp
 public class AutomatedTransfer extends LinearOpMode {
 
+
+    boolean clawToggle = false;
+
+    boolean armToggle = false;
+
     // States
 
     public enum RobotState {
         CONTRACT,
         LEFT,
-        RIGHT
+        RIGHT,
+        GROUND
 
     }
 
@@ -29,6 +35,8 @@ public class AutomatedTransfer extends LinearOpMode {
         INTAKE,
         DONE
     }
+
+
 
     public enum ScoreState {
         READY,
@@ -105,34 +113,38 @@ public class AutomatedTransfer extends LinearOpMode {
             switch (robotState) {
                 case CONTRACT:
 
+                    contract();
 
-                    // Rising edge detector
-                    if (currentGamepad1.x && !previousGamepad1.x) {
+                    if (retractState == RetractState.DONE) {
+                        // Rising edge detector
+                        if (currentGamepad1.x && !previousGamepad1.x) {
 
-                        intake.readyPosition();
-                        intake.openClaw();
-                        intake.dropArm();
+                            intake.readyPosition();
+                            intake.openClaw();
+                            intake.dropArm();
 
-                        outtake.extendSlideLeft();
-                        outtake.setTurretLeft();
-                        outtake.midDeposit();
+                            outtake.extendSlideLeft();
+                            outtake.setTurretLeft();
+                            outtake.midDeposit();
 
-                        robotState = RobotState.LEFT;
+                            robotState = RobotState.LEFT;
+                        }
+
+                        // Rising edge detector
+                        if (currentGamepad1.b && !previousGamepad1.b) {
+
+                            intake.readyPosition();
+                            intake.openClaw();
+                            intake.dropArm();
+
+                            outtake.extendSlideLeft();
+                            outtake.setTurretRight();
+                            outtake.midDeposit();
+
+                            robotState = RobotState.RIGHT;
+                        }
                     }
 
-                    // Rising edge detector
-                    if (currentGamepad1.b && !previousGamepad1.b) {
-
-                        intake.readyPosition();
-                        intake.openClaw();
-                        intake.dropArm();
-
-                        outtake.extendSlideLeft();
-                        outtake.setTurretRight();
-                        outtake.midDeposit();
-
-                        robotState = RobotState.RIGHT;
-                    }
                     break;
                 case LEFT:
 
@@ -160,16 +172,50 @@ public class AutomatedTransfer extends LinearOpMode {
                     }
 
                     break;
+                case GROUND:
+
+
+                    // Rising edge detector
+                    if (currentGamepad1.a && !previousGamepad1.a) {
+                        // This will set intakeToggle to true if it was previously false
+                        // and intakeToggle to false if it was previously true,
+                        // providing a toggling behavior.
+                        clawToggle = !clawToggle;
+                    }
+
+                    // Using the toggle variable to control the robot.
+                    if (clawToggle) {
+                        intake.closeClaw();
+                    }
+                    else {
+                        if (!armToggle) {  // Arm down
+                            intake.openClaw();
+                        }
+
+                    }
+
+
+                    // Rising edge detector
+                    if (currentGamepad1.b && !previousGamepad1.b) {
+                        // This will set intakeToggle to true if it was previously false
+                        // and intakeToggle to false if it was previously true,
+                        // providing a toggling behavior.
+                        armToggle = !armToggle;
+                    }
+
+                    // Using the toggle variable to control the robot.
+                    if (armToggle) {
+                        intake.flipArm();
+                    }
+                    else {
+                        intake.dropArm();
+                    }
+
+                    break;
             }
 
             if (gamepad1.a) { // Retract
-                outtake.moveSlide(0, 0.5);
-                outtake.transferDeposit();
-
-                intake.moveToPos(0, 0.5);
-                intake.openClaw();
-                intake.flipArm();
-
+                retractState = RetractState.OUTTAKE;
                 robotState = RobotState.CONTRACT;
             }
 
@@ -214,25 +260,29 @@ public class AutomatedTransfer extends LinearOpMode {
     public void contract() {
         switch (retractState) {
             case OUTTAKE:
-                outtake.moveSlide(0, 0.5);
                 outtake.transferDeposit();
+                outtake.moveSlide(0, 0.5);
 
+                scoreTimer.reset();
                 retractState = RetractState.INTAKE;
                 break;
             case INTAKE:
 
-                intake.moveToPos(0, 0.5);
-                intake.openClaw();
-                intake.flipArm();
+                if (scoreTimer.seconds() >= .7) {
+                    intake.moveToPos(0, 0.5);
+                    intake.openClaw();
+                    intake.flipArm();
 
-                retractState = RetractState.DONE;
+                    retractState = RetractState.DONE;
+                }
                 break;
             case DONE:
-                robotState = RobotState.CONTRACT;
+
+
                 break;
         }
-
     }
+
     public void cycleLeft() {
         switch (scoreState) {
             case READY:
