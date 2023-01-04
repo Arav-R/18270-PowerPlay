@@ -106,7 +106,7 @@ public class CycleTest extends LinearOpMode
             // Expand
             intake.readyPosition();
             intake.openClaw();
-            intake.dropArm();
+            intake.dropArmAuto(1);
 
             outtake.extendSlideLeft();
             outtake.setTurretLeft();
@@ -170,7 +170,7 @@ public class CycleTest extends LinearOpMode
                 case FLIP:
                     if (scoreTimer.seconds() >= .75) {
                         intake.readyPosition();
-                        intake.dropArm();
+                        intake.dropArmAuto(currentCycle); // Starts at 2
 
                         scoreTimer.reset();
                         scoreState = ScoreState.EXTEND_INTAKE;

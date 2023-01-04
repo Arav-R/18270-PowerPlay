@@ -117,6 +117,24 @@ public class Intake {
 
     }
 
+    // For Auto
+    public void dropArmAuto (int cone){
+
+        if (cone == 2) { // Top cone starting stack
+            flip1.setPosition(flip1_5);
+        } else if (cone == 3) {
+            flip1.setPosition(flip1_4);
+        } else if (cone == 4) {
+            flip1.setPosition(flip1_3);
+        } else if (cone == 5) {
+            flip1.setPosition(flip1_2);
+        } else if (cone == 6) {
+            flip1.setPosition(flip1_1);
+        }
+
+
+    }
+
     public void flipArm (){
         flip1.setPosition(flip1Flip);
         flip2.setPosition(flip2Flip);
