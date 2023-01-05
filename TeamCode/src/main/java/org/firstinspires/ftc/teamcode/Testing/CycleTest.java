@@ -42,7 +42,7 @@ public class CycleTest extends LinearOpMode
 
     // ROBOT STUFF
 
-    public static double expansionDelay = 1.5;
+    public static double expansionDelay = 2;
 
     public static int cycles = 3;
     public static double cycleDelay = 0.5;

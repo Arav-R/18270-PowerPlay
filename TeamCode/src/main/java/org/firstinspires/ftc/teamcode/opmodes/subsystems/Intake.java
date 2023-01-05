@@ -31,6 +31,12 @@ public class Intake {
     double flip1_2 = 0.13;
     double flip1_1 = 0.08;
 
+    double flip2_5 = 0.8;
+    double flip2_4 = 0.83;
+    double flip2_3 = 0.86;
+    double flip2_2 = 0.92;
+    double flip2_1 = 0.97;
+
 
 
     int slideOut = 360;
@@ -122,14 +128,19 @@ public class Intake {
 
         if (cone == 2) { // Top cone starting stack
             flip1.setPosition(flip1_5);
+            flip2.setPosition(flip2_5);
         } else if (cone == 3) {
             flip1.setPosition(flip1_4);
+            flip2.setPosition(flip2_4);
         } else if (cone == 4) {
             flip1.setPosition(flip1_3);
+            flip2.setPosition(flip2_3);
         } else if (cone == 5) {
             flip1.setPosition(flip1_2);
+            flip2.setPosition(flip2_2);
         } else if (cone == 6) {
             flip1.setPosition(flip1_1);
+            flip2.setPosition(flip2_1);
         }
 
 
