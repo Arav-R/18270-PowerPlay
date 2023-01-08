@@ -1,25 +1,29 @@
 package org.firstinspires.ftc.teamcode.opmodes.subsystems;
 
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+@Config
 public class Outtake {
 
     private DcMotor outtakeSlide1, outtakeSlide2, turret;
     private Servo depositServo;
 
-    double transferPos = 0.04;
-    double midPos = 0.2;
-    double scorePos = 0.7; //0.75
+    double transferPos = 0.18; //0.04
+    double midPos = 0.35; //0.2
+    double scorePos = .82; //0.7
 
-    int leftHigh = 530;
+    int leftHigh = 470;
     int rightHigh = 210;
     int turretTransfer = 315;
 
-    int fullExtendLeft = 865;
+    int fullExtendLeft = 810;
     int fullExtendRight = 900;
+
+    public static int turretAutoLeft = 425;
 
     public void init(HardwareMap hardwareMap){
         outtakeSlide1 = hardwareMap.dcMotor.get("outtake1");
@@ -141,6 +145,12 @@ public class Outtake {
 
     public void setTurretLeft (){
         turret.setTargetPosition(leftHigh);
+        turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        turret.setPower(0.7);
+    }
+
+    public void setTurretAutoLeft (){
+        turret.setTargetPosition(turretAutoLeft);
         turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         turret.setPower(0.7);
     }

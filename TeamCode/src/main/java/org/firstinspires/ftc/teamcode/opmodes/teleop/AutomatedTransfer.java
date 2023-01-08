@@ -143,6 +143,12 @@ public class AutomatedTransfer extends LinearOpMode {
 
                             robotState = RobotState.RIGHT;
                         }
+
+                        // Rising edge detector
+                        if (currentGamepad1.dpad_down && !previousGamepad1.dpad_down) {
+
+                            robotState = RobotState.GROUND;
+                        }
                     }
 
                     break;
@@ -156,6 +162,23 @@ public class AutomatedTransfer extends LinearOpMode {
                     } else if (currentGamepad1.dpad_right && !previousGamepad1.dpad_right) {
                         outtake.nudgeLeftRight();
                     }
+
+                    // Test Placement
+                    if (currentGamepad1.right_bumper && !previousGamepad1.right_bumper) {
+                        outtake.scoreDeposit(); // Score
+                    } else if (!currentGamepad1.right_bumper && previousGamepad1.right_bumper) { // Falling edge detector
+                        outtake.midDeposit(); // Go Back
+                    }
+
+
+                    // Adjust Outtake Extension
+                    if (currentGamepad1.dpad_down && !previousGamepad1.dpad_down) {
+                        outtake.lessExtend();
+                    } else if (currentGamepad1.dpad_up && !previousGamepad1.dpad_up) {
+                        outtake.moreExtend();
+                    }
+
+
 
 
 
@@ -171,12 +194,29 @@ public class AutomatedTransfer extends LinearOpMode {
                         outtake.nudgeRightRight();
                     }
 
+                    // Test Placement
+                    if (currentGamepad1.right_bumper && !previousGamepad1.right_bumper) {
+                        outtake.scoreDeposit(); // Score
+                    } else if (!currentGamepad1.right_bumper && previousGamepad1.right_bumper) { // Falling edge detector
+                        outtake.midDeposit(); // Go Back
+                    }
+
+
+                    // Adjust Outtake Extension
+                    if (currentGamepad1.dpad_down && !previousGamepad1.dpad_down) {
+                        outtake.lessExtend();
+                    } else if (currentGamepad1.dpad_up && !previousGamepad1.dpad_up) {
+                        outtake.moreExtend();
+                    }
+
+
+
                     break;
                 case GROUND:
 
 
                     // Rising edge detector
-                    if (currentGamepad1.a && !previousGamepad1.a) {
+                    if (currentGamepad1.b && !previousGamepad1.b) {
                         // This will set intakeToggle to true if it was previously false
                         // and intakeToggle to false if it was previously true,
                         // providing a toggling behavior.
@@ -196,7 +236,7 @@ public class AutomatedTransfer extends LinearOpMode {
 
 
                     // Rising edge detector
-                    if (currentGamepad1.b && !previousGamepad1.b) {
+                    if (currentGamepad1.y && !previousGamepad1.y) {
                         // This will set intakeToggle to true if it was previously false
                         // and intakeToggle to false if it was previously true,
                         // providing a toggling behavior.
@@ -219,21 +259,6 @@ public class AutomatedTransfer extends LinearOpMode {
                 robotState = RobotState.CONTRACT;
             }
 
-
-            // Test Placement
-            if (currentGamepad1.right_bumper && !previousGamepad1.right_bumper) {
-                outtake.scoreDeposit(); // Score
-            } else if (!currentGamepad1.right_bumper && previousGamepad1.right_bumper) { // Falling edge detector
-                outtake.midDeposit(); // Go Back
-            }
-
-
-            // Adjust Outtake Extension
-            if (currentGamepad1.dpad_down && !previousGamepad1.dpad_down) {
-                outtake.lessExtend();
-            } else if (currentGamepad1.dpad_up && !previousGamepad1.dpad_up) {
-                outtake.moreExtend();
-            }
 
 
 
@@ -260,6 +285,7 @@ public class AutomatedTransfer extends LinearOpMode {
     public void contract() {
         switch (retractState) {
             case OUTTAKE:
+                outtake.setTurretMiddle();
                 outtake.transferDeposit();
                 outtake.moveSlide(0, 0.5);
 
@@ -271,7 +297,7 @@ public class AutomatedTransfer extends LinearOpMode {
                 if (scoreTimer.seconds() >= .7) {
                     intake.moveToPos(0, 0.5);
                     intake.openClaw();
-                    intake.flipArm();
+                    intake.contractArm();
 
                     retractState = RetractState.DONE;
                 }
@@ -289,8 +315,8 @@ public class AutomatedTransfer extends LinearOpMode {
                 if (gamepad1.y) {
 
                     outtake.scoreDeposit();
-                    scoreTimer.reset();
 
+                    scoreTimer.reset();
                     scoreState = ScoreState.DEPOSIT;
                 }
                 break;

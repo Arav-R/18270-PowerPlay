@@ -10,48 +10,44 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class Intake {
 
     private DcMotor intakeSlide;
-    private Servo clawServo, flip1, flip2;
+    private Servo clawServo, flip1Servo, flip2Servo;
 
     double frontLeftPower, frontRightPower, backLeftPower, backRightPower;
 
     double clawClose = 1;
     double clawOpen = .75;
 
-    double flip1Down = .08;
-    double flip1Flip = .7;
+    double flipDown = 0.015;
+    double flipUp = 0.64; //0.59
+    double flipContract = 0.4;
 
-    double flip2Down = .97;
-    double flip2Flip = .4;
-
-    // Auto Servo Positions
-
-    double flip1_5 = 0.25;
-    double flip1_4 = 0.22;
-    double flip1_3 = 0.19;
-    double flip1_2 = 0.13;
-    double flip1_1 = 0.08;
-
-    double flip2_5 = 0.8;
-    double flip2_4 = 0.83;
-    double flip2_3 = 0.86;
-    double flip2_2 = 0.92;
-    double flip2_1 = 0.97;
+    public static double flip5 = 0.1;
+    public static double flip4 = 0.08;
+    public static double flip3 = 0.06;
+    public static double flip2 = 0.03;
+    public static double flip1 = 0.015;
 
 
 
     int slideOut = 360;
-    public static int slideIn = 65;
+
+    public static int slideIn = 190; //65
+
+    public static int slideInAuto = 235; //65
+    public static int slideOutAuto = 390; //65
 
     public void init(HardwareMap hardwareMap){
         intakeSlide = hardwareMap.dcMotor.get("intakeslide");
         clawServo = hardwareMap.servo.get("claw");
 
-        flip1 = hardwareMap.servo.get("flip1");
-        flip2 = hardwareMap.servo.get("flip2");
+        flip1Servo = hardwareMap.servo.get("flip1");
+        flip2Servo = hardwareMap.servo.get("flip2");
 
 
 
         intakeSlide.setDirection(DcMotor.Direction.REVERSE);
+
+        flip2Servo.setDirection(Servo.Direction.REVERSE);
 
         intakeSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         intakeSlide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -73,6 +69,12 @@ public class Intake {
         intakeSlide.setPower(1);
     }
 
+    public void autoPosition (){
+        intakeSlide.setTargetPosition(slideOutAuto);
+        intakeSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        intakeSlide.setPower(0.7);
+    }
+
     public void readyPosition (){
         intakeSlide.setTargetPosition(slideOut - 200);
         intakeSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -81,6 +83,18 @@ public class Intake {
 
     public void transferPosition (){
         intakeSlide.setTargetPosition(slideIn);
+        intakeSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        intakeSlide.setPower(0.7);
+    }
+
+    public void transferPositionAuto (){
+        intakeSlide.setTargetPosition(slideInAuto);
+        intakeSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        intakeSlide.setPower(0.6);
+    }
+
+    public void zeroPosition(){
+        intakeSlide.setTargetPosition(-15);
         intakeSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         intakeSlide.setPower(0.7);
     }
@@ -94,6 +108,12 @@ public class Intake {
     public int intakeInDiff(){
 
         return Math.abs(intakeSlide.getCurrentPosition() - slideIn);
+
+    }
+
+    public int intakeInAutoDiff(){
+
+        return Math.abs(intakeSlide.getCurrentPosition() - slideInAuto);
 
     }
 
@@ -118,8 +138,8 @@ public class Intake {
 
 
     public void dropArm (){
-        flip1.setPosition(flip1Down);
-        flip2.setPosition(flip2Down);
+        flip1Servo.setPosition(flipDown);
+        flip2Servo.setPosition(flipDown);
 
     }
 
@@ -127,38 +147,44 @@ public class Intake {
     public void dropArmAuto (int cone){
 
         if (cone == 2) { // Top cone starting stack
-            flip1.setPosition(flip1_5);
-            flip2.setPosition(flip2_5);
+            flip1Servo.setPosition(flip5);
+            flip2Servo.setPosition(flip5);
         } else if (cone == 3) {
-            flip1.setPosition(flip1_4);
-            flip2.setPosition(flip2_4);
+            flip1Servo.setPosition(flip4);
+            flip2Servo.setPosition(flip4);
         } else if (cone == 4) {
-            flip1.setPosition(flip1_3);
-            flip2.setPosition(flip2_3);
+            flip1Servo.setPosition(flip3);
+            flip2Servo.setPosition(flip3);
         } else if (cone == 5) {
-            flip1.setPosition(flip1_2);
-            flip2.setPosition(flip2_2);
+            flip1Servo.setPosition(flip2);
+            flip2Servo.setPosition(flip2);
         } else if (cone == 6) {
-            flip1.setPosition(flip1_1);
-            flip2.setPosition(flip2_1);
+            flip1Servo.setPosition(flip1);
+            flip2Servo.setPosition(flip1);
         }
 
 
     }
 
     public void flipArm (){
-        flip1.setPosition(flip1Flip);
-        flip2.setPosition(flip2Flip);
+        flip1Servo.setPosition(flipUp);
+        flip2Servo.setPosition(flipUp);
+
+    }
+
+    public void contractArm (){
+        flip1Servo.setPosition(flipContract);
+        flip2Servo.setPosition(flipContract);
 
     }
 
     public void moveJoint1 (double pos){
-        flip1.setPosition(pos);
+        flip1Servo.setPosition(pos);
 
     }
 
     public void moveJoint2 (double pos){
-        flip2.setPosition(pos);
+        flip2Servo.setPosition(pos);
 
     }
 

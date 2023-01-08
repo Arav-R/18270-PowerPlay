@@ -19,21 +19,18 @@ import org.firstinspires.ftc.teamcode.opmodes.subsystems.Outtake;
 //@Disabled
 @Config
 @TeleOp
-public class ServoPos extends LinearOpMode {
+public class FlipPos extends LinearOpMode {
 
     public static double servoPos = 0;
-
-    Intake intake = new Intake();
 
 
     @Override
     public void runOpMode() throws InterruptedException {
 
-        Servo servo = hardwareMap.servo.get("deposit");
-        intake.init(hardwareMap);
+        Servo flip1 = hardwareMap.servo.get("flip1");
+        Servo flip2 = hardwareMap.servo.get("flip2");
 
-
-
+        flip2.setDirection(Servo.Direction.REVERSE);
 
         waitForStart();
 
@@ -41,7 +38,8 @@ public class ServoPos extends LinearOpMode {
 
         while (opModeIsActive()) {
 
-            servo.setPosition(servoPos);
+            flip1.setPosition(servoPos);
+            flip2.setPosition(servoPos);
 /*
             if(gamepad1.a){
                 intake.closeClaw();

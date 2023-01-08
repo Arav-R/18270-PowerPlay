@@ -42,10 +42,10 @@ public class CycleTest extends LinearOpMode
 
     // ROBOT STUFF
 
-    public static double expansionDelay = 2;
+    public static double expansionDelay = 1;
 
-    public static int cycles = 3;
-    public static double cycleDelay = 0.5;
+    public static int cycles = 6;
+    public static double cycleDelay = 0.25;
 
 
     int currentCycle = 0;
@@ -99,24 +99,26 @@ public class CycleTest extends LinearOpMode
 
 
         telemetry.addLine("Ready to start");
+
+        outtake.transferDeposit();
         waitForStart();
 
         scoreTimer.reset();
-        while (scoreTimer.seconds() <= expansionDelay) {
+        while (scoreTimer.seconds() <= expansionDelay && opModeIsActive()) {
             // Expand
             intake.readyPosition();
             intake.openClaw();
-            intake.dropArmAuto(1);
+            intake.dropArmAuto(2); //5 cone
 
             outtake.extendSlideLeft();
-            outtake.setTurretLeft();
+            outtake.setTurretAutoLeft();
             outtake.midDeposit();
         }
 
 
 
         scoreTimer.reset();
-        while (currentCycle < cycles) {
+        while (currentCycle < cycles && opModeIsActive()) {
             switch (scoreState) {
                 case READY:
                     if (scoreTimer.seconds() >= cycleDelay) {
@@ -135,7 +137,7 @@ public class CycleTest extends LinearOpMode
                         outtake.setTurretMiddle();
 
                         intake.openClaw();
-                        intake.intakePosition();
+                        intake.autoPosition();
 
 
                         scoreState = ScoreState.PREPARE;
@@ -152,7 +154,7 @@ public class CycleTest extends LinearOpMode
                     break;
                 case GRAB:
                     if (scoreTimer.seconds() >= .5) {
-                        intake.transferPosition();
+                        intake.transferPositionAuto();
                         intake.flipArm();
 
                         scoreTimer.reset();
@@ -160,7 +162,7 @@ public class CycleTest extends LinearOpMode
                     }
                     break;
                 case RETRACT_INTAKE:
-                    if (intake.intakeInDiff() < 5) {
+                    if (scoreTimer.seconds() >= .7) {
                         intake.openClaw();
 
                         scoreTimer.reset();
@@ -170,7 +172,7 @@ public class CycleTest extends LinearOpMode
                 case FLIP:
                     if (scoreTimer.seconds() >= .75) {
                         intake.readyPosition();
-                        intake.dropArmAuto(currentCycle); // Starts at 2
+                        intake.dropArmAuto(currentCycle + 2); // Starts at 2
 
                         scoreTimer.reset();
                         scoreState = ScoreState.EXTEND_INTAKE;
@@ -179,7 +181,7 @@ public class CycleTest extends LinearOpMode
                 case EXTEND_INTAKE:
                     if (scoreTimer.seconds() >= .25) {
                         outtake.midDeposit();
-                        outtake.setTurretLeft();
+                        outtake.setTurretAutoLeft();
                         outtake.extendSlideLeft();
 
                         scoreState = ScoreState.EXTEND_OUTTAKE;
