@@ -23,13 +23,15 @@ public class ServoPos extends LinearOpMode {
 
     public static double servoPos = 0;
 
+    public static String servoName = "deposit";
+
     Intake intake = new Intake();
 
 
     @Override
     public void runOpMode() throws InterruptedException {
 
-        Servo servo = hardwareMap.servo.get("deposit");
+        Servo servo = hardwareMap.servo.get(servoName);
         intake.init(hardwareMap);
 
 
@@ -52,7 +54,7 @@ public class ServoPos extends LinearOpMode {
 
 
 
-            telemetry.addData("Servo Position: ", servoPos);
+            telemetry.addData("Servo Set Position: ", servoPos);
 
             telemetry.update();
         }

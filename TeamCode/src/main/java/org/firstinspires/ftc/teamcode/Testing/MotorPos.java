@@ -19,12 +19,15 @@ import org.firstinspires.ftc.teamcode.opmodes.subsystems.Outtake;
 public class MotorPos extends LinearOpMode {
 
     public static int motorPos = 0;
+    public static double motorSpeed = 0.7;
+
+    public static String motorName = "turret";
 
 
     @Override
     public void runOpMode() throws InterruptedException {
 
-        DcMotor motor = hardwareMap.dcMotor.get("turret");
+        DcMotor motor = hardwareMap.dcMotor.get(motorName);
 
         motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
@@ -43,13 +46,13 @@ public class MotorPos extends LinearOpMode {
 
             motor.setTargetPosition(motorPos);
             motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            motor.setPower(0.7);
+            motor.setPower(motorSpeed);
 
 
 
 
 
-            telemetry.addData("Motor Position: ", motorPos);
+            telemetry.addData("Real Motor Position: ", motor.getCurrentPosition());
 
             telemetry.update();
         }
