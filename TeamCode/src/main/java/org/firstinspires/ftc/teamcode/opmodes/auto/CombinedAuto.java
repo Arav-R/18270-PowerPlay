@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmodes.auto;
 
 import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.outoftheboxrobotics.photoncore.PhotonCore;
@@ -17,6 +18,8 @@ import org.firstinspires.ftc.teamcode.opmodes.teleop.AutomatedTransfer;
 /*
  * This is an example of a more complex path to really test the tuning.
  */
+
+@Config
 @Autonomous(group = "drive")
 public class CombinedAuto extends LinearOpMode {
 
@@ -34,6 +37,14 @@ public class CombinedAuto extends LinearOpMode {
     int currentCycle = 0;
 
     boolean retract = false;
+
+
+
+    public static double depositTime = .7;
+    public static double grabTime = .5;
+    public static double flipTime = .95;
+    public static double transferTime = .6;
+    public static double intakeTime = .25;
 
 
     // States
@@ -162,7 +173,7 @@ public class CombinedAuto extends LinearOpMode {
                     }
                     break;
                 case DEPOSIT:
-                    if (scoreTimer.seconds() >= .7) {
+                    if (scoreTimer.seconds() >= depositTime) {
                         currentCycle++;
 
                         outtake.transferDeposit();
@@ -186,7 +197,7 @@ public class CombinedAuto extends LinearOpMode {
                     }
                     break;
                 case GRAB:
-                    if (scoreTimer.seconds() >= .5) {
+                    if (scoreTimer.seconds() >= grabTime) {
                         intake.transferPositionAuto();
                         intake.flipArm();
 
@@ -195,7 +206,7 @@ public class CombinedAuto extends LinearOpMode {
                     }
                     break;
                 case RETRACT_INTAKE:
-                    if (scoreTimer.seconds() >= .95) {
+                    if (scoreTimer.seconds() >= flipTime) {
                         intake.openClaw();
 
                         scoreTimer.reset();
@@ -203,7 +214,7 @@ public class CombinedAuto extends LinearOpMode {
                     }
                     break;
                 case FLIP:
-                    if (scoreTimer.seconds() >= .75) {
+                    if (scoreTimer.seconds() >= transferTime) {
                         intake.readyPosition();
                         intake.dropArmAuto(currentCycle + 2); // Starts at 2
 
@@ -212,7 +223,7 @@ public class CombinedAuto extends LinearOpMode {
                     }
                     break;
                 case EXTEND_INTAKE:
-                    if (scoreTimer.seconds() >= .25) {
+                    if (scoreTimer.seconds() >= intakeTime) {
                         outtake.midDeposit();
                         outtake.setTurretAutoLeft();
                         outtake.extendSlideLeft();

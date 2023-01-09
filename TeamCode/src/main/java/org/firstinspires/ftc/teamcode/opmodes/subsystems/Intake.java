@@ -17,9 +17,9 @@ public class Intake {
     double clawClose = 1;
     double clawOpen = .75;
 
-    double flipDown = 0.015;
-    double flipUp = 0.55; //.64
-    double flipContract = 0.4;
+    public static double flipDown = 0.015;
+    public static double flipUp = 0.55; //.64
+    public static double flipContract = 0.4;
 
     public static double flip5 = 0.1;
     public static double flip4 = 0.08;
@@ -29,7 +29,7 @@ public class Intake {
 
 
 
-    int slideOut = 430;
+    public static int slideOut = 430;
 
     public static int slideIn = 210; //65
 

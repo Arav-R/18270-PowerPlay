@@ -12,16 +12,16 @@ public class Outtake {
     private DcMotor outtakeSlide1, outtakeSlide2, turret;
     private Servo depositServo;
 
-    double transferPos = 0.18; //0.04
-    double midPos = 0.37; //0.2
-    double scorePos = .82; //0.7
+    public static  double transferPos = 0.18; //0.04
+    public static double midPos = 0.37; //0.2
+    public static double scorePos = .82; //0.7
 
-    int leftHigh = 458;
-    int rightHigh = 140;
-    int turretTransfer = 315;
+    public static int leftHigh = 458;
+    public static int rightHigh = 140;
+    public static int turretTransfer = 315;
 
-    int fullExtendLeft = 920;
-    int fullExtendRight = 1200;
+    public static int fullExtendLeft = 920;
+    public static int fullExtendRight = 1200;
 
     public static int turretAutoLeft = 458;
 
@@ -193,14 +193,6 @@ public class Outtake {
     public void scoreDeposit(){
         depositServo.setPosition(scorePos);
     }
-
-
-
-
-
-
-
-
 
 
 

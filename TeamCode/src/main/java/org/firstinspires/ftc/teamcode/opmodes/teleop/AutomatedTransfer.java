@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmodes.teleop;
 
 import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -12,6 +13,7 @@ import org.firstinspires.ftc.teamcode.opmodes.subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.opmodes.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.opmodes.subsystems.Outtake;
 
+@Config
 @TeleOp
 public class AutomatedTransfer extends LinearOpMode {
 
@@ -19,6 +21,13 @@ public class AutomatedTransfer extends LinearOpMode {
     boolean clawToggle = false;
 
     boolean armToggle = false;
+
+    public static double depositTime = .7;
+    public static double grabTime = .5;
+    public static double flipTime = .95;
+    public static double transferTime = .5;
+    public static double intakeTime = .25;
+
 
     // States
 
@@ -215,6 +224,27 @@ public class AutomatedTransfer extends LinearOpMode {
                 case GROUND:
 
 
+
+
+
+                    // Rising edge detector
+                    if (currentGamepad1.y && !previousGamepad1.y) {
+                        // This will set intakeToggle to true if it was previously false
+                        // and intakeToggle to false if it was previously true,
+                        // providing a toggling behavior.
+                        armToggle = !armToggle;
+                    }
+
+                    // Using the toggle variable to control the robot.
+                    if (armToggle) {
+                        intake.flipArm();
+                    }
+                    else {
+                        intake.dropArm();
+                    }
+
+
+
                     // Rising edge detector
                     if (currentGamepad1.b && !previousGamepad1.b) {
                         // This will set intakeToggle to true if it was previously false
@@ -235,21 +265,7 @@ public class AutomatedTransfer extends LinearOpMode {
                     }
 
 
-                    // Rising edge detector
-                    if (currentGamepad1.y && !previousGamepad1.y) {
-                        // This will set intakeToggle to true if it was previously false
-                        // and intakeToggle to false if it was previously true,
-                        // providing a toggling behavior.
-                        armToggle = !armToggle;
-                    }
 
-                    // Using the toggle variable to control the robot.
-                    if (armToggle) {
-                        intake.flipArm();
-                    }
-                    else {
-                        intake.dropArm();
-                    }
 
                     break;
             }
@@ -321,7 +337,7 @@ public class AutomatedTransfer extends LinearOpMode {
                 }
                 break;
             case DEPOSIT:
-                if (scoreTimer.seconds() >= .7) {
+                if (scoreTimer.seconds() >= depositTime) {
                     outtake.transferDeposit();
                     outtake.retractSlide();
                     outtake.setTurretMiddle();
@@ -343,7 +359,7 @@ public class AutomatedTransfer extends LinearOpMode {
                 }
                 break;
             case GRAB:
-                if (scoreTimer.seconds() >= .5) {
+                if (scoreTimer.seconds() >= grabTime) {
                     intake.transferPosition();
                     intake.flipArm();
 
@@ -352,7 +368,7 @@ public class AutomatedTransfer extends LinearOpMode {
                 }
                 break;
             case RETRACT_INTAKE:
-                if (scoreTimer.seconds() >= .95) {
+                if (scoreTimer.seconds() >= flipTime) {
                     intake.openClaw();
 
                     scoreTimer.reset();
@@ -360,7 +376,7 @@ public class AutomatedTransfer extends LinearOpMode {
                 }
                 break;
             case FLIP:
-                if (scoreTimer.seconds() >= .5) {
+                if (scoreTimer.seconds() >= transferTime) {
                     intake.readyPosition();
                     intake.dropArm();
 
@@ -369,7 +385,7 @@ public class AutomatedTransfer extends LinearOpMode {
                 }
                 break;
             case EXTEND_INTAKE:
-                if (scoreTimer.seconds() >= .25) {
+                if (scoreTimer.seconds() >= intakeTime) {
                     outtake.midDeposit();
                     outtake.setTurretLeft();
                     outtake.extendSlideLeft();

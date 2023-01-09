@@ -107,7 +107,7 @@ public class CycleTest extends LinearOpMode
         while (scoreTimer.seconds() <= expansionDelay && opModeIsActive()) {
             // Expand
             intake.readyPosition();
-            intake.openClaw();   
+            intake.openClaw();
             intake.dropArmAuto(2); //5 cone
 
             outtake.extendSlideLeft();
