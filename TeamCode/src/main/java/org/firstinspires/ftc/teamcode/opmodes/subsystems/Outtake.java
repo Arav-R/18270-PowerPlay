@@ -13,17 +13,17 @@ public class Outtake {
     private Servo depositServo;
 
     double transferPos = 0.18; //0.04
-    double midPos = 0.35; //0.2
+    double midPos = 0.37; //0.2
     double scorePos = .82; //0.7
 
-    int leftHigh = 470;
-    int rightHigh = 210;
+    int leftHigh = 458;
+    int rightHigh = 140;
     int turretTransfer = 315;
 
-    int fullExtendLeft = 810;
-    int fullExtendRight = 900;
+    int fullExtendLeft = 920;
+    int fullExtendRight = 1200;
 
-    public static int turretAutoLeft = 425;
+    public static int turretAutoLeft = 458;
 
     public void init(HardwareMap hardwareMap){
         outtakeSlide1 = hardwareMap.dcMotor.get("outtake1");
@@ -108,28 +108,42 @@ public class Outtake {
     public void extendSlideRight(){
         outtakeSlide1.setTargetPosition(fullExtendRight);
         outtakeSlide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        outtakeSlide1.setPower(0.8);
+        outtakeSlide1.setPower(0.9);
 
         outtakeSlide2.setTargetPosition(fullExtendRight);
         outtakeSlide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        outtakeSlide2.setPower(0.8);
+        outtakeSlide2.setPower(0.9);
     }
 
-    public void moreExtend (){
+    public void moreExtendLeft(){
         fullExtendLeft += 5;
     }
 
-    public void lessExtend (){
+    public void lessExtendLeft(){
         fullExtendLeft -= 5;
     }
 
-    public int getExtend (){
-        return fullExtendLeft;
+    public void moreExtendRight(){
+        fullExtendRight += 5;
     }
 
-    public int slideOutDiff(){
+    public void lessExtendRight(){
+        fullExtendRight -= 5;
+    }
+
+    public int getExtend (){
+        return outtakeSlide1.getCurrentPosition();
+    }
+
+    public int slideOutDiffLeft(){
 
         return Math.abs(outtakeSlide1.getCurrentPosition() - fullExtendLeft);
+
+    }
+
+    public int slideOutDiffRight(){
+
+        return Math.abs(outtakeSlide1.getCurrentPosition() - fullExtendRight);
 
     }
 

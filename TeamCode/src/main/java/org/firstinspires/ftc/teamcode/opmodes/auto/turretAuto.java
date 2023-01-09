@@ -74,13 +74,17 @@ public class turretAuto extends LinearOpMode
 
     // ROBOT STUFF
 
+    // ROBOT STUFF
+
     public static double expansionDelay = 1.5;
 
     public static int cycles = 3;
-    public static double cycleDelay = 0.5;
+    public static double cycleDelay = 0.25;
 
 
     int currentCycle = 0;
+
+    boolean retract = false;
 
 
     // States
@@ -97,7 +101,14 @@ public class turretAuto extends LinearOpMode
 
     }
 
-    ScoreState scoreState = ScoreState.READY;
+    public enum RetractState {
+        OUTTAKE,
+        INTAKE,
+        DONE
+    }
+
+    CombinedAuto.ScoreState scoreState = CombinedAuto.ScoreState.READY;
+    CombinedAuto.RetractState retractState = CombinedAuto.RetractState.DONE;
 
 
 
@@ -294,106 +305,6 @@ public class turretAuto extends LinearOpMode
         /* Actually do something useful */
 
         drive.followTrajectorySequence(trajSeq);
-
-        scoreTimer.reset();
-        while (scoreTimer.seconds() <= expansionDelay) {
-            // Expand
-            intake.readyPosition();
-            intake.openClaw();
-            intake.dropArm();
-
-            outtake.extendSlideLeft();
-            outtake.setTurretLeft();
-            outtake.midDeposit();
-        }
-
-
-
-        scoreTimer.reset();
-        while (currentCycle < cycles) {
-            switch (scoreState) {
-                case READY:
-                    if (scoreTimer.seconds() >= cycleDelay) {
-
-                        outtake.scoreDeposit();
-                        scoreTimer.reset();
-
-                        scoreState = ScoreState.DEPOSIT;
-                        currentCycle++;
-                    }
-                    break;
-                case DEPOSIT:
-                    if (scoreTimer.seconds() >= .7) {
-                        outtake.transferDeposit();
-                        outtake.retractSlide();
-                        outtake.setTurretMiddle();
-
-                        intake.openClaw();
-                        intake.intakePosition();
-
-
-                        scoreState = ScoreState.PREPARE;
-                    }
-                    break;
-                case PREPARE:
-                    if (intake.intakeOutDiff() < 20) {
-                        intake.closeClaw();
-
-
-                        scoreTimer.reset();
-                        scoreState = ScoreState.GRAB;
-                    }
-                    break;
-                case GRAB:
-                    if (scoreTimer.seconds() >= .5) {
-                        intake.transferPosition();
-                        intake.flipArm();
-
-                        scoreTimer.reset();
-                        scoreState = ScoreState.RETRACT_INTAKE;
-                    }
-                    break;
-                case RETRACT_INTAKE:
-                    if (intake.intakeInDiff() < 5) {
-                        intake.openClaw();
-
-                        scoreTimer.reset();
-                        scoreState = ScoreState.FLIP;
-                    }
-                    break;
-                case FLIP:
-                    if (scoreTimer.seconds() >= .75) {
-                        intake.readyPosition();
-                        intake.dropArm();
-
-                        scoreTimer.reset();
-                        scoreState = ScoreState.EXTEND_INTAKE;
-                    }
-                    break;
-                case EXTEND_INTAKE:
-                    if (scoreTimer.seconds() >= .25) {
-                        outtake.midDeposit();
-                        outtake.setTurretLeft();
-                        outtake.extendSlideLeft();
-
-                        scoreState = ScoreState.EXTEND_OUTTAKE;
-                    }
-                    break;
-                case EXTEND_OUTTAKE:
-                    if (outtake.slideOutDiff() < 10) {
-
-                        scoreTimer.reset();
-                        scoreState = ScoreState.READY;
-                    }
-                    break;
-                default:
-                    // should never be reached, as liftState should never be null
-                    scoreState = ScoreState.READY;
-                    break;
-
-            }
-        }
-
 
 
 

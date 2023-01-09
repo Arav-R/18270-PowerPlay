@@ -18,7 +18,7 @@ public class Intake {
     double clawOpen = .75;
 
     double flipDown = 0.015;
-    double flipUp = 0.64; //0.59
+    double flipUp = 0.55; //.64
     double flipContract = 0.4;
 
     public static double flip5 = 0.1;
@@ -29,12 +29,12 @@ public class Intake {
 
 
 
-    int slideOut = 360;
+    int slideOut = 430;
 
-    public static int slideIn = 190; //65
+    public static int slideIn = 210; //65
 
-    public static int slideInAuto = 235; //65
-    public static int slideOutAuto = 390; //65
+    public static int slideInAuto = -5; //235
+    public static int slideOutAuto = 430; //65
 
     public void init(HardwareMap hardwareMap){
         intakeSlide = hardwareMap.dcMotor.get("intakeslide");
@@ -75,16 +75,17 @@ public class Intake {
         intakeSlide.setPower(0.7);
     }
 
+
     public void readyPosition (){
-        intakeSlide.setTargetPosition(slideOut - 200);
+        intakeSlide.setTargetPosition(slideOut - 150);
         intakeSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         intakeSlide.setPower(0.7);
     }
 
     public void transferPosition (){
-        intakeSlide.setTargetPosition(slideIn);
+        intakeSlide.setTargetPosition(-5);
         intakeSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        intakeSlide.setPower(0.7);
+        intakeSlide.setPower(.8);
     }
 
     public void transferPositionAuto (){
@@ -170,6 +171,11 @@ public class Intake {
         flip1Servo.setPosition(flipUp);
         flip2Servo.setPosition(flipUp);
 
+    }
+
+    public void armStartingPosition (){
+        flip1Servo.setPosition(flipUp);
+        flip2Servo.setPosition(flipUp);
     }
 
     public void contractArm (){

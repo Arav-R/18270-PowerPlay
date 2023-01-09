@@ -173,9 +173,9 @@ public class AutomatedTransfer extends LinearOpMode {
 
                     // Adjust Outtake Extension
                     if (currentGamepad1.dpad_down && !previousGamepad1.dpad_down) {
-                        outtake.lessExtend();
+                        outtake.lessExtendLeft();
                     } else if (currentGamepad1.dpad_up && !previousGamepad1.dpad_up) {
-                        outtake.moreExtend();
+                        outtake.moreExtendLeft();
                     }
 
 
@@ -204,9 +204,9 @@ public class AutomatedTransfer extends LinearOpMode {
 
                     // Adjust Outtake Extension
                     if (currentGamepad1.dpad_down && !previousGamepad1.dpad_down) {
-                        outtake.lessExtend();
+                        outtake.lessExtendRight();
                     } else if (currentGamepad1.dpad_up && !previousGamepad1.dpad_up) {
-                        outtake.moreExtend();
+                        outtake.moreExtendRight();
                     }
 
 
@@ -352,7 +352,7 @@ public class AutomatedTransfer extends LinearOpMode {
                 }
                 break;
             case RETRACT_INTAKE:
-                if (scoreTimer.seconds() >= .75) {
+                if (scoreTimer.seconds() >= .95) {
                     intake.openClaw();
 
                     scoreTimer.reset();
@@ -378,7 +378,7 @@ public class AutomatedTransfer extends LinearOpMode {
                 }
                 break;
             case EXTEND_OUTTAKE:
-                if (outtake.slideOutDiff() < 10) {
+                if (outtake.slideOutDiffLeft() < 40) {
 
                     scoreState = ScoreState.READY;
                 }
@@ -397,8 +397,8 @@ public class AutomatedTransfer extends LinearOpMode {
                 if (gamepad1.y) {
 
                     outtake.scoreDeposit();
-                    scoreTimer.reset();
 
+                    scoreTimer.reset();
                     scoreState = ScoreState.DEPOSIT;
                 }
                 break;
@@ -434,7 +434,7 @@ public class AutomatedTransfer extends LinearOpMode {
                 }
                 break;
             case RETRACT_INTAKE:
-                if (scoreTimer.seconds() >= .6) {
+                if (scoreTimer.seconds() >= .75) {
                     intake.openClaw();
 
                     scoreTimer.reset();
@@ -442,7 +442,7 @@ public class AutomatedTransfer extends LinearOpMode {
                 }
                 break;
             case FLIP:
-                if (scoreTimer.seconds() >= .75) {
+                if (scoreTimer.seconds() >= .5) {
                     intake.readyPosition();
                     intake.dropArm();
 
@@ -456,13 +456,11 @@ public class AutomatedTransfer extends LinearOpMode {
                     outtake.setTurretRight();
                     outtake.extendSlideRight();
 
-
-
                     scoreState = ScoreState.EXTEND_OUTTAKE;
                 }
                 break;
             case EXTEND_OUTTAKE:
-                if (outtake.slideOutDiff() < 10) {
+                if (outtake.slideOutDiffRight() < 40) {
 
                     scoreState = ScoreState.READY;
                 }
