@@ -372,7 +372,7 @@ public class CombinedAuto extends LinearOpMode {
                     }
                     break;
                 case RETRACT_INTAKE:
-                    if (scoreTimer.seconds() >= flipTime) {
+                    if (scoreTimer.seconds() >= flipTime && intake.intakeInDiff() < 10) {
                         intake.openClaw();
 
                         scoreTimer.reset();
