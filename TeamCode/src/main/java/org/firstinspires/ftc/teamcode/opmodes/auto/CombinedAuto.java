@@ -224,6 +224,8 @@ public class CombinedAuto extends LinearOpMode {
 
         telemetry.addLine("Ready to start");
 
+        telemetry.update();
+
         /*
          * The INIT-loop:
          * This REPLACES waitForStart!
@@ -412,6 +414,7 @@ public class CombinedAuto extends LinearOpMode {
 
             }
             telemetry.addData("Current Cycle", currentCycle);
+            telemetry.update();
 
         }
 
@@ -464,6 +467,9 @@ public class CombinedAuto extends LinearOpMode {
             drive.followTrajectory(rightApril);
 
         }
+
+        telemetry.addLine("Auto Done");
+        telemetry.update();
 
 
 
