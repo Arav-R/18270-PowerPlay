@@ -111,6 +111,10 @@ public class CombinedAuto extends LinearOpMode {
 
 
     ElapsedTime scoreTimer = new ElapsedTime();
+
+    ElapsedTime cycleTimer = new ElapsedTime();
+
+    double cycleTime = 0;
     //ElapsedTime readyTimer = new ElapsedTime();
 
     //Drivetrain drive = new Drivetrain();
@@ -327,6 +331,7 @@ public class CombinedAuto extends LinearOpMode {
 
 
 
+        cycleTimer.reset();
         scoreTimer.reset();
         while (currentCycle < cycles && opModeIsActive()) {
             switch (scoreState) {
@@ -403,6 +408,9 @@ public class CombinedAuto extends LinearOpMode {
                 case EXTEND_OUTTAKE:
                     if (outtake.slideOutDiffLeft() < 10) {
 
+                        cycleTime = cycleTimer.seconds();
+
+                        cycleTimer.reset();
                         scoreTimer.reset();
                         scoreState = ScoreState.READY;
                     }
@@ -413,7 +421,8 @@ public class CombinedAuto extends LinearOpMode {
                     break;
 
             }
-            telemetry.addData("Current Cycle", currentCycle);
+            telemetry.addData("Current Cycle: ", currentCycle);
+            telemetry.addData("Previous Cycle time: ", cycleTime);
             telemetry.update();
 
         }
