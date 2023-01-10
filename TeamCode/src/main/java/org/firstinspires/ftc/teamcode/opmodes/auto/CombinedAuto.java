@@ -347,7 +347,7 @@ public class CombinedAuto extends LinearOpMode {
                         outtake.setTurretMiddle();
 
                         intake.openClaw();
-                        intake.autoPosition();
+                        intake.autoStackPosition();
 
 
                         scoreState = ScoreState.PREPARE;
@@ -381,7 +381,8 @@ public class CombinedAuto extends LinearOpMode {
                     break;
                 case FLIP:
                     if (scoreTimer.seconds() >= transferTime) {
-                        intake.readyPosition();
+                        //intake.readyPosition();
+                        intake.autoStackPosition();
                         intake.dropArmAuto(currentCycle + 2); // Starts at 2
 
                         scoreTimer.reset();

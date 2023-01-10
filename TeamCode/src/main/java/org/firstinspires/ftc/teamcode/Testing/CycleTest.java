@@ -137,7 +137,7 @@ public class CycleTest extends LinearOpMode
                         outtake.setTurretMiddle();
 
                         intake.openClaw();
-                        intake.autoPosition();
+                        intake.autoStackPosition();
 
 
                         scoreState = ScoreState.PREPARE;

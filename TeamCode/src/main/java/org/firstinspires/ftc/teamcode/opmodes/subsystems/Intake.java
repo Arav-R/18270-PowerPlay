@@ -32,7 +32,7 @@ public class Intake {
 
     public static int slideOut = 430;
 
-    public static int slideIn = 210; //65
+    public static int slideIn = -5; //65
 
     public static int slideInAuto = -5; //235
     public static int slideOutAuto = 430; //65
@@ -70,7 +70,7 @@ public class Intake {
         intakeSlide.setPower(1);
     }
 
-    public void autoPosition (){
+    public void autoStackPosition(){
         intakeSlide.setTargetPosition(slideOutAuto);
         intakeSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         intakeSlide.setPower(0.7);
