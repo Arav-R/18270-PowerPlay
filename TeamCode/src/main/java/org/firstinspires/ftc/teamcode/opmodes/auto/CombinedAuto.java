@@ -348,7 +348,7 @@ public class CombinedAuto extends LinearOpMode {
                     break;
                 case DEPOSIT:
                     if (scoreTimer.seconds() >= depositTime) {
-                        currentCycle++;
+
 
                         outtake.transferDeposit();
                         outtake.retractSlide();
@@ -366,12 +366,15 @@ public class CombinedAuto extends LinearOpMode {
                         intake.closeClaw();
 
 
+
                         scoreTimer.reset();
                         scoreState = ScoreState.GRAB;
                     }
                     break;
                 case GRAB:
                     if (scoreTimer.seconds() >= grabTime) {
+                        currentCycle++;
+
                         intake.transferPositionAuto();
                         intake.flipArm();
 
