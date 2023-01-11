@@ -156,7 +156,7 @@ public class CycleTest extends LinearOpMode
                     break;
                 case GRAB:
                     if (scoreTimer.seconds() >= .5) {
-                        intake.transferPositionAuto();
+                        intake.transferPosition();
                         intake.flipArm();
 
                         scoreTimer.reset();
