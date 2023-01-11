@@ -19,10 +19,9 @@
  * SOFTWARE.
  */
 
-package org.firstinspires.ftc.teamcode.opmodes.auto;
+package org.firstinspires.ftc.teamcode.oldRobot;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -38,9 +37,8 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.ArrayList;
 
-@Disabled
 @Autonomous
-public class TestApril extends LinearOpMode
+public class ParkAuto extends LinearOpMode
 {
     ElapsedTime armTimer = new ElapsedTime();
 
@@ -254,58 +252,6 @@ public class TestApril extends LinearOpMode
 
         resetencoders();
 
-        PIDMotorsClip(3000, 0, 0);
-        PIDMotorsClip(2600, 0, 0);
-        PIDMotors(2600, 0, 1180); //turn
-
-
-        slide1.setTargetPosition(900); //intake pos
-        slide2.setTargetPosition(-900); //intake pos
-
-        slide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        slide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        slide1.setPower(0.5);
-        slide2.setPower(-0.5);
-
-        sleep(3000);
-        PIDMotors(2100, 0, 1210); //back up
-
-        sleep(500);
-
-
-        //place
-        slide1.setTargetPosition(300); //intake pos
-        slide2.setTargetPosition(-300); //intake pos
-
-        slide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        slide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        slide1.setPower(0.7);
-        slide2.setPower(-0.7);
-
-        sleep(120);
-
-
-        PIDMotors(2600, 0, 1210);
-
-        slide1.setTargetPosition(0); //intake pos
-        slide2.setTargetPosition(0); //intake pos
-
-        slide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        slide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        slide1.setPower(0.7);
-        slide2.setPower(-0.7);
-        sleep(1000);
-
-//        armMotor.setTargetPosition(0); //stored pos
-//
-//        armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//
-//        armMotor.setPower(0.5);
-
-        PIDMotors(2600, 0, 0);
         PIDMotors(1140, 0, 0); //go back
 
 
@@ -340,26 +286,7 @@ public class TestApril extends LinearOpMode
 
         }
 
-        //place
-        slide1.setTargetPosition(0); //intake pos
-        slide2.setTargetPosition(0); //intake pos
 
-        slide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        slide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        slide1.setPower(0.5);
-        slide2.setPower(-0.5);
-
-        sleep(200);
-        //reset arm
-        armTimer.reset();
-        while (armTimer.milliseconds() < 3000) {
-            armMotor.setPower(-0.2);
-        }
-        armTimer.reset();
-        while (armTimer.milliseconds() < 100) {
-            armMotor.setPower(0.1);
-        }
 
 
 

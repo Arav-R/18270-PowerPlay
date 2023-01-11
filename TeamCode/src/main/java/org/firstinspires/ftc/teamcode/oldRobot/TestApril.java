@@ -19,12 +19,8 @@
  * SOFTWARE.
  */
 
-package org.firstinspires.ftc.teamcode.opmodes.auto;
+package org.firstinspires.ftc.teamcode.oldRobot;
 
-import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.geometry.Vector2d;
-import com.acmerobotics.roadrunner.trajectory.Trajectory;
-import com.outoftheboxrobotics.photoncore.PhotonCore;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -34,8 +30,6 @@ import com.qualcomm.robotcore.hardware.Gyroscope;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
-import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.opmodes.auto.vision.AprilTagDetectionPipeline;
 import org.openftc.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
@@ -46,10 +40,8 @@ import java.util.ArrayList;
 
 @Disabled
 @Autonomous
-public class rr3 extends LinearOpMode
+public class TestApril extends LinearOpMode
 {
-
-
     ElapsedTime armTimer = new ElapsedTime();
 
     OpenCvCamera camera;
@@ -102,9 +94,6 @@ public class rr3 extends LinearOpMode
     @Override
     public void runOpMode()
     {
-        PhotonCore.enable(); // Enable PhotonCore
-
-
         // with live view port
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
@@ -177,281 +166,6 @@ public class rr3 extends LinearOpMode
         armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         slide1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         slide2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-
-
-        // Road Runner Code
-
-        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
-
-        Pose2d startPose = new Pose2d(35, -63, Math.toRadians(90));
-
-
-        drive.setPoseEstimate(startPose);
-
-        TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(startPose)
-
-                //.setConstraints(MAX_VEL, MAX_ACCEL)
-//
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    armMotor.setTargetPosition(700); //intake pos
-
-
-                    armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-
-                    armMotor.setPower(0.5);
-
-                })
-                //.waitSeconds(2)
-
-                .forward(59) //.forward(52)
-                .back(7)
-                .turn(Math.toRadians(-135))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    slide1.setTargetPosition(900); //intake pos
-                    slide2.setTargetPosition(-900); //intake pos
-
-                    slide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    slide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-                    slide1.setPower(0.5);
-                    slide2.setPower(-0.5);
-                })
-                .waitSeconds(2)
-
-                .back(14)
-                //score cone
-                .waitSeconds(1)
-
-                .UNSTABLE_addTemporalMarkerOffset(.1, () -> {
-                    slide1.setTargetPosition(0); //intake pos
-                    slide2.setTargetPosition(0); //intake pos
-
-                    slide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    slide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-                    slide1.setPower(0.9);
-                    slide2.setPower(-0.9);
-                })
-
-                .splineTo(new Vector2d(58, -11.9), Math.toRadians(-2))
-                //.waitSeconds(1.5)//intake cone
-
-
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    armMotor.setTargetPosition(1250); //intake pos
-
-
-                    armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-
-                    armMotor.setPower(0.5);
-
-                    intake1.setPower(1);
-                    intake2.setPower(-1);
-
-                })
-                .waitSeconds(1.5)
-
-
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-
-                    armMotor.setTargetPosition(0); //intake pos
-
-
-                    armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-
-                    armMotor.setPower(0.5);
-
-
-                })
-                .waitSeconds(2)
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    intake1.setPower(-1);
-                    intake2.setPower(1);
-                    armMotor.setTargetPosition(700); //intake pos
-
-
-                    armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-
-                    armMotor.setPower(0.5);
-
-                })
-                .waitSeconds(1)
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-
-                    intake1.setPower(0);
-                    intake2.setPower(0);
-
-                    slide1.setTargetPosition(900); //intake pos
-                    slide2.setTargetPosition(-900); //intake pos
-
-                    slide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    slide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-                    slide1.setPower(0.5);
-                    slide2.setPower(-0.5);
-                })
-                //.waitSeconds(1)
-                .setReversed(true)
-                .splineTo(new Vector2d(23, -1), Math.toRadians(135))
-
-                .waitSeconds(.5)
-
-                .setReversed(false)
-
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    slide1.setTargetPosition(0); //intake pos
-                    slide2.setTargetPosition(0); //intake pos
-
-                    slide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    slide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-                    slide1.setPower(1);
-                    slide2.setPower(-1);
-                })
-
-
-
-                // 1 + 2
-
-                .splineTo(new Vector2d(58, -11.9), Math.toRadians(-2))
-                //.waitSeconds(1.5)//intake cone
-
-
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    armMotor.setTargetPosition(1250); //intake pos
-
-
-                    armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-
-                    armMotor.setPower(0.5);
-
-                    intake1.setPower(1);
-                    intake2.setPower(-1);
-
-                })
-                .waitSeconds(1.5)
-
-
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    armMotor.setTargetPosition(0); //intake pos
-
-
-                    armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-
-                    armMotor.setPower(0.5);
-
-
-                })
-                .waitSeconds(2)
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    intake1.setPower(-1);
-                    intake2.setPower(1);
-                    armMotor.setTargetPosition(700); //intake pos
-
-
-                    armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-
-                    armMotor.setPower(0.5);
-
-                })
-                .waitSeconds(1)
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-
-                    intake1.setPower(0);
-                    intake2.setPower(0);
-
-                    slide1.setTargetPosition(900); //intake pos
-                    slide2.setTargetPosition(-900); //intake pos
-
-                    slide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    slide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-                    slide1.setPower(0.5);
-                    slide2.setPower(-0.5);
-                })
-                //.waitSeconds(1)
-                .setReversed(true)
-                .splineTo(new Vector2d(24, -1), Math.toRadians(135))
-
-                .waitSeconds(.5)
-
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    slide1.setTargetPosition(0); //intake pos
-                    slide2.setTargetPosition(0); //intake pos
-
-                    slide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    slide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-                    slide1.setPower(0.7);
-                    slide2.setPower(-0.7);
-                })
-
-
-
-
-
-
-                // before park
-                .forward(14)
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    armMotor.setTargetPosition(0); //intake pos
-
-
-                    armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-
-                    armMotor.setPower(0.5);
-
-
-                })
-
-                //.setReversed(false)
-
-                //.waitSeconds(1)
-
-
-                //.lineToLinearHeading(new Pose2d(6, -14, Math.toRadians(0)))
-
-
-
-
-/*
-                .turn(Math.toRadians(45))
-                //1 cycle
-                .forward(25)
-
- */
-
-                .build();
-
-        Trajectory leftApril = drive.trajectoryBuilder(trajSeq.end())
-                .lineToLinearHeading(new Pose2d(6, -11, Math.toRadians(0)))
-                .build();
-        Trajectory midApril = drive.trajectoryBuilder(trajSeq.end())
-                .lineToLinearHeading(new Pose2d(35.4, -12.5, Math.toRadians(0)))
-                .build();
-        Trajectory rightApril = drive.trajectoryBuilder(trajSeq.end())
-                .lineToLinearHeading(new Pose2d(58, -12.5, Math.toRadians(0)))
-                .build();
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -538,27 +252,94 @@ public class rr3 extends LinearOpMode
 
         /* Actually do something useful */
 
-        drive.followTrajectorySequence(trajSeq);
+        resetencoders();
+
+        PIDMotorsClip(3000, 0, 0);
+        PIDMotorsClip(2600, 0, 0);
+        PIDMotors(2600, 0, 1180); //turn
+
+
+        slide1.setTargetPosition(900); //intake pos
+        slide2.setTargetPosition(-900); //intake pos
+
+        slide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        slide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        slide1.setPower(0.5);
+        slide2.setPower(-0.5);
+
+        sleep(3000);
+        PIDMotors(2100, 0, 1210); //back up
+
+        sleep(500);
+
+
+        //place
+        slide1.setTargetPosition(300); //intake pos
+        slide2.setTargetPosition(-300); //intake pos
+
+        slide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        slide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        slide1.setPower(0.7);
+        slide2.setPower(-0.7);
+
+        sleep(120);
+
+
+        PIDMotors(2600, 0, 1210);
+
+        slide1.setTargetPosition(0); //intake pos
+        slide2.setTargetPosition(0); //intake pos
+
+        slide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        slide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        slide1.setPower(0.7);
+        slide2.setPower(-0.7);
+        sleep(1000);
+
+//        armMotor.setTargetPosition(0); //stored pos
+//
+//        armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//
+//        armMotor.setPower(0.5);
+
+        PIDMotors(2600, 0, 0);
+        PIDMotors(1140, 0, 0); //go back
+
+
 
 
         if(tagOfInterest == null || tagOfInterest.id == LEFT){
             //trajectory
 
-            drive.followTrajectory(leftApril);
+
+
+            resetencoders();
+
+            PIDMotors(0, -1350, 0);
 
         }else if(tagOfInterest.id == MIDDLE){
             //trajectory
 
-            drive.followTrajectory(midApril);
+
+
+            resetencoders();
+
+            PIDMotors(0, 0, 0);
 
         }else{
             //trajectory
 
-            drive.followTrajectory(rightApril);
+            resetencoders();
+
+            PIDMotors(0, 1350, 0);
+
+
 
         }
 
-        /*
         //place
         slide1.setTargetPosition(0); //intake pos
         slide2.setTargetPosition(0); //intake pos
@@ -579,8 +360,6 @@ public class rr3 extends LinearOpMode
         while (armTimer.milliseconds() < 100) {
             armMotor.setPower(0.1);
         }
-
-         */
 
 
 
