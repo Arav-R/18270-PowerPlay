@@ -434,9 +434,9 @@ public class CombinedAuto extends LinearOpMode {
         while (!retract && opModeIsActive()) {
             switch (retractState) {
                 case OUTTAKE:
-                    outtake.setTurretMiddle();
+                    outtake.moveTurret(-25, 0.5); // zero turret
                     outtake.transferDeposit();
-                    outtake.moveSlide(0, 0.5);
+                    outtake.moveSlide(-25, 0.5); // zero outtake slide
 
                     scoreTimer.reset();
                     retractState = RetractState.INTAKE;
@@ -444,7 +444,7 @@ public class CombinedAuto extends LinearOpMode {
                 case INTAKE:
 
                     if (scoreTimer.seconds() >= .6) {
-                        intake.transferPosition();
+                        intake.transferPosition(); // zero intake
                         intake.openClaw();
                         intake.contractArm();
 
