@@ -26,12 +26,14 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.outoftheboxrobotics.photoncore.PhotonCore;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.opmodes.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.opmodes.subsystems.Outtake;
 
+@Disabled
 @Config
 @Autonomous
 public class CycleTest extends LinearOpMode
