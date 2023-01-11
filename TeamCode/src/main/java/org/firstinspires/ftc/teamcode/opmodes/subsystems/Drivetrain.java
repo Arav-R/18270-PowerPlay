@@ -68,5 +68,17 @@ public class Drivetrain {
 
     }
 
+    public void driveReverse ( double forward, double strafe, double turn){
+        frontLeftPower = forward + turn + strafe;
+        frontRightPower = forward - turn - strafe;
+        backLeftPower = forward + turn - strafe;
+        backRightPower = forward - turn + strafe;
+
+
+        setPowers(backRightPower, backLeftPower, frontRightPower, frontLeftPower);
+
+
+    }
+
 
 }

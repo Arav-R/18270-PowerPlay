@@ -18,9 +18,13 @@ import org.firstinspires.ftc.teamcode.opmodes.subsystems.Outtake;
 public class AutomatedTransfer extends LinearOpMode {
 
 
+    boolean reverseToggle = false;
+
     boolean clawToggle = false;
 
     boolean armToggle = false;
+
+
 
     public static double depositTime = .7;
     public static double grabTime = .5;
@@ -111,11 +115,41 @@ public class AutomatedTransfer extends LinearOpMode {
             double strafe = gamepad1.left_stick_x;
             double turn = gamepad1.right_stick_x;
 
-            if(gamepad1.left_bumper) {
-                drive.drive(forward * .3, strafe * .3, turn * .3);
-            } else {
-                drive.drive(forward, strafe, turn);
+
+
+
+
+            // Rising edge detector
+            if (currentGamepad1.right_trigger > 0 && previousGamepad1.right_trigger == 0) {
+                // This will set intakeToggle to true if it was previously false
+                // and intakeToggle to false if it was previously true,
+                // providing a toggling behavior.
+                reverseToggle = !reverseToggle;
             }
+
+            // Using the toggle variable to control the robot.
+            if (reverseToggle) {
+                if(gamepad1.left_bumper) {
+                    drive.driveReverse(forward * .3, strafe * .3, turn * .3);
+                } else {
+                    drive.driveReverse(forward, strafe, turn);
+                }
+            }
+            else {
+                if(gamepad1.left_bumper) {
+                    drive.drive(forward * .3, strafe * .3, turn * .3);
+                } else {
+                    drive.drive(forward, strafe, turn);
+                }
+            }
+
+
+
+
+
+
+
+
 
             // State machine
 
