@@ -66,8 +66,8 @@ public class CombinedAuto extends LinearOpMode {
 
     public static double expansionDelay = 1.5;
 
-    public static int cycles = 3;
-    public static double cycleDelay = 0.25;
+    public static int cycles = 5;
+    public static double cycleDelay = 0.1;
 
 
     int currentCycle = 0;
@@ -201,6 +201,7 @@ public class CombinedAuto extends LinearOpMode {
                 .turn(Math.toRadians(-95))
                 .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
                     outtake.transferDeposit();
+                    outtake.setTurretAutoLeft();
                 })
 
 
@@ -209,7 +210,7 @@ public class CombinedAuto extends LinearOpMode {
 
 
         Trajectory leftApril = drive.trajectoryBuilder(trajSeq.end())
-                .lineToLinearHeading(new Pose2d(7, -11, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(9, -11, Math.toRadians(0)))
                 .build();
         Trajectory midApril = drive.trajectoryBuilder(trajSeq.end())
                 .lineToLinearHeading(new Pose2d(35.4, -12.5, Math.toRadians(0)))
@@ -428,6 +429,7 @@ public class CombinedAuto extends LinearOpMode {
         }
 
 
+        RetractState retractState = RetractState.OUTTAKE;
         scoreTimer.reset();
         while (!retract && opModeIsActive()) {
             switch (retractState) {
@@ -442,7 +444,7 @@ public class CombinedAuto extends LinearOpMode {
                 case INTAKE:
 
                     if (scoreTimer.seconds() >= .6) {
-                        intake.moveToPos(0, 0.5);
+                        intake.transferPosition();
                         intake.openClaw();
                         intake.contractArm();
 
@@ -474,6 +476,10 @@ public class CombinedAuto extends LinearOpMode {
             //trajectory
 
             drive.followTrajectory(rightApril);
+
+        }
+
+        while (intake.intakeInDiff() > 15){
 
         }
 

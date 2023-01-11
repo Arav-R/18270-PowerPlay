@@ -17,11 +17,11 @@ public class Outtake {
     public static double scorePos = .82; //0.7
 
     public static int leftHigh = 458;
-    public static int rightHigh = 140;
+    public static int rightHigh = 160;
     public static int turretTransfer = 315;
 
-    public static int fullExtendLeft = 920;
-    public static int fullExtendRight = 1200;
+    public static int fullExtendLeft = 915;
+    public static int fullExtendRight = 1030;
 
     public static int turretAutoLeft = 458;
 
