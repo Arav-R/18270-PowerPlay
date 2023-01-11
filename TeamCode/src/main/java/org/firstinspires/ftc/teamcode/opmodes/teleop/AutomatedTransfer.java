@@ -240,7 +240,7 @@ public class AutomatedTransfer extends LinearOpMode {
                         intake.flipArm();
                     }
                     else {
-                        intake.dropArm();
+                        intake.dropArmGround();
                     }
 
 

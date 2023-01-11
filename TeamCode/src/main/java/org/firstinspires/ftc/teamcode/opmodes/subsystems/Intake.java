@@ -145,6 +145,12 @@ public class Intake {
 
     }
 
+    public void dropArmGround (){
+        flip1Servo.setPosition(0.04);
+        flip2Servo.setPosition(0.04);
+
+    }
+
     // For Auto
     public void dropArmAuto (int cone){
 
