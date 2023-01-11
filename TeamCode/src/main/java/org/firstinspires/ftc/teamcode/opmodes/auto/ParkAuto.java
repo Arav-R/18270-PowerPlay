@@ -19,10 +19,9 @@
  * SOFTWARE.
  */
 
-package org.firstinspires.ftc.teamcode.oldRobot;
+package org.firstinspires.ftc.teamcode.opmodes.auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -38,12 +37,9 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.ArrayList;
 
-@Disabled
 @Autonomous
 public class ParkAuto extends LinearOpMode
 {
-    ElapsedTime armTimer = new ElapsedTime();
-
     OpenCvCamera camera;
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
 
@@ -73,14 +69,7 @@ public class ParkAuto extends LinearOpMode
     private DcMotor backright;
     private DcMotor frontleft;
     private DcMotor frontright;
-    private Gyroscope imu;
-    private CRServo intake1;
-    private CRServo intake2;
-    private DcMotor slide1;
-    private DcMotor slide2;
 
-    private CRServo frontIntakeWheels = null;
-    private CRServo backIntakeWheels  = null;
 
     double LFPower, RFPower, LBPower, RBPower;
     double LFClip, RFClip, LBClip, RBClip;
@@ -130,14 +119,6 @@ public class ParkAuto extends LinearOpMode
         backleft=hardwareMap.dcMotor.get("backleft");
         backright=hardwareMap.dcMotor.get("backright");
 
-        slide1=hardwareMap.dcMotor.get("slide1");
-        slide2=hardwareMap.dcMotor.get("slide2");
-        armMotor=hardwareMap.dcMotor.get("arm");
-        intake1=hardwareMap.crservo.get("intake1");
-        intake2=hardwareMap.crservo.get("intake2");
-
-        intake1=hardwareMap.crservo.get("intake1");
-        intake2=hardwareMap.crservo.get("intake2");
         // Reverse the right side motors
         // Reverse left motors if you are using NeveRests
 
@@ -146,26 +127,11 @@ public class ParkAuto extends LinearOpMode
         frontright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backleft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
         frontleft.setDirection(DcMotor.Direction.REVERSE);
         backleft.setDirection(DcMotor.Direction.REVERSE);
 
 
-        armMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        slide1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        slide2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-
-
-
-        armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slide1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slide2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-
-
-        armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        slide1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        slide2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
 
 
