@@ -375,7 +375,7 @@ public class CombinedAuto extends LinearOpMode {
                     if (scoreTimer.seconds() >= grabTime) {
                         currentCycle++;
 
-                        intake.transferPositionAuto();
+                        intake.transferPosition();
                         intake.flipArm();
 
                         scoreTimer.reset();
