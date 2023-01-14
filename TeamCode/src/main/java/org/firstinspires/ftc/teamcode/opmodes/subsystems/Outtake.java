@@ -24,7 +24,7 @@ public class Outtake {
     public static int fullExtendLeft = 915;
     public static int fullExtendRight = 1030;
 
-    public static int fullExtendAutoLeft = 933;
+    public static int fullExtendAutoLeft = 915;
 
     public static int turretAutoLeft = 510;
 
@@ -121,11 +121,11 @@ public class Outtake {
     }
 
     public void extendSlidePreloadLeft(){
-        outtakeSlide1.setTargetPosition(fullExtendAutoLeft + 12);
+        outtakeSlide1.setTargetPosition(fullExtendAutoLeft + 10);
         outtakeSlide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         outtakeSlide1.setPower(0.8);
 
-        outtakeSlide2.setTargetPosition(fullExtendAutoLeft + 12);
+        outtakeSlide2.setTargetPosition(fullExtendAutoLeft + 10);
         outtakeSlide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         outtakeSlide2.setPower(0.8);
     }

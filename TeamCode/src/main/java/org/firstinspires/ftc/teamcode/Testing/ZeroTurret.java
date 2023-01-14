@@ -17,8 +17,12 @@ public class ZeroTurret extends LinearOpMode {
 
     private DcMotor turret, intakeSlide, outtakeSlide1, outtakeSlide2;
 
+    Drivetrain drive = new Drivetrain();
+
     @Override
     public void runOpMode() throws InterruptedException {
+        drive.init(hardwareMap);
+
         turret = hardwareMap.dcMotor.get("turret");
         intakeSlide = hardwareMap.dcMotor.get("intakeslide");
 
@@ -33,6 +37,18 @@ public class ZeroTurret extends LinearOpMode {
         if (isStopRequested()) return;
 
         while (opModeIsActive()) {
+
+            // Drive
+            double forward = -gamepad1.left_stick_y;
+            double strafe = gamepad1.left_stick_x;
+            double turn = gamepad1.right_stick_x;
+
+            drive.drive(forward * .3, strafe * .3, turn * .3);
+
+
+            
+
+
 
             if(gamepad1.left_bumper) {
                 turret.setPower(.3);

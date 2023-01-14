@@ -64,7 +64,7 @@ public class CombinedAuto extends LinearOpMode {
 
     // ROBOT STUFF
 
-    public static double expansionDelay = 1.0;
+    public static double expansionDelay = 0.8;
 
     public static int cones = 5;
     public static double cycleDelay = 0.1;
@@ -211,13 +211,13 @@ public class CombinedAuto extends LinearOpMode {
 
 
         Trajectory leftApril = drive.trajectoryBuilder(trajSeq.end())
-                .lineToLinearHeading(new Pose2d(10, -12, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(10.5, -12, Math.toRadians(0)))
                 .build();
         Trajectory midApril = drive.trajectoryBuilder(trajSeq.end())
                 .lineToLinearHeading(new Pose2d(35.4, -12.5, Math.toRadians(0)))
                 .build();
         Trajectory rightApril = drive.trajectoryBuilder(trajSeq.end())
-                .lineToLinearHeading(new Pose2d(58, -12.5, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(59, -12.5, Math.toRadians(0)))
                 .build();
 
 
@@ -314,6 +314,28 @@ public class CombinedAuto extends LinearOpMode {
         }
 
         /* Actually do something useful */
+
+
+        // PARK
+
+        if(tagOfInterest == null || tagOfInterest.id == LEFT){
+            //trajectory
+
+            cones = 5;
+
+        }else if(tagOfInterest.id == MIDDLE){
+            //trajectory
+
+            cones = 5;
+
+        }else{
+            //trajectory
+
+            cones = 5;
+
+        }
+
+
 
         if (!isStopRequested())
             drive.followTrajectorySequence(trajSeq);

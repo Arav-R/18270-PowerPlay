@@ -180,7 +180,7 @@ public class AutomatedTransfer extends LinearOpMode {
                             intake.openClaw();
                             intake.dropArm();
 
-                            outtake.extendSlideLeft();
+                            outtake.extendSlideRight();
                             outtake.setTurretRight();
                             outtake.midDeposit();
 
