@@ -108,7 +108,7 @@ public class Testing extends LinearOpMode {
 
 
             if (currentGamepad1.y && !previousGamepad1.y) {
-                outtake.scoreDeposit();
+                outtake.scoreDepositLeft();
 
             } else if (currentGamepad1.x && !previousGamepad1.x) {
                 outtake.transferDeposit();

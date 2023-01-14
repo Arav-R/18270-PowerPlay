@@ -12,9 +12,10 @@ public class Outtake {
     private DcMotor outtakeSlide1, outtakeSlide2, turret;
     private Servo depositServo;
 
-    public static  double transferPos = 0.18; //0.04
-    public static double midPos = 0.37; //0.2
-    public static double scorePos = .82; //0.7
+    public static  double transferPos = 0.19; //0.18
+    public static double midPos = 0.38; //0.37
+    public static double scorePosLeft = .83; //.82
+    public static double scorePosRight = .85; //.82
 
     public static int leftHigh = 458;
     public static int rightHigh = 160;
@@ -23,7 +24,9 @@ public class Outtake {
     public static int fullExtendLeft = 915;
     public static int fullExtendRight = 1030;
 
-    public static int turretAutoLeft = 458;
+    public static int fullExtendAutoLeft = 933;
+
+    public static int turretAutoLeft = 510;
 
     public void init(HardwareMap hardwareMap){
         outtakeSlide1 = hardwareMap.dcMotor.get("outtake1");
@@ -67,6 +70,8 @@ public class Outtake {
         turret.setPower(speed);
     }
 
+
+
     public void nudgeLeftLeft(){
         leftHigh += 2;
     }
@@ -105,14 +110,34 @@ public class Outtake {
         outtakeSlide2.setPower(0.8);
     }
 
+    public void extendSlideAutoLeft(){
+        outtakeSlide1.setTargetPosition(fullExtendAutoLeft);
+        outtakeSlide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        outtakeSlide1.setPower(0.8);
+
+        outtakeSlide2.setTargetPosition(fullExtendAutoLeft);
+        outtakeSlide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        outtakeSlide2.setPower(0.8);
+    }
+
+    public void extendSlidePreloadLeft(){
+        outtakeSlide1.setTargetPosition(fullExtendAutoLeft + 12);
+        outtakeSlide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        outtakeSlide1.setPower(0.8);
+
+        outtakeSlide2.setTargetPosition(fullExtendAutoLeft + 12);
+        outtakeSlide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        outtakeSlide2.setPower(0.8);
+    }
+
     public void extendSlideRight(){
         outtakeSlide1.setTargetPosition(fullExtendRight);
         outtakeSlide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        outtakeSlide1.setPower(0.9);
+        outtakeSlide1.setPower(0.8);
 
         outtakeSlide2.setTargetPosition(fullExtendRight);
         outtakeSlide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        outtakeSlide2.setPower(0.9);
+        outtakeSlide2.setPower(0.8);
     }
 
     public void moreExtendLeft(){
@@ -136,6 +161,12 @@ public class Outtake {
     }
 
     public int slideOutDiffLeft(){
+
+        return Math.abs(outtakeSlide1.getCurrentPosition() - fullExtendLeft);
+
+    }
+
+    public int slideOutDiffAutoLeft(){
 
         return Math.abs(outtakeSlide1.getCurrentPosition() - fullExtendLeft);
 
@@ -190,8 +221,12 @@ public class Outtake {
         depositServo.setPosition(midPos);
     }
 
-    public void scoreDeposit(){
-        depositServo.setPosition(scorePos);
+    public void scoreDepositLeft(){
+        depositServo.setPosition(scorePosLeft);
+    }
+
+    public void scoreDepositRight(){
+        depositServo.setPosition(scorePosRight);
     }
 
 

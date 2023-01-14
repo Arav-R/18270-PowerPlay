@@ -22,8 +22,8 @@ public class Intake {
     public static double flipContract = 0.4;
     public static double flipStartingPosition = 0.51;
 
-    public static double flip5 = 0.1;
-    public static double flip4 = 0.08;
+    public static double flip5 = 0.095;
+    public static double flip4 = 0.075;
     public static double flip3 = 0.06;
     public static double flip2 = 0.03;
     public static double flip1 = 0.015;
@@ -78,7 +78,7 @@ public class Intake {
 
 
     public void readyPosition (){
-        intakeSlide.setTargetPosition(slideOut - 150);
+        intakeSlide.setTargetPosition(slideOut - 250);
         intakeSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         intakeSlide.setPower(0.7);
     }
@@ -146,8 +146,8 @@ public class Intake {
     }
 
     public void dropArmGround (){
-        flip1Servo.setPosition(0.04);
-        flip2Servo.setPosition(0.04);
+        flip1Servo.setPosition(0.02);
+        flip2Servo.setPosition(0.02);
 
     }
 

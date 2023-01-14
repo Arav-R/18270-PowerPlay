@@ -120,7 +120,7 @@ public class AutomatedTransfer extends LinearOpMode {
 
 
             // Rising edge detector
-            if (currentGamepad1.right_trigger > 0 && previousGamepad1.right_trigger == 0) {
+            if (currentGamepad1.dpad_left && !previousGamepad1.dpad_left) {
                 // This will set intakeToggle to true if it was previously false
                 // and intakeToggle to false if it was previously true,
                 // providing a toggling behavior.
@@ -208,7 +208,7 @@ public class AutomatedTransfer extends LinearOpMode {
 
                     // Test Placement
                     if (currentGamepad1.right_bumper && !previousGamepad1.right_bumper) {
-                        outtake.scoreDeposit(); // Score
+                        outtake.scoreDepositLeft(); // Score
                     } else if (!currentGamepad1.right_bumper && previousGamepad1.right_bumper) { // Falling edge detector
                         outtake.midDeposit(); // Go Back
                     }
@@ -239,7 +239,7 @@ public class AutomatedTransfer extends LinearOpMode {
 
                     // Test Placement
                     if (currentGamepad1.right_bumper && !previousGamepad1.right_bumper) {
-                        outtake.scoreDeposit(); // Score
+                        outtake.scoreDepositRight(); // Score
                     } else if (!currentGamepad1.right_bumper && previousGamepad1.right_bumper) { // Falling edge detector
                         outtake.midDeposit(); // Go Back
                     }
@@ -364,7 +364,7 @@ public class AutomatedTransfer extends LinearOpMode {
             case READY:
                 if (gamepad1.y) {
 
-                    outtake.scoreDeposit();
+                    outtake.scoreDepositLeft();
 
                     scoreTimer.reset();
                     scoreState = ScoreState.DEPOSIT;
@@ -446,14 +446,14 @@ public class AutomatedTransfer extends LinearOpMode {
             case READY:
                 if (gamepad1.y) {
 
-                    outtake.scoreDeposit();
+                    outtake.scoreDepositRight();
 
                     scoreTimer.reset();
                     scoreState = ScoreState.DEPOSIT;
                 }
                 break;
             case DEPOSIT:
-                if (scoreTimer.seconds() >= .7) {
+                if (scoreTimer.seconds() >= depositTime) {
                     outtake.transferDeposit();
                     outtake.retractSlide();
                     outtake.setTurretMiddle();
@@ -475,7 +475,7 @@ public class AutomatedTransfer extends LinearOpMode {
                 }
                 break;
             case GRAB:
-                if (scoreTimer.seconds() >= .5) {
+                if (scoreTimer.seconds() >= grabTime) {
                     intake.transferPosition();
                     intake.flipArm();
 
@@ -484,7 +484,7 @@ public class AutomatedTransfer extends LinearOpMode {
                 }
                 break;
             case RETRACT_INTAKE:
-                if (scoreTimer.seconds() >= .75) {
+                if (scoreTimer.seconds() >= flipTime && intake.intakeInDiff() < 10) {
                     intake.openClaw();
 
                     scoreTimer.reset();
@@ -492,7 +492,7 @@ public class AutomatedTransfer extends LinearOpMode {
                 }
                 break;
             case FLIP:
-                if (scoreTimer.seconds() >= .5) {
+                if (scoreTimer.seconds() >= transferTime) {
                     intake.readyPosition();
                     intake.dropArm();
 
@@ -501,7 +501,7 @@ public class AutomatedTransfer extends LinearOpMode {
                 }
                 break;
             case EXTEND_INTAKE:
-                if (scoreTimer.seconds() >= .25) {
+                if (scoreTimer.seconds() >= intakeTime) {
                     outtake.midDeposit();
                     outtake.setTurretRight();
                     outtake.extendSlideRight();

@@ -125,7 +125,7 @@ public class CycleTest extends LinearOpMode
                 case READY:
                     if (scoreTimer.seconds() >= cycleDelay) {
 
-                        outtake.scoreDeposit();
+                        outtake.scoreDepositLeft();
 
                         scoreTimer.reset();
                         scoreState = ScoreState.DEPOSIT;

@@ -64,9 +64,9 @@ public class CombinedAuto extends LinearOpMode {
 
     // ROBOT STUFF
 
-    public static double expansionDelay = 1.5;
+    public static double expansionDelay = 1.0;
 
-    public static int cycles = 5;
+    public static int cones = 5;
     public static double cycleDelay = 0.1;
 
 
@@ -90,6 +90,7 @@ public class CombinedAuto extends LinearOpMode {
         DEPOSIT,
         PREPARE,
         GRAB,
+        UNSTACK,
         RETRACT_INTAKE,
         FLIP,
         EXTEND_INTAKE,
@@ -194,7 +195,7 @@ public class CombinedAuto extends LinearOpMode {
                 })
 
                 .waitSeconds(0.25)
-                .forward(48)
+                .forward(50)
                 .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
                     intake.flipArm();
                 })
@@ -210,7 +211,7 @@ public class CombinedAuto extends LinearOpMode {
 
 
         Trajectory leftApril = drive.trajectoryBuilder(trajSeq.end())
-                .lineToLinearHeading(new Pose2d(9, -11, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(10, -12, Math.toRadians(0)))
                 .build();
         Trajectory midApril = drive.trajectoryBuilder(trajSeq.end())
                 .lineToLinearHeading(new Pose2d(35.4, -12.5, Math.toRadians(0)))
@@ -325,7 +326,7 @@ public class CombinedAuto extends LinearOpMode {
             intake.openClaw();
             intake.dropArmAuto(2); //5 cone
 
-            outtake.extendSlideLeft();
+            outtake.extendSlidePreloadLeft();
             outtake.setTurretAutoLeft();
             outtake.midDeposit();
         }
@@ -334,12 +335,12 @@ public class CombinedAuto extends LinearOpMode {
 
         cycleTimer.reset();
         scoreTimer.reset();
-        while (currentCycle < cycles && opModeIsActive()) {
+        while (currentCycle < cones && opModeIsActive()) {
             switch (scoreState) {
                 case READY:
                     if (scoreTimer.seconds() >= cycleDelay) {
 
-                        outtake.scoreDeposit();
+                        outtake.scoreDepositLeft();
 
                         scoreTimer.reset();
                         scoreState = ScoreState.DEPOSIT;
@@ -348,7 +349,7 @@ public class CombinedAuto extends LinearOpMode {
                     break;
                 case DEPOSIT:
                     if (scoreTimer.seconds() >= depositTime) {
-
+                        currentCycle++;
 
                         outtake.transferDeposit();
                         outtake.retractSlide();
@@ -373,10 +374,20 @@ public class CombinedAuto extends LinearOpMode {
                     break;
                 case GRAB:
                     if (scoreTimer.seconds() >= grabTime) {
-                        currentCycle++;
+
+
+                        //intake.transferPosition();
+                        intake.flipArm();
+
+                        scoreTimer.reset();
+                        scoreState = ScoreState.UNSTACK;
+                    }
+                    break;
+                case UNSTACK:
+                    if (scoreTimer.seconds() >= .1) {
+
 
                         intake.transferPosition();
-                        intake.flipArm();
 
                         scoreTimer.reset();
                         scoreState = ScoreState.RETRACT_INTAKE;
@@ -404,13 +415,13 @@ public class CombinedAuto extends LinearOpMode {
                     if (scoreTimer.seconds() >= intakeTime) {
                         outtake.midDeposit();
                         outtake.setTurretAutoLeft();
-                        outtake.extendSlideLeft();
+                        outtake.extendSlideAutoLeft();
 
                         scoreState = ScoreState.EXTEND_OUTTAKE;
                     }
                     break;
                 case EXTEND_OUTTAKE:
-                    if (outtake.slideOutDiffLeft() < 10) {
+                    if (outtake.slideOutDiffAutoLeft() < 10) {
 
                         cycleTime = cycleTimer.seconds();
 
@@ -437,7 +448,6 @@ public class CombinedAuto extends LinearOpMode {
         while (!retract && opModeIsActive()) {
             switch (retractState) {
                 case OUTTAKE:
-                    outtake.moveTurret(-25, 0.5); // zero turret
                     outtake.transferDeposit();
                     outtake.moveSlide(-25, 0.5); // zero outtake slide
 
@@ -447,6 +457,8 @@ public class CombinedAuto extends LinearOpMode {
                 case INTAKE:
 
                     if (scoreTimer.seconds() >= .6) {
+                        outtake.moveTurret(-25, 0.2); // zero turret
+
                         intake.transferPosition(); // zero intake
                         intake.openClaw();
                         intake.contractArm();
@@ -482,7 +494,7 @@ public class CombinedAuto extends LinearOpMode {
 
         }
 
-        while (intake.intakeInDiff() > 15){
+        while (intake.intakeInDiff() > 10 && outtake.getTurret() > 10){
 
         }
 

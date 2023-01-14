@@ -15,11 +15,17 @@ import org.firstinspires.ftc.teamcode.opmodes.subsystems.Outtake;
 @TeleOp
 public class ZeroTurret extends LinearOpMode {
 
-    private DcMotor turret;
+    private DcMotor turret, intakeSlide, outtakeSlide1, outtakeSlide2;
 
     @Override
     public void runOpMode() throws InterruptedException {
         turret = hardwareMap.dcMotor.get("turret");
+        intakeSlide = hardwareMap.dcMotor.get("intakeslide");
+
+        outtakeSlide1 = hardwareMap.dcMotor.get("outtake1");
+        outtakeSlide2 = hardwareMap.dcMotor.get("outtake2");
+
+        outtakeSlide2.setDirection(DcMotor.Direction.REVERSE);
 
 
         waitForStart();
@@ -29,11 +35,31 @@ public class ZeroTurret extends LinearOpMode {
         while (opModeIsActive()) {
 
             if(gamepad1.left_bumper) {
-                turret.setPower(.5);
+                turret.setPower(.3);
             } else if (gamepad1.right_bumper) {
-                turret.setPower(-.5);
+                turret.setPower(-.3);
             } else {
                 turret.setPower(0);
+            }
+
+            if(gamepad1.left_trigger > 0.5) {
+                intakeSlide.setPower(.3);
+            } else if (gamepad1.right_trigger > 0.5) {
+                intakeSlide.setPower(-.3);
+            } else {
+                intakeSlide.setPower(0);
+            }
+
+            if(gamepad1.dpad_up) {
+                outtakeSlide1.setPower(.3);
+                outtakeSlide2.setPower(.3);
+
+            } else if (gamepad1.dpad_down) {
+                outtakeSlide1.setPower(-.3);
+                outtakeSlide2.setPower(-.3);
+            } else {
+                outtakeSlide1.setPower(0);
+                outtakeSlide2.setPower(0);
             }
         }
     }
