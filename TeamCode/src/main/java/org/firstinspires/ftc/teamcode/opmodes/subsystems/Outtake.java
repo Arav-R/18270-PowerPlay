@@ -168,7 +168,7 @@ public class Outtake {
 
     public int slideOutDiffAutoLeft(){
 
-        return Math.abs(outtakeSlide1.getCurrentPosition() - fullExtendLeft);
+        return Math.abs(outtakeSlide1.getCurrentPosition() - fullExtendAutoLeft);
 
     }
 
@@ -187,6 +187,15 @@ public class Outtake {
         outtakeSlide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         outtakeSlide2.setPower(0.5);
     }
+
+    public int retractDiff (){
+
+        return Math.abs(outtakeSlide1.getCurrentPosition());
+
+    }
+
+
+
 
     public void setTurretLeft (){
         turret.setTargetPosition(leftHigh);

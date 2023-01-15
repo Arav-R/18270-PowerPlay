@@ -109,7 +109,7 @@ public class Intake {
 
     public int intakeInDiff(){
 
-        return Math.abs(intakeSlide.getCurrentPosition() - slideIn);
+        return Math.abs(intakeSlide.getCurrentPosition() - 0);
 
     }
 

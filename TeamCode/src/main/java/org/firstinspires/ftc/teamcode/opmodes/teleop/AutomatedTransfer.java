@@ -127,7 +127,7 @@ public class AutomatedTransfer extends LinearOpMode {
 
                 reverseToggle = !reverseToggle;
 
-                
+
             }
 
             // Using the toggle variable to control the robot.
@@ -405,7 +405,7 @@ public class AutomatedTransfer extends LinearOpMode {
                 }
                 break;
             case RETRACT_INTAKE:
-                if (scoreTimer.seconds() >= flipTime && intake.intakeInDiff() < 10) {
+                if (scoreTimer.seconds() >= flipTime && intake.intakeInDiff() < 10 && outtake.retractDiff() < 10) {
                     intake.openClaw();
 
                     scoreTimer.reset();
@@ -487,7 +487,7 @@ public class AutomatedTransfer extends LinearOpMode {
                 }
                 break;
             case RETRACT_INTAKE:
-                if (scoreTimer.seconds() >= flipTime && intake.intakeInDiff() < 10) {
+                if (scoreTimer.seconds() >= flipTime && intake.intakeInDiff() < 10 && outtake.retractDiff() < 10) {
                     intake.openClaw();
 
                     scoreTimer.reset();
