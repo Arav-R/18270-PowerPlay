@@ -120,11 +120,14 @@ public class AutomatedTransfer extends LinearOpMode {
 
 
             // Rising edge detector
-            if (currentGamepad1.dpad_left && !previousGamepad1.dpad_left) {
+            if (currentGamepad1.dpad_left && !previousGamepad1.dpad_left && robotState == RobotState.CONTRACT) { // dpad_left and contract
                 // This will set intakeToggle to true if it was previously false
                 // and intakeToggle to false if it was previously true,
                 // providing a toggling behavior.
+
                 reverseToggle = !reverseToggle;
+
+                
             }
 
             // Using the toggle variable to control the robot.
