@@ -68,6 +68,7 @@ public class Intake {
         intakeSlide.setTargetPosition(slideOut);
         intakeSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         intakeSlide.setPower(1);
+        
     }
 
     public void autoStackPosition(){

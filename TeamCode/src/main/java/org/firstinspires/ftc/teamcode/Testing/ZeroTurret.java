@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.Testing;
 
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -21,6 +23,9 @@ public class ZeroTurret extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
+        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
+
+
         drive.init(hardwareMap);
 
         turret = hardwareMap.dcMotor.get("turret");
@@ -51,9 +56,9 @@ public class ZeroTurret extends LinearOpMode {
 
 
             if(gamepad1.left_bumper) {
-                turret.setPower(.3);
+                turret.setPower(.4);
             } else if (gamepad1.right_bumper) {
-                turret.setPower(-.3);
+                turret.setPower(-.4);
             } else {
                 turret.setPower(0);
             }
@@ -77,6 +82,14 @@ public class ZeroTurret extends LinearOpMode {
                 outtakeSlide1.setPower(0);
                 outtakeSlide2.setPower(0);
             }
+
+
+            telemetry.addData("Turret: ", turret.getCurrentPosition());
+            telemetry.addData("Intake: ", intakeSlide.getCurrentPosition());
+            telemetry.addData("Outtake1: ", outtakeSlide1.getCurrentPosition());
+            telemetry.addData("Outtake2: ", outtakeSlide2.getCurrentPosition());
+
+            telemetry.update();
         }
     }
 }
