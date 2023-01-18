@@ -18,7 +18,7 @@ import org.firstinspires.ftc.teamcode.opmodes.subsystems.Outtake;
 public class AutomatedTransfer extends LinearOpMode {
 
 
-    boolean reverseToggle = false;
+    boolean reverseToggle = true;
 
     boolean clawToggle = false;
 
