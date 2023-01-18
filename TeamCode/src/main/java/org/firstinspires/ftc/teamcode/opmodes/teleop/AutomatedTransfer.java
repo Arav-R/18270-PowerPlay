@@ -82,9 +82,6 @@ public class AutomatedTransfer extends LinearOpMode {
     Outtake outtake = new Outtake();
 
 
-    // Distance Sensor
-    private DistanceSensor sensorRange;
-
 
 
 
@@ -92,8 +89,6 @@ public class AutomatedTransfer extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-
-        //sensorRange = hardwareMap.get(DistanceSensor.class, "sensor_range");
 
         Gamepad currentGamepad1 = new Gamepad();
         Gamepad previousGamepad1 = new Gamepad();
@@ -337,6 +332,7 @@ public class AutomatedTransfer extends LinearOpMode {
 
             telemetry.addData("Extend Position: ", outtake.getExtend());
             telemetry.addData("Turret Position: ", outtake.getTurret());
+            telemetry.addData("Distance CM: ", intake.getDistanceCM());
 
             telemetry.update();
         }

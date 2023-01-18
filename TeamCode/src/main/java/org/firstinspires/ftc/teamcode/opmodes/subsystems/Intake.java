@@ -3,8 +3,11 @@ package org.firstinspires.ftc.teamcode.opmodes.subsystems;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 @Config
 public class Intake {
@@ -12,7 +15,10 @@ public class Intake {
     private DcMotor intakeSlide;
     private Servo clawServo, flip1Servo, flip2Servo;
 
-    double frontLeftPower, frontRightPower, backLeftPower, backRightPower;
+    // Distance Sensor
+    private DistanceSensor sensorRange;
+
+
 
     double clawClose = 1;
     double clawOpen = .75;
@@ -43,6 +49,10 @@ public class Intake {
 
         flip1Servo = hardwareMap.servo.get("flip1");
         flip2Servo = hardwareMap.servo.get("flip2");
+
+
+        // Distance Sensor
+        sensorRange = hardwareMap.get(DistanceSensor.class, "sensor_range");
 
 
 
@@ -200,6 +210,11 @@ public class Intake {
     public void moveJoint2 (double pos){
         flip2Servo.setPosition(pos);
 
+    }
+
+
+    public double getDistanceCM(){
+        return sensorRange.getDistance(DistanceUnit.CM);
     }
 
 

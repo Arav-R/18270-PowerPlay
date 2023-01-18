@@ -443,7 +443,7 @@ public class CombinedAuto extends LinearOpMode {
                     }
                     break;
                 case EXTEND_OUTTAKE:
-                    if (outtake.slideOutDiffAutoLeft() < 10) {
+                    if (outtake.slideOutDiffAutoLeft() < 40) {
 
                         cycleTime = cycleTimer.seconds();
 
