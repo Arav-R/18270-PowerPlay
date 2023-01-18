@@ -5,6 +5,7 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -81,6 +82,9 @@ public class AutomatedTransfer extends LinearOpMode {
     Outtake outtake = new Outtake();
 
 
+    // Distance Sensor
+    private DistanceSensor sensorRange;
+
 
 
 
@@ -88,6 +92,9 @@ public class AutomatedTransfer extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
+
+        //sensorRange = hardwareMap.get(DistanceSensor.class, "sensor_range");
+
         Gamepad currentGamepad1 = new Gamepad();
         Gamepad previousGamepad1 = new Gamepad();
 
