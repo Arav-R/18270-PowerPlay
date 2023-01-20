@@ -190,7 +190,8 @@ public class Outtake {
 
     public int retractDiff (){
 
-        return Math.abs(outtakeSlide1.getCurrentPosition());
+        return outtakeSlide1.getCurrentPosition();
+        //return Math.abs(outtakeSlide1.getCurrentPosition());
 
     }
 

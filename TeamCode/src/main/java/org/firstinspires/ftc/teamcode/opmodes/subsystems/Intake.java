@@ -20,8 +20,8 @@ public class Intake {
 
 
 
-    double clawClose = 1;
-    double clawOpen = .75;
+    double clawClose = .24; //1
+    double clawOpen = 0.0; //.75
 
     public static double flipDown = 0.015;
     public static double flipUp = 0.55; //.64
@@ -52,7 +52,7 @@ public class Intake {
 
 
         // Distance Sensor
-        sensorRange = hardwareMap.get(DistanceSensor.class, "sensor_range");
+        //sensorRange = hardwareMap.get(DistanceSensor.class, "sensor_range");
 
 
 
@@ -213,9 +213,9 @@ public class Intake {
     }
 
 
-    public double getDistanceCM(){
-        return sensorRange.getDistance(DistanceUnit.CM);
-    }
+//    public double getDistanceCM(){
+//        return sensorRange.getDistance(DistanceUnit.CM);
+//    }
 
 
 }

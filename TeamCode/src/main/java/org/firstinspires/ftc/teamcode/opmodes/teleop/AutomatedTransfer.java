@@ -332,7 +332,7 @@ public class AutomatedTransfer extends LinearOpMode {
 
             telemetry.addData("Extend Position: ", outtake.getExtend());
             telemetry.addData("Turret Position: ", outtake.getTurret());
-            telemetry.addData("Distance CM: ", intake.getDistanceCM());
+            //telemetry.addData("Distance CM: ", intake.getDistanceCM());
 
             telemetry.update();
         }
