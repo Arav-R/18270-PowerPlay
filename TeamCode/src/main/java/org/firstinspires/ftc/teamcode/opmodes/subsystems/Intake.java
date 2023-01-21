@@ -120,7 +120,7 @@ public class Intake {
 
     public int intakeInDiff(){
 
-        return Math.abs(intakeSlide.getCurrentPosition() - 0);
+        return intakeSlide.getCurrentPosition();
 
     }
 
@@ -130,6 +130,19 @@ public class Intake {
 
     }
 
+    public int getSlide(){
+
+        return intakeSlide.getCurrentPosition();
+
+    }
+
+/*
+    public void initSlide(){
+
+        intakeSlide.setPower(0.2);
+
+    }
+*/
 
 
 

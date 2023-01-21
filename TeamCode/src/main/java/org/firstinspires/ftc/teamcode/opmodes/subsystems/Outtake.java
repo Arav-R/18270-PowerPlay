@@ -239,6 +239,22 @@ public class Outtake {
         depositServo.setPosition(scorePosRight);
     }
 
+/*
+
+    public void initOutSlide(){
+
+        outtakeSlide1.setPower(-0.2);
+        outtakeSlide2.setPower(-0.2);
+
+    }
+
+    public void initTurret(){
+
+        outtakeSlide1.setPower(-0.2);
+        outtakeSlide2.setPower(-0.2);
+
+    }
+*/
 
 
 }

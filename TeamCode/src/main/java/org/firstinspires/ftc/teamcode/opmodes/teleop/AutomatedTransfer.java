@@ -27,7 +27,7 @@ public class AutomatedTransfer extends LinearOpMode {
 
 
 
-    public static double depositTime = .7;
+    public static double depositTime = .9;
     public static double grabTime = .5;
     public static double flipTime = .95;
     public static double transferTime = .5;
@@ -332,6 +332,7 @@ public class AutomatedTransfer extends LinearOpMode {
 
             telemetry.addData("Extend Position: ", outtake.getExtend());
             telemetry.addData("Turret Position: ", outtake.getTurret());
+            telemetry.addData("Intake Slide Position: ", intake.getSlide());
             //telemetry.addData("Distance CM: ", intake.getDistanceCM());
 
             telemetry.update();

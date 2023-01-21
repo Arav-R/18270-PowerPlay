@@ -76,7 +76,7 @@ public class CombinedAuto extends LinearOpMode {
 
 
 
-    public static double depositTime = .7;
+    public static double depositTime = .9;
     public static double grabTime = .5;
     public static double flipTime = .95;
     public static double transferTime = .6;
