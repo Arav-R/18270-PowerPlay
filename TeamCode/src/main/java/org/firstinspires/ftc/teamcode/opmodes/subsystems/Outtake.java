@@ -24,9 +24,9 @@ public class Outtake {
     public static int fullExtendLeft = 915;
     public static int fullExtendRight = 1030;
 
-    public static int fullExtendAutoLeft = 915;
+    public static int fullExtendAutoLeft = 913;
 
-    public static int turretAutoLeft = 510;
+    public static int turretAutoLeft = 513; //510
 
     public void init(HardwareMap hardwareMap){
         outtakeSlide1 = hardwareMap.dcMotor.get("outtake1");
@@ -206,6 +206,12 @@ public class Outtake {
 
     public void setTurretAutoLeft (){
         turret.setTargetPosition(turretAutoLeft);
+        turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        turret.setPower(0.7);
+    }
+
+    public void setTurretAutoLeftPreload (){
+        turret.setTargetPosition(turretAutoLeft - 2);
         turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         turret.setPower(0.7);
     }

@@ -175,6 +175,7 @@ public class AutomatedTransfer extends LinearOpMode {
                             outtake.setTurretLeft();
                             outtake.midDeposit();
 
+                            scoreState = ScoreState.READY;
                             robotState = RobotState.LEFT;
                         }
 
@@ -189,6 +190,7 @@ public class AutomatedTransfer extends LinearOpMode {
                             outtake.setTurretRight();
                             outtake.midDeposit();
 
+                            scoreState = ScoreState.READY;
                             robotState = RobotState.RIGHT;
                         }
 

@@ -220,7 +220,7 @@ public class ParkAuto extends LinearOpMode
 
         resetencoders();
 
-        PIDMotors(1140, 0, 0); //go back
+        PIDMotors(1230, 0, 0); //go back
 
 
 
@@ -248,7 +248,7 @@ public class ParkAuto extends LinearOpMode
 
             resetencoders();
 
-            PIDMotors(0, 1350, 0);
+            PIDMotors(0, 1450, 0);
 
 
 

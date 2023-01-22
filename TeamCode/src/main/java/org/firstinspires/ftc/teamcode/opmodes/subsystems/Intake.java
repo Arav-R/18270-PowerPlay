@@ -36,7 +36,7 @@ public class Intake {
 
 
 
-    public static int slideOut = 430;
+    public static int slideOut = 420;
 
     public static int slideIn = -5; //65
 

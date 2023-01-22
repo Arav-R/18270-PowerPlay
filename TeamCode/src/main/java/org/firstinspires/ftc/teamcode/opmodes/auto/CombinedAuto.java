@@ -188,6 +188,8 @@ public class CombinedAuto extends LinearOpMode {
         TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(startPose)
 
 
+                //.waitSeconds(9)
+
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     intake.zeroPosition();
                     intake.dropArm();
@@ -316,6 +318,7 @@ public class CombinedAuto extends LinearOpMode {
         /* Actually do something useful */
 
 
+
         // PARK
 
         if(tagOfInterest == null || tagOfInterest.id == LEFT){
@@ -349,7 +352,7 @@ public class CombinedAuto extends LinearOpMode {
             intake.dropArmAuto(2); //5 cone
 
             outtake.extendSlidePreloadLeft();
-            outtake.setTurretAutoLeft();
+            outtake.setTurretAutoLeftPreload();
             outtake.midDeposit();
         }
 
