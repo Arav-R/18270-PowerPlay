@@ -54,6 +54,28 @@ public class Outtake {
     }
 
 
+    public void moveTurretZero(){
+        turret.setPower(-.2);
+    }
+
+    public void zeroTurret(){
+        turret.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        turret.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
+
+    public void moveOuttakeZero(){
+        outtakeSlide1.setPower(-.2);
+        outtakeSlide2.setPower(-.2);
+    }
+
+    public void zeroOuttake(){
+        outtakeSlide1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        outtakeSlide2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        outtakeSlide1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        outtakeSlide2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
+
+
 
 
 //    public void moveToPos (int pos, double speed){

@@ -65,6 +65,15 @@ public class Intake {
 
     }
 
+    public void moveIntakeZero(){
+        intakeSlide.setPower(-.2);
+    }
+
+    public void zeroIntake(){
+        intakeSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        intakeSlide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
+
 
 
 

@@ -104,7 +104,17 @@ public class AutomatedTransfer extends LinearOpMode {
 
         scoreTimer.reset();
 
+        
+        // Zero mechanisms
+        intake.moveIntakeZero();
+        outtake.moveTurretZero();
+        outtake.moveOuttakeZero();
+
         waitForStart();
+
+        intake.zeroIntake();
+        outtake.zeroTurret();
+        outtake.zeroOuttake();
 
         if (isStopRequested()) return;
 
