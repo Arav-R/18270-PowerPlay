@@ -31,5 +31,7 @@ dependencies {
     implementation 'com.acmerobotics.dashboard:dashboard:0.4.8' // Roadrunner Quickstart | Dashboard
 
     implementation 'com.github.Eeshwar-Krishnan:PhotonFTC:v2.0.1' // Photon
+
+    implementation 'com.github.Thermal-Equilibrium:homeostasis-FTC:1.0.8' // Homeostasis
 }
 
