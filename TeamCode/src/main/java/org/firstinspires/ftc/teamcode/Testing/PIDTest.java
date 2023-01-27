@@ -26,6 +26,9 @@ public class PIDTest extends LinearOpMode {
     public static double Kd = 0;
 
 
+    public static int targetPosition = 0;
+
+
     // creation of the PID object
     PIDCoefficients coefficients = new PIDCoefficients(Kp, Ki, Kd);
     BasicPID controller = new BasicPID(coefficients);
@@ -37,6 +40,11 @@ public class PIDTest extends LinearOpMode {
 
         //turret = hardwareMap.dcMotor.get("turret");
         intakeSlide = hardwareMap.dcMotor.get("intakeslide");
+
+        intakeSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        // use braking to slow the motor down faster
+        intakeSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         //outtakeSlide1 = hardwareMap.dcMotor.get("outtake1");
         //outtakeSlide2 = hardwareMap.dcMotor.get("outtake2");
@@ -52,14 +60,16 @@ public class PIDTest extends LinearOpMode {
 
         while (opModeIsActive()) {
 
-            // Drive
+
+            // PID
+            // update pid controller
+            double command = controller.calculate(targetPosition, intakeSlide.getCurrentPosition());
+            // assign motor the PID output
+            intakeSlide.setPower(command);
 
 
-
-            //telemetry.addData("Turret: ", turret.getCurrentPosition());
-            telemetry.addData("Intake Current Position: ", intakeSlide.getCurrentPosition());
-            //telemetry.addData("Outtake1: ", outtakeSlide1.getCurrentPosition());
-            //telemetry.addData("Outtake2: ", outtakeSlide2.getCurrentPosition());
+            telemetry.addData("Target Position: ", targetPosition);
+            telemetry.addData("Current Position: ", intakeSlide.getCurrentPosition());
 
             telemetry.update();
         }
