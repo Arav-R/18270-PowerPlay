@@ -21,12 +21,12 @@ public class PIDTest extends LinearOpMode {
 
     // PID
 
-    public static double Kp = 0;
+    public static double Kp = 0.001;
     public static double Ki = 0;
     public static double Kd = 0;
 
 
-    public static int targetPosition = 0;
+    public static int targetPosition = 200;
 
 
     // creation of the PID object
@@ -69,6 +69,7 @@ public class PIDTest extends LinearOpMode {
 
 
             telemetry.addData("Target Position: ", targetPosition);
+            telemetry.addData("Command: ", command);
             telemetry.addData("Current Position: ", intakeSlide.getCurrentPosition());
 
             telemetry.update();

@@ -14,19 +14,19 @@ public class Outtake {
 
     public static  double transferPos = 0.19; //0.18
     public static double midPos = 0.38; //0.37
-    public static double scorePosLeft = .83; //.82
+    public static double scorePosLeft = 0.81; //.82
     public static double scorePosRight = .85; //.82
 
-    public static int leftHigh = 458;
+    public static int leftHigh = 484;
     public static int rightHigh = 160;
     public static int turretTransfer = 315;
 
-    public static int fullExtendLeft = 915;
+    public static int fullExtendLeft = 890;
     public static int fullExtendRight = 1030;
 
-    public static int fullExtendAutoLeft = 913;
+    public static int fullExtendAutoLeft = 910;
 
-    public static int turretAutoLeft = 513; //510
+    public static int turretAutoLeft = 510; //510
 
     public void init(HardwareMap hardwareMap){
         outtakeSlide1 = hardwareMap.dcMotor.get("outtake1");
@@ -125,11 +125,11 @@ public class Outtake {
     public void extendSlideLeft(){
         outtakeSlide1.setTargetPosition(fullExtendLeft);
         outtakeSlide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        outtakeSlide1.setPower(0.8);
+        outtakeSlide1.setPower(1);
 
         outtakeSlide2.setTargetPosition(fullExtendLeft);
         outtakeSlide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        outtakeSlide2.setPower(0.8);
+        outtakeSlide2.setPower(1);
     }
 
     public void extendSlideAutoLeft(){
@@ -155,11 +155,11 @@ public class Outtake {
     public void extendSlideRight(){
         outtakeSlide1.setTargetPosition(fullExtendRight);
         outtakeSlide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        outtakeSlide1.setPower(0.8);
+        outtakeSlide1.setPower(1);
 
         outtakeSlide2.setTargetPosition(fullExtendRight);
         outtakeSlide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        outtakeSlide2.setPower(0.8);
+        outtakeSlide2.setPower(1);
     }
 
     public void moreExtendLeft(){

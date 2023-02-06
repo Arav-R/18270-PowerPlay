@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Testing;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -12,7 +13,7 @@ import org.firstinspires.ftc.teamcode.opmodes.subsystems.Intake;
 /*
  * This is an example of a more complex path to really test the tuning.
  */
-@Disabled
+
 @Autonomous(group = "drive")
 public class RRTest extends LinearOpMode {
 
@@ -55,11 +56,12 @@ public class RRTest extends LinearOpMode {
                 })
 
                 .waitSeconds(0.25)
-                .forward(48)
+                //.forward(48)
+                .lineTo(new Vector2d(35, -15))
                 .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
                     intake.flipArm();
                 })
-                .turn(Math.toRadians(-95))
+                .lineToLinearHeading(new Pose2d(35,-15, Math.toRadians(90)))
 
 
                 .build();

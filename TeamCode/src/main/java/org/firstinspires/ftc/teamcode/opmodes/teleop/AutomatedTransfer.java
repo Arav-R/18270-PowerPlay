@@ -27,11 +27,12 @@ public class AutomatedTransfer extends LinearOpMode {
 
 
 
-    public static double depositTime = .9;
-    public static double grabTime = .5;
-    public static double flipTime = .95;
-    public static double transferTime = .5;
+    public static double depositTime = 0.5; //.9
+    public static double grabTime = .3;
+    public static double flipTime = .8; //.95
+    public static double transferTime = .2; //.5
     public static double intakeTime = .25;
+    public static int depBuffer = 400;
 
 
     // States
@@ -61,6 +62,19 @@ public class AutomatedTransfer extends LinearOpMode {
         FLIP,
         EXTEND_INTAKE,
         EXTEND_OUTTAKE
+
+    }
+
+    public enum GrabState {
+
+        EXTEND_INTAKE,
+        GRAB,
+        RETRACT_INTAKE,
+        FLIP,
+        READY,
+        EXTEND_OUTTAKE,
+        SCORE,
+        RETRACT
 
     }
 
@@ -106,6 +120,8 @@ public class AutomatedTransfer extends LinearOpMode {
 
         
         // Zero mechanisms
+        outtake.transferDeposit();
+
         intake.moveIntakeZero();
         outtake.moveTurretZero();
         outtake.moveOuttakeZero();
@@ -421,7 +437,7 @@ public class AutomatedTransfer extends LinearOpMode {
                 }
                 break;
             case RETRACT_INTAKE:
-                if (scoreTimer.seconds() >= flipTime && intake.intakeInDiff() < 10 && outtake.retractDiff() < 10) {
+                if (scoreTimer.seconds() >= flipTime && intake.intakeInDiff() < 10 && outtake.retractDiff() < 40) {
                     intake.openClaw();
 
                     scoreTimer.reset();
@@ -447,7 +463,7 @@ public class AutomatedTransfer extends LinearOpMode {
                 }
                 break;
             case EXTEND_OUTTAKE:
-                if (outtake.slideOutDiffLeft() < 40) {
+                if (outtake.slideOutDiffLeft() < depBuffer) {
 
                     scoreState = ScoreState.READY;
                 }
@@ -532,6 +548,67 @@ public class AutomatedTransfer extends LinearOpMode {
                 if (outtake.slideOutDiffRight() < 40) {
 
                     scoreState = ScoreState.READY;
+                }
+                break;
+            default:
+                // should never be reached, as liftState should never be null
+                scoreState = ScoreState.READY;
+                break;
+
+        }
+    }
+
+
+
+    // Grab cone and transfer
+    public void grabCone() {
+        switch (scoreState) {
+            case DEPOSIT:
+                if (scoreTimer.seconds() >= depositTime) {
+                    outtake.transferDeposit();
+                    outtake.retractSlide();
+                    outtake.setTurretMiddle();
+
+                    intake.openClaw();
+                    intake.intakePosition();
+
+
+                    scoreState = ScoreState.PREPARE;
+                }
+                break;
+            case PREPARE:
+                if (intake.intakeOutDiff() < 20) {
+                    intake.closeClaw();
+
+
+                    scoreTimer.reset();
+                    scoreState = ScoreState.GRAB;
+                }
+                break;
+            case GRAB:
+                if (scoreTimer.seconds() >= grabTime) {
+                    intake.transferPosition();
+                    intake.flipArm();
+
+                    scoreTimer.reset();
+                    scoreState = ScoreState.RETRACT_INTAKE;
+                }
+                break;
+            case RETRACT_INTAKE:
+                if (scoreTimer.seconds() >= flipTime && intake.intakeInDiff() < 10 && outtake.retractDiff() < 40) {
+                    intake.openClaw();
+
+                    scoreTimer.reset();
+                    scoreState = ScoreState.FLIP;
+                }
+                break;
+            case FLIP:
+                if (scoreTimer.seconds() >= transferTime) {
+                    intake.zeroPosition();
+                    intake.contractArm();
+
+                    scoreTimer.reset();
+                    scoreState = ScoreState.EXTEND_INTAKE;
                 }
                 break;
             default:

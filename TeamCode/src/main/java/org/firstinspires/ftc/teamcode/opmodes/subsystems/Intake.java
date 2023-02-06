@@ -23,16 +23,16 @@ public class Intake {
     double clawClose = .24; //1
     double clawOpen = 0.0; //.75
 
-    public static double flipDown = 0.015;
+    public static double flipDown = 0; //0.015
     public static double flipUp = 0.55; //.64
     public static double flipContract = 0.4;
     public static double flipStartingPosition = 0.51;
 
-    public static double flip5 = 0.095;
-    public static double flip4 = 0.075;
-    public static double flip3 = 0.06;
-    public static double flip2 = 0.03;
-    public static double flip1 = 0.015;
+    public static double flip5 = 0.08; //.095
+    public static double flip4 = 0.065; //.075
+    public static double flip3 = 0.03; //.06
+    public static double flip2 = .02; //0.03
+    public static double flip1 = 0; //0.015
 
 
 
@@ -41,7 +41,14 @@ public class Intake {
     public static int slideIn = -5; //65
 
     public static int slideInAuto = -5; //235
-    public static int slideOutAuto = 430; //65
+    public static int slideOutAuto = 417; //65
+
+    public static int slideOutAuto5 = 410; //65
+    public static int slideOutAuto4 = 415; //65
+    public static int slideOutAuto3 = 417; //65
+    public static int slideOutAuto2 = 417; //65
+    public static int slideOutAuto1 = 417; //65
+
 
     public void init(HardwareMap hardwareMap){
         intakeSlide = hardwareMap.dcMotor.get("intakeslide");
@@ -66,7 +73,7 @@ public class Intake {
     }
 
     public void moveIntakeZero(){
-        intakeSlide.setPower(-.2);
+        intakeSlide.setPower(-.3);
     }
 
     public void zeroIntake(){
@@ -89,11 +96,38 @@ public class Intake {
         intakeSlide.setPower(1);
         
     }
-
+/*
     public void autoStackPosition(){
         intakeSlide.setTargetPosition(slideOutAuto);
         intakeSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         intakeSlide.setPower(0.7);
+    }
+*/
+    public void autoStackPosition (int cone){
+
+        if (cone == 2) { // Top cone starting stack
+            intakeSlide.setTargetPosition(slideOutAuto5);
+            intakeSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            intakeSlide.setPower(0.7);
+        } else if (cone == 3) {
+            intakeSlide.setTargetPosition(slideOutAuto4);
+            intakeSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            intakeSlide.setPower(0.7);
+        } else if (cone == 4) {
+            intakeSlide.setTargetPosition(slideOutAuto3);
+            intakeSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            intakeSlide.setPower(0.7);
+        } else if (cone == 5) {
+            intakeSlide.setTargetPosition(slideOutAuto2);
+            intakeSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            intakeSlide.setPower(0.7);
+        } else if (cone == 6) {
+            intakeSlide.setTargetPosition(slideOutAuto1);
+            intakeSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            intakeSlide.setPower(0.7);
+        }
+
+
     }
 
 
@@ -106,7 +140,7 @@ public class Intake {
     public void transferPosition (){
         intakeSlide.setTargetPosition(-5);
         intakeSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        intakeSlide.setPower(.8);
+        intakeSlide.setPower(1);
     }
 
     public void transferPositionAuto (){
@@ -127,14 +161,26 @@ public class Intake {
 
     }
 
+
     public int intakeInDiff(){
 
         return intakeSlide.getCurrentPosition();
 
     }
 
-    public int intakeInAutoDiff(){
+    public int intakeOutAutoDiff( int cone){
 
+        if (cone == 2) { // Top cone starting stack
+            return Math.abs(intakeSlide.getCurrentPosition() - slideOutAuto5);
+        } else if (cone == 3) {
+            return Math.abs(intakeSlide.getCurrentPosition() - slideOutAuto4);
+        } else if (cone == 4) {
+            return Math.abs(intakeSlide.getCurrentPosition() - slideOutAuto3);
+        } else if (cone == 5) {
+            return Math.abs(intakeSlide.getCurrentPosition() - slideOutAuto2);
+        } else if (cone == 6) {
+            return Math.abs(intakeSlide.getCurrentPosition() - slideOutAuto1);
+        }
         return Math.abs(intakeSlide.getCurrentPosition() - slideInAuto);
 
     }
