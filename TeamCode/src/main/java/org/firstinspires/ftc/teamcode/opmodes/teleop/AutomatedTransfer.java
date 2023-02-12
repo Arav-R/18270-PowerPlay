@@ -41,7 +41,8 @@ public class AutomatedTransfer extends LinearOpMode {
         CONTRACT,
         LEFT,
         RIGHT,
-        GROUND
+        GROUND,
+        SEPARATE
 
     }
 
@@ -65,16 +66,23 @@ public class AutomatedTransfer extends LinearOpMode {
 
     }
 
+    public enum OuttakeState {
+
+        WAIT,
+        EXTEND_OUTTAKE,
+        READY,
+        FLIP,
+        RETRACT_OUTTAKE
+
+    }
+
     public enum GrabState {
 
+        READY,
         EXTEND_INTAKE,
         GRAB,
         RETRACT_INTAKE,
-        FLIP,
-        READY,
-        EXTEND_OUTTAKE,
-        SCORE,
-        RETRACT
+        TRANSFER
 
     }
 
@@ -83,6 +91,10 @@ public class AutomatedTransfer extends LinearOpMode {
     RetractState retractState = RetractState.DONE;
 
     ScoreState scoreState = ScoreState.READY;
+
+    GrabState grabState = GrabState.EXTEND_INTAKE;
+
+    OuttakeState outtakeState = OuttakeState.EXTEND_OUTTAKE;
 
 
 
@@ -288,6 +300,11 @@ public class AutomatedTransfer extends LinearOpMode {
 
 
                     break;
+                case SEPARATE:
+
+                    scoreCone();
+
+                    break;
                 case GROUND:
 
 
@@ -335,6 +352,7 @@ public class AutomatedTransfer extends LinearOpMode {
 
 
                     break;
+
             }
 
             if (gamepad1.a) { // Retract
@@ -560,62 +578,40 @@ public class AutomatedTransfer extends LinearOpMode {
 
 
 
-    // Grab cone and transfer
-    public void grabCone() {
-        switch (scoreState) {
-            case DEPOSIT:
-                if (scoreTimer.seconds() >= depositTime) {
+    public void scoreCone(){
+        switch (outtakeState){
+            case WAIT:
+                if (gamepad2.x){
+                    outtake.setTurretRight();
+                    outtake.extendSlideRight();
+
+                    outtakeState = OuttakeState.EXTEND_OUTTAKE;
+                }
+                break;
+            case EXTEND_OUTTAKE:
+                if (outtake.slideOutDiffRight() < 40) {
+
+                    outtakeState = OuttakeState.READY;
+                }
+                break;
+            case READY:
+                if (gamepad1.right_bumper){
+                    outtake.scoreDepositRight();
+                }
+                if (gamepad2.a) {
+
                     outtake.transferDeposit();
                     outtake.retractSlide();
                     outtake.setTurretMiddle();
 
-                    intake.openClaw();
-                    intake.intakePosition();
-
-
-                    scoreState = ScoreState.PREPARE;
+                    outtakeState = OuttakeState.RETRACT_OUTTAKE;
                 }
                 break;
-            case PREPARE:
-                if (intake.intakeOutDiff() < 20) {
-                    intake.closeClaw();
+            case RETRACT_OUTTAKE:
 
+                    outtakeState = OuttakeState.WAIT;
 
-                    scoreTimer.reset();
-                    scoreState = ScoreState.GRAB;
-                }
                 break;
-            case GRAB:
-                if (scoreTimer.seconds() >= grabTime) {
-                    intake.transferPosition();
-                    intake.flipArm();
-
-                    scoreTimer.reset();
-                    scoreState = ScoreState.RETRACT_INTAKE;
-                }
-                break;
-            case RETRACT_INTAKE:
-                if (scoreTimer.seconds() >= flipTime && intake.intakeInDiff() < 10 && outtake.retractDiff() < 40) {
-                    intake.openClaw();
-
-                    scoreTimer.reset();
-                    scoreState = ScoreState.FLIP;
-                }
-                break;
-            case FLIP:
-                if (scoreTimer.seconds() >= transferTime) {
-                    intake.zeroPosition();
-                    intake.contractArm();
-
-                    scoreTimer.reset();
-                    scoreState = ScoreState.EXTEND_INTAKE;
-                }
-                break;
-            default:
-                // should never be reached, as liftState should never be null
-                scoreState = ScoreState.READY;
-                break;
-
         }
     }
 

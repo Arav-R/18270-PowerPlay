@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Testing;
 
 
+import com.ThermalEquilibrium.homeostasis.Controllers.Feedback.PIDEx;
 import com.ThermalEquilibrium.homeostasis.Parameters.PIDCoefficients;
 import com.ThermalEquilibrium.homeostasis.Controllers.Feedback.BasicPID;
 import com.acmerobotics.dashboard.FtcDashboard;
@@ -32,6 +33,8 @@ public class PIDTest extends LinearOpMode {
     // creation of the PID object
     PIDCoefficients coefficients = new PIDCoefficients(Kp, Ki, Kd);
     BasicPID controller = new BasicPID(coefficients);
+
+    //PIDEx controller = new BasicPID(coefficients);
 
     @Override
     public void runOpMode() throws InterruptedException {

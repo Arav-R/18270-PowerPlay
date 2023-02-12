@@ -25,8 +25,10 @@ public class Outtake {
     public static int fullExtendRight = 1030;
 
     public static int fullExtendAutoLeft = 910;
+    public static int fullExtendAutoRight = 1020;
 
     public static int turretAutoLeft = 510; //510
+    public static int turretAutoRight = 160; //510
 
     public void init(HardwareMap hardwareMap){
         outtakeSlide1 = hardwareMap.dcMotor.get("outtake1");
@@ -54,6 +56,7 @@ public class Outtake {
     }
 
 
+    // Turret Code
     public void moveTurretZero(){
         turret.setPower(-.2);
     }
@@ -68,30 +71,12 @@ public class Outtake {
         outtakeSlide2.setPower(-.2);
     }
 
-    public void zeroOuttake(){
-        outtakeSlide1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        outtakeSlide2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        outtakeSlide1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        outtakeSlide2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    }
-
-
-
-
-//    public void moveToPos (int pos, double speed){
-//        outtakeSlide1.setTargetPosition(pos);
-//        outtakeSlide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//        outtakeSlide1.setPower(speed);
-//    }
-
-
 
     public void moveTurret (int pos, double speed){
         turret.setTargetPosition(pos);
         turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         turret.setPower(speed);
     }
-
 
 
     public void nudgeLeftLeft(){
@@ -110,6 +95,52 @@ public class Outtake {
 
     public int getTurret (){
         return turret.getCurrentPosition();
+    }
+
+
+
+
+    public void setTurretLeft (){
+        turret.setTargetPosition(leftHigh);
+        turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        turret.setPower(0.7);
+    }
+
+
+
+    public void setTurretMiddle (){
+        turret.setTargetPosition(turretTransfer);
+        turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        turret.setPower(0.7);
+    }
+
+    public void setTurretRight (){
+        turret.setTargetPosition(rightHigh);
+        turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        turret.setPower(0.7);
+    }
+
+    public void setTurretAutoRight (){
+        turret.setTargetPosition(turretAutoRight);
+        turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        turret.setPower(0.7);
+    }
+
+    public void setTurretAutoRightPreload (){
+        turret.setTargetPosition(turretAutoRight - 2);
+        turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        turret.setPower(0.7);
+    }
+
+
+
+
+    // Outtake
+    public void zeroOuttake(){
+        outtakeSlide1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        outtakeSlide2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        outtakeSlide1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        outtakeSlide2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     public void moveSlide (int pos, double speed){
@@ -201,11 +232,11 @@ public class Outtake {
     }
 
     public void retractSlide (){
-        outtakeSlide1.setTargetPosition(-50);
+        outtakeSlide1.setTargetPosition(0);
         outtakeSlide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         outtakeSlide1.setPower(0.5);
 
-        outtakeSlide2.setTargetPosition(-50);
+        outtakeSlide2.setTargetPosition(0);
         outtakeSlide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         outtakeSlide2.setPower(0.5);
     }
@@ -219,37 +250,7 @@ public class Outtake {
 
 
 
-
-    public void setTurretLeft (){
-        turret.setTargetPosition(leftHigh);
-        turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        turret.setPower(0.7);
-    }
-
-    public void setTurretAutoLeft (){
-        turret.setTargetPosition(turretAutoLeft);
-        turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        turret.setPower(0.7);
-    }
-
-    public void setTurretAutoLeftPreload (){
-        turret.setTargetPosition(turretAutoLeft - 2);
-        turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        turret.setPower(0.7);
-    }
-
-    public void setTurretMiddle (){
-        turret.setTargetPosition(turretTransfer);
-        turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        turret.setPower(0.7);
-    }
-
-    public void setTurretRight (){
-        turret.setTargetPosition(rightHigh);
-        turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        turret.setPower(0.7);
-    }
-
+    // Deposit
 
     public void transferDeposit(){
         depositServo.setPosition(transferPos);
@@ -283,6 +284,16 @@ public class Outtake {
 
     }
 */
+
+
+
+
+//    public void moveToPos (int pos, double speed){
+//        outtakeSlide1.setTargetPosition(pos);
+//        outtakeSlide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//        outtakeSlide1.setPower(speed);
+//    }
+
 
 
 }
