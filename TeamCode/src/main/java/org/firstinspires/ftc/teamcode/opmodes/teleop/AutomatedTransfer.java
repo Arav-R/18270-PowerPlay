@@ -27,7 +27,7 @@ public class AutomatedTransfer extends LinearOpMode {
 
 
 
-    public static double depositTime = 0.5; //.9
+    public static double depositTime = 0.6; //.9
     public static double grabTime = .3;
     public static double flipTime = .8; //.95
     public static double transferTime = .2; //.5
@@ -212,6 +212,7 @@ public class AutomatedTransfer extends LinearOpMode {
                             outtake.extendSlideLeft();
                             outtake.setTurretLeft();
                             outtake.midDeposit();
+                            outtake.guideUp();
 
                             scoreState = ScoreState.READY;
                             robotState = RobotState.LEFT;
@@ -428,6 +429,7 @@ public class AutomatedTransfer extends LinearOpMode {
                     outtake.transferDeposit();
                     outtake.retractSlide();
                     outtake.setTurretMiddle();
+                    outtake.guideDown();
 
                     intake.openClaw();
                     intake.intakePosition();
@@ -455,9 +457,10 @@ public class AutomatedTransfer extends LinearOpMode {
                 }
                 break;
             case RETRACT_INTAKE:
-                if (scoreTimer.seconds() >= flipTime && intake.intakeInDiff() < 10 && outtake.retractDiff() < 40) {
+                if (scoreTimer.seconds() >= flipTime && intake.intakeInDiff() < 10) {
                     intake.openClaw();
 
+                    outtake.zeroOuttake();
                     scoreTimer.reset();
                     scoreState = ScoreState.FLIP;
                 }
@@ -476,6 +479,7 @@ public class AutomatedTransfer extends LinearOpMode {
                     outtake.midDeposit();
                     outtake.setTurretLeft();
                     outtake.extendSlideLeft();
+                    outtake.guideUp();
 
                     scoreState = ScoreState.EXTEND_OUTTAKE;
                 }

@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class Outtake {
 
     private DcMotor outtakeSlide1, outtakeSlide2, turret;
-    private Servo depositServo;
+    private Servo depositServo, guideServo;
 
     public static  double transferPos = 0.19; //0.18
     public static double midPos = 0.38; //0.37
@@ -27,14 +27,19 @@ public class Outtake {
     public static int fullExtendAutoLeft = 910;
     public static int fullExtendAutoRight = 1020;
 
-    public static int turretAutoLeft = 510; //510
+    public static int turretAutoLeft = 450; //510
     public static int turretAutoRight = 160; //510
+
+    public static double guideUpPos = .45; //510
+    public static double guideDownPos = .75; //510
 
     public void init(HardwareMap hardwareMap){
         outtakeSlide1 = hardwareMap.dcMotor.get("outtake1");
         outtakeSlide2 = hardwareMap.dcMotor.get("outtake2");
         turret = hardwareMap.dcMotor.get("turret");
         depositServo = hardwareMap.servo.get("deposit");
+
+        guideServo = hardwareMap.servo.get("guide");
 
 
         outtakeSlide1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -102,6 +107,18 @@ public class Outtake {
 
     public void setTurretLeft (){
         turret.setTargetPosition(leftHigh);
+        turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        turret.setPower(0.7);
+    }
+
+    public void setTurretAutoLeft (){
+        turret.setTargetPosition(turretAutoLeft);
+        turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        turret.setPower(0.7);
+    }
+
+    public void setTurretAutoLeftPreload (){
+        turret.setTargetPosition(turretAutoLeft - 5);
         turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         turret.setPower(0.7);
     }
@@ -267,6 +284,18 @@ public class Outtake {
     public void scoreDepositRight(){
         depositServo.setPosition(scorePosRight);
     }
+
+
+    // Guide
+
+    public void guideUp(){
+        guideServo.setPosition(guideUpPos);
+    }
+
+    public void guideDown(){
+        guideServo.setPosition(guideDownPos);
+    }
+
 
 /*
 

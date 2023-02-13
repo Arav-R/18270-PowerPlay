@@ -5,7 +5,7 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
-import com.outoftheboxrobotics.photoncore.PhotonCore;
+//import com.outoftheboxrobotics.photoncore.PhotonCore;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -66,8 +66,8 @@ public class CombinedAuto extends LinearOpMode {
 
     public static double expansionDelay = 0.8;
 
-    public static int cones = 5;
-    public static double cycleDelay = 0.1;
+    public static int cones = 6;
+    public static double cycleDelay = 0;
 
 
     int currentCycle = 0;
@@ -76,11 +76,12 @@ public class CombinedAuto extends LinearOpMode {
 
 
 
-    public static double depositTime = .9;
+    public static double depositTime = 0.6;
     public static double grabTime = .5;
-    public static double flipTime = .95;
-    public static double transferTime = .6;
+    public static double flipTime = .8;
+    public static double transferTime = .3;
     public static double intakeTime = .25;
+    public static int depBuffer = 400;
 
 
     // States
@@ -130,7 +131,7 @@ public class CombinedAuto extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        PhotonCore.enable(); // Enable PhotonCore
+        //PhotonCore.enable(); // Enable PhotonCore
 
 
         // APRILTAG
@@ -197,14 +198,14 @@ public class CombinedAuto extends LinearOpMode {
                 })
 
                 .waitSeconds(0.25)
-                .forward(50)
+                .forward(48.5)
                 .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
                     intake.flipArm();
                 })
-                .turn(Math.toRadians(-95))
+                .turn(Math.toRadians(-94))
                 .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
                     outtake.transferDeposit();
-                    outtake.setTurretAutoLeft();
+                    outtake.setTurretAutoLeftPreload();
                 })
 
 
@@ -319,24 +320,6 @@ public class CombinedAuto extends LinearOpMode {
 
 
 
-        // PARK
-
-        if(tagOfInterest == null || tagOfInterest.id == LEFT){
-            //trajectory
-
-            cones = 5;
-
-        }else if(tagOfInterest.id == MIDDLE){
-            //trajectory
-
-            cones = 5;
-
-        }else{
-            //trajectory
-
-            cones = 5;
-
-        }
 
 
 
@@ -419,9 +402,10 @@ public class CombinedAuto extends LinearOpMode {
                     }
                     break;
                 case RETRACT_INTAKE:
-                    if (scoreTimer.seconds() >= flipTime && intake.intakeInDiff() < 10 && outtake.retractDiff() < 10) {
+                    if (scoreTimer.seconds() >= flipTime && intake.intakeInDiff() < 10) {
                         intake.openClaw();
 
+                        outtake.zeroOuttake();
                         scoreTimer.reset();
                         scoreState = ScoreState.FLIP;
                     }
@@ -446,7 +430,7 @@ public class CombinedAuto extends LinearOpMode {
                     }
                     break;
                 case EXTEND_OUTTAKE:
-                    if (outtake.slideOutDiffAutoLeft() < 40) {
+                    if (outtake.slideOutDiffAutoLeft() < depBuffer) {
 
                         cycleTime = cycleTimer.seconds();
 
@@ -462,7 +446,13 @@ public class CombinedAuto extends LinearOpMode {
 
             }
             telemetry.addData("Current Cycle: ", currentCycle);
+            telemetry.addData("Cone: ", cones);
             telemetry.addData("Previous Cycle time: ", cycleTime);
+
+            telemetry.addData("Outtake Slide: ", outtake.getExtend());
+            telemetry.addData("Turret Pos: ", outtake.getTurret());
+
+
             telemetry.update();
 
         }
