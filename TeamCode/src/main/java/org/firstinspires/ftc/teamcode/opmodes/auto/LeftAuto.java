@@ -202,7 +202,7 @@ public class LeftAuto extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
                     intake.flipArm();
                 })
-                .turn(Math.toRadians(-94))
+                .turn(Math.toRadians(94))
                 .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
                     outtake.transferDeposit();
                     outtake.setTurretAutoRightPreload();
