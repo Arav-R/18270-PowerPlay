@@ -92,7 +92,7 @@ public class AutomatedTransfer extends LinearOpMode {
 
     ScoreState scoreState = ScoreState.READY;
 
-    GrabState grabState = GrabState.EXTEND_INTAKE;
+    GrabState grabState = GrabState.READY;
 
     OuttakeState outtakeState = OuttakeState.EXTEND_OUTTAKE;
 
@@ -439,7 +439,7 @@ public class AutomatedTransfer extends LinearOpMode {
                 }
                 break;
             case PREPARE:
-                if (intake.intakeOutDiff() < 20) {
+                if (intake.intakeOutDiff() < 20 || intake.getDistanceCM() < 1) {
                     intake.closeClaw();
 
 
@@ -613,11 +613,60 @@ public class AutomatedTransfer extends LinearOpMode {
                 break;
             case RETRACT_OUTTAKE:
 
-                    outtakeState = OuttakeState.WAIT;
+                outtakeState = OuttakeState.WAIT;
 
                 break;
         }
     }
+
+
+    public void grabCone(){
+        switch (grabState){
+            case READY:
+                if (gamepad2.a) {
+                    intake.openClaw();
+                    intake.dropArmAuto(2);
+                    grabState = GrabState.EXTEND_INTAKE;
+                }
+                break;
+            case EXTEND_INTAKE:
+                if (gamepad1.y) {
+                    intake.closeClaw();
+
+                    scoreTimer.reset();
+                    grabState = GrabState.GRAB;
+                }
+                break;
+            case GRAB:
+                if (scoreTimer.seconds() >= grabTime) {
+                    intake.transferPosition();
+                    intake.flipArm();
+
+                    scoreTimer.reset();
+                    grabState = GrabState.RETRACT_INTAKE;
+                }
+                break;
+            case RETRACT_INTAKE:
+                if (scoreTimer.seconds() >= flipTime && intake.intakeInDiff() < 10 && outtake.retractDiff() < 10) {
+                    intake.openClaw();
+
+                    scoreTimer.reset();
+                    scoreState = ScoreState.FLIP;
+                }
+                break;
+            case TRANSFER:
+                if (scoreTimer.seconds() >= transferTime) {
+                    intake.contractArm();
+                    intake.openClaw();
+
+                    scoreTimer.reset();
+                    //scoreState = ScoreState.WAIT;
+                }
+                break;
+        }
+    }
+
+
 
 
 

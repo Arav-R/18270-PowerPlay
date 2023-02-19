@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.opmodes.subsystems;
 
 
 import com.acmerobotics.dashboard.config.Config;
+import com.qualcomm.robotcore.hardware.ColorRangeSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -14,6 +15,8 @@ public class Intake {
 
     private DcMotor intakeSlide;
     private Servo clawServo, flip1Servo, flip2Servo;
+
+    private ColorRangeSensor colorSensor;
 
     // Distance Sensor
     private DistanceSensor sensorRange;
@@ -43,11 +46,18 @@ public class Intake {
     public static int slideInAuto = -5; //235
     public static int slideOutAuto = 417; //65
 
-    public static int slideOutAuto5 = 385; //65
-    public static int slideOutAuto4 = 385; //65
-    public static int slideOutAuto3 = 385; //65
-    public static int slideOutAuto2 = 385; //65
-    public static int slideOutAuto1 = 385; //65
+    public static int slideOutAuto5R = 385; //65
+    public static int slideOutAuto4R = 385; //65
+    public static int slideOutAuto3R = 385; //65
+    public static int slideOutAuto2R = 385; //65
+    public static int slideOutAuto1R = 385; //65
+
+
+    public static int slideOutAuto5L = 385; //65
+    public static int slideOutAuto4L = 385; //65
+    public static int slideOutAuto3L = 385; //65
+    public static int slideOutAuto2L = 385; //65
+    public static int slideOutAuto1L = 385; //65
 
 
     public void init(HardwareMap hardwareMap){
@@ -69,6 +79,10 @@ public class Intake {
 
         intakeSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         intakeSlide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+
+        // V3 color
+        colorSensor = hardwareMap.get(ColorRangeSensor.class, "sensor_color");
 
     }
 
@@ -103,26 +117,53 @@ public class Intake {
         intakeSlide.setPower(0.7);
     }
 */
-    public void autoStackPosition (int cone){
+    public void autoStackPositionRight(int cone){
 
         if (cone == 2) { // Top cone starting stack
-            intakeSlide.setTargetPosition(slideOutAuto5);
+            intakeSlide.setTargetPosition(slideOutAuto5R);
             intakeSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             intakeSlide.setPower(0.7);
         } else if (cone == 3) {
-            intakeSlide.setTargetPosition(slideOutAuto4);
+            intakeSlide.setTargetPosition(slideOutAuto4R);
             intakeSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             intakeSlide.setPower(0.7);
         } else if (cone == 4) {
-            intakeSlide.setTargetPosition(slideOutAuto3);
+            intakeSlide.setTargetPosition(slideOutAuto3R);
             intakeSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             intakeSlide.setPower(0.7);
         } else if (cone == 5) {
-            intakeSlide.setTargetPosition(slideOutAuto2);
+            intakeSlide.setTargetPosition(slideOutAuto2R);
             intakeSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             intakeSlide.setPower(0.7);
         } else if (cone == 6) {
-            intakeSlide.setTargetPosition(slideOutAuto1);
+            intakeSlide.setTargetPosition(slideOutAuto1R);
+            intakeSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            intakeSlide.setPower(0.7);
+        }
+
+
+    }
+
+    public void autoStackPositionLeft(int cone){
+
+        if (cone == 2) { // Top cone starting stack
+            intakeSlide.setTargetPosition(slideOutAuto5L);
+            intakeSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            intakeSlide.setPower(0.7);
+        } else if (cone == 3) {
+            intakeSlide.setTargetPosition(slideOutAuto4L);
+            intakeSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            intakeSlide.setPower(0.7);
+        } else if (cone == 4) {
+            intakeSlide.setTargetPosition(slideOutAuto3L);
+            intakeSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            intakeSlide.setPower(0.7);
+        } else if (cone == 5) {
+            intakeSlide.setTargetPosition(slideOutAuto2L);
+            intakeSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            intakeSlide.setPower(0.7);
+        } else if (cone == 6) {
+            intakeSlide.setTargetPosition(slideOutAuto1L);
             intakeSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             intakeSlide.setPower(0.7);
         }
@@ -168,18 +209,35 @@ public class Intake {
 
     }
 
-    public int intakeOutAutoDiff( int cone){
+    public int intakeOutAutoDiffR(int cone){
 
         if (cone == 2) { // Top cone starting stack
-            return Math.abs(intakeSlide.getCurrentPosition() - slideOutAuto5);
+            return Math.abs(intakeSlide.getCurrentPosition() - slideOutAuto5R);
         } else if (cone == 3) {
-            return Math.abs(intakeSlide.getCurrentPosition() - slideOutAuto4);
+            return Math.abs(intakeSlide.getCurrentPosition() - slideOutAuto4R);
         } else if (cone == 4) {
-            return Math.abs(intakeSlide.getCurrentPosition() - slideOutAuto3);
+            return Math.abs(intakeSlide.getCurrentPosition() - slideOutAuto3R);
         } else if (cone == 5) {
-            return Math.abs(intakeSlide.getCurrentPosition() - slideOutAuto2);
+            return Math.abs(intakeSlide.getCurrentPosition() - slideOutAuto2R);
         } else if (cone == 6) {
-            return Math.abs(intakeSlide.getCurrentPosition() - slideOutAuto1);
+            return Math.abs(intakeSlide.getCurrentPosition() - slideOutAuto1R);
+        }
+        return Math.abs(intakeSlide.getCurrentPosition() - slideInAuto);
+
+    }
+
+    public int intakeOutAutoDiffL(int cone){
+
+        if (cone == 2) { // Top cone starting stack
+            return Math.abs(intakeSlide.getCurrentPosition() - slideOutAuto5L);
+        } else if (cone == 3) {
+            return Math.abs(intakeSlide.getCurrentPosition() - slideOutAuto4L);
+        } else if (cone == 4) {
+            return Math.abs(intakeSlide.getCurrentPosition() - slideOutAuto3L);
+        } else if (cone == 5) {
+            return Math.abs(intakeSlide.getCurrentPosition() - slideOutAuto2L);
+        } else if (cone == 6) {
+            return Math.abs(intakeSlide.getCurrentPosition() - slideOutAuto1L);
         }
         return Math.abs(intakeSlide.getCurrentPosition() - slideInAuto);
 
@@ -278,6 +336,13 @@ public class Intake {
     public void moveJoint2 (double pos){
         flip2Servo.setPosition(pos);
 
+    }
+
+
+    // V3 color
+
+    public double getDistanceCM (){
+        return colorSensor.getDistance(DistanceUnit.CM);
     }
 
 

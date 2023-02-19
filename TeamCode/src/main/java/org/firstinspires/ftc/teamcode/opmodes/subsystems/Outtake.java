@@ -24,14 +24,20 @@ public class Outtake {
     public static int fullExtendLeft = 890;
     public static int fullExtendRight = 1030;
 
-    public static int fullExtendAutoLeft = 910;
+    public static int fullExtendAutoLeft = 908;
     public static int fullExtendAutoRight = 1020;
 
-    public static int turretAutoLeft = 450; //510
+    public static int turretAutoLeft = 479; //510
     public static int turretAutoRight = 160; //510
 
     public static double guideUpPos = .45; //510
     public static double guideDownPos = .75; //510
+
+    public static int preloadTurretOffsetL = 0; //510
+    public static int preloadLeftExtendOffset = 0; //510
+
+    public static int preloadTurretOffsetR = 0; //510
+    public static int preloadRightExtendOffset = 0; //510
 
     public void init(HardwareMap hardwareMap){
         outtakeSlide1 = hardwareMap.dcMotor.get("outtake1");
@@ -118,7 +124,7 @@ public class Outtake {
     }
 
     public void setTurretAutoLeftPreload (){
-        turret.setTargetPosition(turretAutoLeft - 5);
+        turret.setTargetPosition(turretAutoLeft + preloadTurretOffsetL);
         turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         turret.setPower(0.7);
     }
@@ -144,7 +150,7 @@ public class Outtake {
     }
 
     public void setTurretAutoRightPreload (){
-        turret.setTargetPosition(turretAutoRight - 2);
+        turret.setTargetPosition(turretAutoRight + preloadTurretOffsetR);
         turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         turret.setPower(0.7);
     }
@@ -191,11 +197,11 @@ public class Outtake {
     }
 
     public void extendSlidePreloadLeft(){
-        outtakeSlide1.setTargetPosition(fullExtendAutoLeft + 10);
+        outtakeSlide1.setTargetPosition(fullExtendAutoLeft + preloadLeftExtendOffset);
         outtakeSlide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         outtakeSlide1.setPower(0.8);
 
-        outtakeSlide2.setTargetPosition(fullExtendAutoLeft + 10);
+        outtakeSlide2.setTargetPosition(fullExtendAutoLeft + preloadLeftExtendOffset);
         outtakeSlide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         outtakeSlide2.setPower(0.8);
     }
@@ -208,6 +214,26 @@ public class Outtake {
         outtakeSlide2.setTargetPosition(fullExtendRight);
         outtakeSlide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         outtakeSlide2.setPower(1);
+    }
+
+    public void extendSlideAutoRight(){
+        outtakeSlide1.setTargetPosition(fullExtendAutoRight);
+        outtakeSlide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        outtakeSlide1.setPower(0.8);
+
+        outtakeSlide2.setTargetPosition(fullExtendAutoRight);
+        outtakeSlide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        outtakeSlide2.setPower(0.8);
+    }
+
+    public void extendSlidePreloadRight(){
+        outtakeSlide1.setTargetPosition(fullExtendAutoRight + preloadRightExtendOffset);
+        outtakeSlide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        outtakeSlide1.setPower(0.8);
+
+        outtakeSlide2.setTargetPosition(fullExtendAutoRight + preloadRightExtendOffset);
+        outtakeSlide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        outtakeSlide2.setPower(0.8);
     }
 
     public void moreExtendLeft(){
@@ -245,6 +271,12 @@ public class Outtake {
     public int slideOutDiffRight(){
 
         return Math.abs(outtakeSlide1.getCurrentPosition() - fullExtendRight);
+
+    }
+
+    public int slideOutDiffAutoRight(){
+
+        return Math.abs(outtakeSlide1.getCurrentPosition() - fullExtendAutoRight);
 
     }
 

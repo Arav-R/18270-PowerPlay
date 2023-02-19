@@ -5,7 +5,6 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
-//import com.outoftheboxrobotics.photoncore.PhotonCore;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -16,7 +15,6 @@ import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.TrajectorySe
 import org.firstinspires.ftc.teamcode.opmodes.auto.vision.AprilTagDetectionPipeline;
 import org.firstinspires.ftc.teamcode.opmodes.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.opmodes.subsystems.Outtake;
-
 import org.openftc.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
@@ -30,7 +28,7 @@ import java.util.ArrayList;
 
 @Config
 @Autonomous(group = "drive")
-public class CombinedAuto extends LinearOpMode {
+public class LeftAuto extends LinearOpMode {
 
 
     // APRILTAG STUFF
@@ -69,7 +67,7 @@ public class CombinedAuto extends LinearOpMode {
     public static int cones = 6;
     public static double cycleDelay = 0;
 
-    public static double forwardDistance  = 48.5;
+    public static double forwardDistance  = 50;
 
 
     int currentCycle = 0;
@@ -207,7 +205,7 @@ public class CombinedAuto extends LinearOpMode {
                 .turn(Math.toRadians(-94))
                 .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
                     outtake.transferDeposit();
-                    outtake.setTurretAutoLeftPreload();
+                    outtake.setTurretAutoRightPreload();
                 })
 
 
@@ -336,8 +334,8 @@ public class CombinedAuto extends LinearOpMode {
             intake.openClaw();
             intake.dropArmAuto(2); //5 cone
 
-            outtake.extendSlidePreloadLeft();
-            outtake.setTurretAutoLeftPreload();
+            outtake.extendSlidePreloadRight();
+            outtake.setTurretAutoRightPreload();
             outtake.midDeposit();
         }
 
@@ -350,7 +348,7 @@ public class CombinedAuto extends LinearOpMode {
                 case READY:
                     if (scoreTimer.seconds() >= cycleDelay) {
 
-                        outtake.scoreDepositLeft();
+                        outtake.scoreDepositRight();
 
                         scoreTimer.reset();
                         scoreState = ScoreState.DEPOSIT;
@@ -366,14 +364,14 @@ public class CombinedAuto extends LinearOpMode {
                         outtake.setTurretMiddle();
 
                         intake.openClaw();
-                        intake.autoStackPositionRight(currentCycle + 1);
+                        intake.autoStackPositionLeft(currentCycle + 1);
 
 
                         scoreState = ScoreState.PREPARE;
                     }
                     break;
                 case PREPARE:
-                    if (intake.intakeOutAutoDiffR(currentCycle + 1) < 20) {
+                    if (intake.intakeOutAutoDiffL(currentCycle + 1) < 20) {
                         intake.closeClaw();
 
 
@@ -415,7 +413,7 @@ public class CombinedAuto extends LinearOpMode {
                 case FLIP:
                     if (scoreTimer.seconds() >= transferTime) {
                         //intake.readyPosition();
-                        intake.autoStackPositionRight(currentCycle + 2);
+                        intake.autoStackPositionLeft(currentCycle + 2);
                         intake.dropArmAuto(currentCycle + 2); // Starts at 2
 
                         scoreTimer.reset();
@@ -425,14 +423,14 @@ public class CombinedAuto extends LinearOpMode {
                 case EXTEND_INTAKE:
                     if (scoreTimer.seconds() >= intakeTime) {
                         outtake.midDeposit();
-                        outtake.setTurretAutoLeft();
-                        outtake.extendSlideAutoLeft();
+                        outtake.setTurretAutoRight();
+                        outtake.extendSlideAutoRight();
 
                         scoreState = ScoreState.EXTEND_OUTTAKE;
                     }
                     break;
                 case EXTEND_OUTTAKE:
-                    if (outtake.slideOutDiffAutoLeft() < depBuffer) {
+                    if (outtake.slideOutDiffAutoRight() < depBuffer) {
 
                         cycleTime = cycleTimer.seconds();
 
