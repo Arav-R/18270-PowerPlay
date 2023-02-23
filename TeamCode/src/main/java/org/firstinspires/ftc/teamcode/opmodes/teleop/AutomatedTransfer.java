@@ -25,6 +25,8 @@ public class AutomatedTransfer extends LinearOpMode {
 
     boolean armToggle = false;
 
+    int coneHeight = 6;
+
 
 
     public static double depositTime = 0.6; //.9
@@ -66,23 +68,18 @@ public class AutomatedTransfer extends LinearOpMode {
 
     }
 
-    public enum OuttakeState {
-
-        WAIT,
-        EXTEND_OUTTAKE,
-        READY,
-        FLIP,
-        RETRACT_OUTTAKE
-
-    }
-
     public enum GrabState {
 
         READY,
         EXTEND_INTAKE,
         GRAB,
         RETRACT_INTAKE,
-        TRANSFER
+        TRANSFER,
+        WAIT,
+        EXTEND_OUTTAKE,
+        READY2,
+        FLIP,
+        RETRACT_OUTTAKE
 
     }
 
@@ -94,7 +91,6 @@ public class AutomatedTransfer extends LinearOpMode {
 
     GrabState grabState = GrabState.READY;
 
-    OuttakeState outtakeState = OuttakeState.EXTEND_OUTTAKE;
 
 
 
@@ -303,7 +299,14 @@ public class AutomatedTransfer extends LinearOpMode {
                     break;
                 case SEPARATE:
 
-                    scoreCone();
+                    grabCone();
+
+                    if (currentGamepad1.dpad_up && !currentGamepad1.dpad_up &&    coneHeight < 6){
+                        coneHeight++;
+                    } else if (currentGamepad1.dpad_down && !currentGamepad1.dpad_down &&    coneHeight > 2){
+                        coneHeight--;
+                    }
+
 
                     break;
                 case GROUND:
@@ -582,50 +585,15 @@ public class AutomatedTransfer extends LinearOpMode {
 
 
 
-    public void scoreCone(){
-        switch (outtakeState){
-            case WAIT:
-                if (gamepad2.x){
-                    outtake.setTurretRight();
-                    outtake.extendSlideRight();
-
-                    outtakeState = OuttakeState.EXTEND_OUTTAKE;
-                }
-                break;
-            case EXTEND_OUTTAKE:
-                if (outtake.slideOutDiffRight() < 40) {
-
-                    outtakeState = OuttakeState.READY;
-                }
-                break;
-            case READY:
-                if (gamepad1.right_bumper){
-                    outtake.scoreDepositRight();
-                }
-                if (gamepad2.a) {
-
-                    outtake.transferDeposit();
-                    outtake.retractSlide();
-                    outtake.setTurretMiddle();
-
-                    outtakeState = OuttakeState.RETRACT_OUTTAKE;
-                }
-                break;
-            case RETRACT_OUTTAKE:
-
-                outtakeState = OuttakeState.WAIT;
-
-                break;
-        }
-    }
-
 
     public void grabCone(){
         switch (grabState){
             case READY:
                 if (gamepad2.a) {
                     intake.openClaw();
-                    intake.dropArmAuto(2);
+                    intake.dropArmAuto(coneHeight);
+                    intake.intakePosition();
+
                     grabState = GrabState.EXTEND_INTAKE;
                 }
                 break;
@@ -651,7 +619,7 @@ public class AutomatedTransfer extends LinearOpMode {
                     intake.openClaw();
 
                     scoreTimer.reset();
-                    scoreState = ScoreState.FLIP;
+                    grabState = GrabState.TRANSFER;
                 }
                 break;
             case TRANSFER:
@@ -660,8 +628,50 @@ public class AutomatedTransfer extends LinearOpMode {
                     intake.openClaw();
 
                     scoreTimer.reset();
-                    //scoreState = ScoreState.WAIT;
+                    grabState = GrabState.WAIT;
                 }
+                break;
+            case WAIT:
+                if (gamepad2.x){
+                    outtake.setTurretLeft();
+                    outtake.extendSlideLeft();
+
+                    grabState = GrabState.EXTEND_OUTTAKE;
+                }
+
+                if (gamepad2.b){
+                    outtake.setTurretRight();
+                    outtake.extendSlideRight();
+
+                    grabState = GrabState.EXTEND_OUTTAKE;
+                }
+                
+                break;
+            case EXTEND_OUTTAKE:
+                if (outtake.slideOutDiffLeft() < 40 || outtake.slideOutDiffRight() < 40) {
+
+                    grabState = GrabState.READY2;
+                }
+                break;
+            case READY2:
+                if (gamepad1.right_bumper){
+                    outtake.scoreDepositRight();
+                }
+                if (gamepad2.a) {
+
+                    outtake.transferDeposit();
+                    outtake.retractSlide();
+                    outtake.setTurretMiddle();
+
+                    grabState = GrabState.RETRACT_OUTTAKE;
+                }
+                break;
+            case RETRACT_OUTTAKE:
+
+                if (outtake.getExtend() < 50) {
+                    grabState = GrabState.READY;
+                }
+
                 break;
         }
     }
