@@ -457,7 +457,7 @@ public class AutomatedTransfer extends LinearOpMode {
                 }
                 break;
             case RETRACT_INTAKE:
-                if (scoreTimer.seconds() >= flipTime && intake.intakeInDiff() < 10) {
+                if (scoreTimer.seconds() >= flipTime) {
                     intake.openClaw();
 
                     outtake.zeroOuttake();
@@ -541,9 +541,9 @@ public class AutomatedTransfer extends LinearOpMode {
                 }
                 break;
             case RETRACT_INTAKE:
-                if (scoreTimer.seconds() >= flipTime && intake.intakeInDiff() < 10 && outtake.retractDiff() < 10) {
+                if (scoreTimer.seconds() >= flipTime) {
                     intake.openClaw();
-
+                    outtake.zeroOuttake();
                     scoreTimer.reset();
                     scoreState = ScoreState.FLIP;
                 }

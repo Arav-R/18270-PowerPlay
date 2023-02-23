@@ -28,7 +28,7 @@ import java.util.ArrayList;
 
 @Config
 @Autonomous(group = "drive")
-public class LeftAuto extends LinearOpMode {
+public class  LeftAuto extends LinearOpMode {
 
 
     // APRILTAG STUFF
@@ -67,7 +67,7 @@ public class LeftAuto extends LinearOpMode {
     public static int cones = 6;
     public static double cycleDelay = 0;
 
-    public static double forwardDistance  = 50;
+    public static double forwardDistance  = 52;
 
 
     int currentCycle = 0;
@@ -214,13 +214,13 @@ public class LeftAuto extends LinearOpMode {
 
 
         Trajectory leftApril = drive.trajectoryBuilder(trajSeq.end())
-                .lineToLinearHeading(new Pose2d(10.5, -12, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(10.5, -12, Math.toRadians(180)))
                 .build();
         Trajectory midApril = drive.trajectoryBuilder(trajSeq.end())
-                .lineToLinearHeading(new Pose2d(35.4, -12.5, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(35.4, -12.5, Math.toRadians(180)))
                 .build();
         Trajectory rightApril = drive.trajectoryBuilder(trajSeq.end())
-                .lineToLinearHeading(new Pose2d(59, -12.5, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(59, -12.5, Math.toRadians(180)))
                 .build();
 
 
