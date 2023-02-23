@@ -23,7 +23,7 @@ public class Intake {
 
 
 
-    double clawClose = .24; //1
+    double clawClose = .27; //.24
     double clawOpen = 0.0; //.75
 
     public static double flipDown = 0; //0.015
