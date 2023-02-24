@@ -242,7 +242,7 @@ public class CircuitTele extends LinearOpMode {
                         // Rising edge detector
                         if (currentGamepad2.dpad_down && !previousGamepad2.dpad_down) {
 
-                            robotState = RobotState.GROUND;
+                            robotState = RobotState.SEPARATE;
                         }
                     }
 
@@ -665,6 +665,7 @@ public class CircuitTele extends LinearOpMode {
                 if (gamepad2.x){
                     outtake.setTurretLeft();
                     outtake.extendSlideLeft();
+                    outtake.guideUp();
 
                     grabState = GrabState.EXTEND_OUTTAKE;
                 }
@@ -672,6 +673,7 @@ public class CircuitTele extends LinearOpMode {
                 if (gamepad2.b){
                     outtake.setTurretRight();
                     outtake.extendSlideRight();
+                    outtake.guideUp();
 
                     grabState = GrabState.EXTEND_OUTTAKE;
                 }
@@ -692,6 +694,7 @@ public class CircuitTele extends LinearOpMode {
                     outtake.transferDeposit();
                     outtake.retractSlide();
                     outtake.setTurretMiddle();
+                    outtake.guideDown();
 
                     grabState = GrabState.RETRACT_OUTTAKE;
                 }
