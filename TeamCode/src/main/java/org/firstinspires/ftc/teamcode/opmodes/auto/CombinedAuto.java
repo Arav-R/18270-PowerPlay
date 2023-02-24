@@ -79,7 +79,7 @@ public class CombinedAuto extends LinearOpMode {
 
 
     public static double depositTime = 0.6;
-    public static double grabTime = .5;
+    public static double grabTime = .8;
     public static double flipTime = .8;
     public static double transferTime = .3;
     public static double intakeTime = .25;
@@ -339,6 +339,7 @@ public class CombinedAuto extends LinearOpMode {
             outtake.extendSlidePreloadLeft();
             outtake.setTurretAutoLeftPreload();
             outtake.midDeposit();
+            outtake.guideUp();
         }
 
 
@@ -364,6 +365,7 @@ public class CombinedAuto extends LinearOpMode {
                         outtake.transferDeposit();
                         outtake.retractSlide();
                         outtake.setTurretMiddle();
+                        outtake.guideDown();
 
                         intake.openClaw();
                         intake.autoStackPositionRight(currentCycle + 1);
@@ -427,6 +429,7 @@ public class CombinedAuto extends LinearOpMode {
                         outtake.midDeposit();
                         outtake.setTurretAutoLeft();
                         outtake.extendSlideAutoLeft();
+                        outtake.guideUp();
 
                         scoreState = ScoreState.EXTEND_OUTTAKE;
                     }

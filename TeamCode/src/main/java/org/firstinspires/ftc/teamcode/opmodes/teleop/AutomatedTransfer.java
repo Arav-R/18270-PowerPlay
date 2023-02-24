@@ -78,7 +78,6 @@ public class AutomatedTransfer extends LinearOpMode {
         WAIT,
         EXTEND_OUTTAKE,
         READY2,
-        FLIP,
         RETRACT_OUTTAKE
 
     }
@@ -114,6 +113,9 @@ public class AutomatedTransfer extends LinearOpMode {
 
         Gamepad currentGamepad1 = new Gamepad();
         Gamepad previousGamepad1 = new Gamepad();
+
+        Gamepad currentGamepad2 = new Gamepad();
+        Gamepad previousGamepad2 = new Gamepad();
 
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
@@ -224,6 +226,7 @@ public class AutomatedTransfer extends LinearOpMode {
                             outtake.extendSlideRight();
                             outtake.setTurretRight();
                             outtake.midDeposit();
+                            outtake.guideUp();
 
                             scoreState = ScoreState.READY;
                             robotState = RobotState.RIGHT;
@@ -231,6 +234,12 @@ public class AutomatedTransfer extends LinearOpMode {
 
                         // Rising edge detector
                         if (currentGamepad1.dpad_down && !previousGamepad1.dpad_down) {
+
+                            robotState = RobotState.GROUND;
+                        }
+
+                        // Rising edge detector
+                        if (currentGamepad2.dpad_down && !previousGamepad2.dpad_down) {
 
                             robotState = RobotState.GROUND;
                         }
@@ -379,6 +388,7 @@ public class AutomatedTransfer extends LinearOpMode {
 
 
             previousGamepad1.copy(currentGamepad1);
+            previousGamepad2.copy(currentGamepad2);
 
             telemetry.addData("Extend Position: ", outtake.getExtend());
             telemetry.addData("Turret Position: ", outtake.getTurret());
@@ -517,6 +527,7 @@ public class AutomatedTransfer extends LinearOpMode {
                     outtake.transferDeposit();
                     outtake.retractSlide();
                     outtake.setTurretMiddle();
+                    outtake.guideDown();
 
                     intake.openClaw();
                     intake.intakePosition();
@@ -565,6 +576,7 @@ public class AutomatedTransfer extends LinearOpMode {
                     outtake.midDeposit();
                     outtake.setTurretRight();
                     outtake.extendSlideRight();
+                    outtake.guideUp();
 
                     scoreState = ScoreState.EXTEND_OUTTAKE;
                 }
@@ -645,7 +657,7 @@ public class AutomatedTransfer extends LinearOpMode {
 
                     grabState = GrabState.EXTEND_OUTTAKE;
                 }
-                
+
                 break;
             case EXTEND_OUTTAKE:
                 if (outtake.slideOutDiffLeft() < 40 || outtake.slideOutDiffRight() < 40) {

@@ -77,7 +77,7 @@ public class  LeftAuto extends LinearOpMode {
 
 
     public static double depositTime = 0.6;
-    public static double grabTime = .5;
+    public static double grabTime = .8;
     public static double flipTime = .8;
     public static double transferTime = .3;
     public static double intakeTime = .25;
@@ -197,12 +197,12 @@ public class  LeftAuto extends LinearOpMode {
                     intake.openClaw();
                 })
 
-                .waitSeconds(0.25)
+                .waitSeconds(0.35)
                 .forward(forwardDistance)
                 .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
                     intake.flipArm();
                 })
-                .turn(Math.toRadians(94))
+                .turn(Math.toRadians(92))
                 .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
                     outtake.transferDeposit();
                     outtake.setTurretAutoRightPreload();
@@ -337,6 +337,7 @@ public class  LeftAuto extends LinearOpMode {
             outtake.extendSlidePreloadRight();
             outtake.setTurretAutoRightPreload();
             outtake.midDeposit();
+            outtake.guideUp();
         }
 
 
@@ -356,12 +357,17 @@ public class  LeftAuto extends LinearOpMode {
                     }
                     break;
                 case DEPOSIT:
+                    if (scoreTimer.seconds() >= depositTime - .4) {
+                        outtake.guideScore();
+                    }
+
                     if (scoreTimer.seconds() >= depositTime) {
                         currentCycle++;
 
                         outtake.transferDeposit();
                         outtake.retractSlide();
                         outtake.setTurretMiddle();
+                        outtake.guideDown();
 
                         intake.openClaw();
                         intake.autoStackPositionLeft(currentCycle + 1);
@@ -425,6 +431,7 @@ public class  LeftAuto extends LinearOpMode {
                         outtake.midDeposit();
                         outtake.setTurretAutoRight();
                         outtake.extendSlideAutoRight();
+                        outtake.guideUp();
 
                         scoreState = ScoreState.EXTEND_OUTTAKE;
                     }
