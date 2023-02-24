@@ -13,7 +13,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 @Config
 public class Intake {
 
-    private DcMotor intakeSlide;
+    public DcMotor intakeSlide;
     private Servo clawServo, flip1Servo, flip2Servo;
 
     private ColorRangeSensor colorSensor;

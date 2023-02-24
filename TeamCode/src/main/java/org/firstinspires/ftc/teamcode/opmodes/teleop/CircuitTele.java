@@ -44,8 +44,8 @@ public class CircuitTele extends LinearOpMode {
         LEFT,
         RIGHT,
         GROUND,
-        SEPARATE
-
+        SEPARATE,
+        ZEROTURRET
     }
 
     public enum RetractState {
@@ -366,12 +366,47 @@ public class CircuitTele extends LinearOpMode {
 
 
                     break;
+                case ZEROTURRET:
+
+                    if(gamepad1.left_bumper) {
+                        outtake.turret.setPower(.4);
+                    } else if (gamepad1.right_bumper) {
+                        outtake.turret.setPower(-.4);
+                    } else {
+                        outtake.turret.setPower(0);
+                    }
+
+                    if(gamepad1.left_trigger > 0.5) {
+                        intake.intakeSlide.setPower(.3);
+                    } else if (gamepad1.right_trigger > 0.5) {
+                        intake.intakeSlide.setPower(-.3);
+                    } else {
+                        intake.intakeSlide.setPower(0);
+                    }
+
+                    if(gamepad1.dpad_up) {
+                        outtake.outtakeSlide1.setPower(.3);
+                        outtake.outtakeSlide2.setPower(.3);
+
+                    } else if (gamepad1.dpad_down) {
+                        outtake.outtakeSlide1.setPower(-.3);
+                        outtake.outtakeSlide2.setPower(-.3);
+                    } else {
+                        outtake.outtakeSlide1.setPower(0);
+                        outtake.outtakeSlide2.setPower(0);
+                    }
+
+                    break;
 
             }
 
             if (gamepad1.a) { // Retract
                 retractState = RetractState.OUTTAKE;
                 robotState = RobotState.CONTRACT;
+            }
+
+            if (gamepad2.dpad_up) { // Retract
+                robotState = RobotState.ZEROTURRET;
             }
 
 

@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 @Config
 public class Outtake {
 
-    private DcMotor outtakeSlide1, outtakeSlide2, turret;
+    public DcMotor outtakeSlide1, outtakeSlide2, turret;
     private Servo depositServo, guideServo;
 
     public static  double transferPos = 0.19; //0.18
