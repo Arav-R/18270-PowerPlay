@@ -30,7 +30,7 @@ public class CircuitTele extends LinearOpMode {
 
     public static double guideOffset = -0.2; //.9
     public static double depositTime = 0.6; //.9
-    public static double grabTime = .3;
+    public static double grabTime = .4;
     public static double flipTime = .8; //.95
     public static double transferTime = .2; //.5
     public static double intakeTime = .25;
