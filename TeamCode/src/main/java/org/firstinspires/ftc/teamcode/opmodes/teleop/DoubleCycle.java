@@ -42,7 +42,8 @@ public class DoubleCycle extends LinearOpMode {
         LEFT,
         RIGHT,
         GROUND,
-        SEPARATE
+        FAR_LEFT,
+        FAR_RIGHT
 
     }
 
@@ -66,19 +67,20 @@ public class DoubleCycle extends LinearOpMode {
 
     }
 
-    public enum GrabState {
-
+    public enum FarState {
         READY,
-        EXTEND_INTAKE,
+        DEPOSIT,
+        PREPARE,
         GRAB,
-        RETRACT_INTAKE,
-        TRANSFER,
-        WAIT,
-        EXTEND_OUTTAKE,
-        READY2,
-        RETRACT_OUTTAKE
+        RETRACT_INTAKE_TURRET_MIDDLE,
+        FLIP,
+        EXTEND_INTAKE,
+        TURRET_MOVE,
+        EXTEND_OUTTAKE
 
     }
+
+
 
     RobotState robotState = RobotState.CONTRACT;
 
@@ -86,7 +88,8 @@ public class DoubleCycle extends LinearOpMode {
 
     ScoreState scoreState = ScoreState.READY;
 
-    GrabState grabState = GrabState.READY;
+    FarState farState = FarState.READY;
+
 
 
 
@@ -304,15 +307,38 @@ public class DoubleCycle extends LinearOpMode {
 
 
                     break;
-                case SEPARATE:
+                case FAR_LEFT:
 
-                    grabCone();
+                    cycleFarLeft();
 
-                    if (currentGamepad1.dpad_up && !currentGamepad1.dpad_up &&    coneHeight < 6){
-                        coneHeight++;
-                    } else if (currentGamepad1.dpad_down && !currentGamepad1.dpad_down &&    coneHeight > 2){
-                        coneHeight--;
+                    // Adjust Side to Side
+                    if (currentGamepad1.dpad_left && !previousGamepad1.dpad_left) {
+                        outtake.nudgeLeftLeft();
+                    } else if (currentGamepad1.dpad_right && !previousGamepad1.dpad_right) {
+                        outtake.nudgeLeftRight();
                     }
+
+                    // Test Placement
+                    if (currentGamepad1.right_bumper && !previousGamepad1.right_bumper) {
+                        outtake.scoreDepositLeft(); // Score
+                    } else if (!currentGamepad1.right_bumper && previousGamepad1.right_bumper) { // Falling edge detector
+                        outtake.midDeposit(); // Go Back
+                    }
+
+
+                    // Adjust Outtake Extension
+                    if (currentGamepad1.dpad_down && !previousGamepad1.dpad_down) {
+                        outtake.lessExtendLeft();
+                    } else if (currentGamepad1.dpad_up && !previousGamepad1.dpad_up) {
+                        outtake.moreExtendLeft();
+                    }
+
+
+                    break;
+                case FAR_RIGHT:
+
+
+
 
 
                     break;
@@ -594,25 +620,38 @@ public class DoubleCycle extends LinearOpMode {
     }
 
 
-
-
-    public void grabCone(){
-        switch (grabState){
+    public void cycleFarLeft() {
+        switch (farState) {
             case READY:
-                if (gamepad2.a) {
-                    intake.openClaw();
-                    intake.dropArmAuto(coneHeight);
-                    intake.intakePosition();
-
-                    grabState = GrabState.EXTEND_INTAKE;
-                }
-                break;
-            case EXTEND_INTAKE:
                 if (gamepad1.y) {
-                    intake.closeClaw();
+
+                    outtake.scoreDepositLeft();
 
                     scoreTimer.reset();
-                    grabState = GrabState.GRAB;
+                    scoreState = ScoreState.DEPOSIT;
+                }
+                break;
+            case DEPOSIT:
+                if (scoreTimer.seconds() >= depositTime) {
+                    outtake.transferDeposit();
+                    outtake.retractSlide();
+                    //outtake.setTurretMiddle();
+                    outtake.guideDown();
+
+                    intake.openClaw();
+                    intake.intakePosition();
+
+
+                    scoreState = ScoreState.PREPARE;
+                }
+                break;
+            case PREPARE:
+                if (intake.intakeOutDiff() < 20 || intake.getDistanceCM() < 1) {
+                    intake.closeClaw();
+
+
+                    scoreTimer.reset();
+                    scoreState = ScoreState.GRAB;
                 }
                 break;
             case GRAB:
@@ -620,71 +659,65 @@ public class DoubleCycle extends LinearOpMode {
                     intake.transferPosition();
                     intake.flipArm();
 
-                    scoreTimer.reset();
-                    grabState = GrabState.RETRACT_INTAKE;
-                }
-                break;
-            case RETRACT_INTAKE:
-                if (scoreTimer.seconds() >= flipTime && intake.intakeInDiff() < 10 && outtake.retractDiff() < 10) {
-                    intake.openClaw();
-
-                    scoreTimer.reset();
-                    grabState = GrabState.TRANSFER;
-                }
-                break;
-            case TRANSFER:
-                if (scoreTimer.seconds() >= transferTime) {
-                    intake.contractArm();
-                    intake.openClaw();
-
-                    scoreTimer.reset();
-                    grabState = GrabState.WAIT;
-                }
-                break;
-            case WAIT:
-                if (gamepad2.x){
-                    outtake.setTurretLeft();
-                    outtake.extendSlideLeft();
-
-                    grabState = GrabState.EXTEND_OUTTAKE;
-                }
-
-                if (gamepad2.b){
-                    outtake.setTurretRight();
-                    outtake.extendSlideRight();
-
-                    grabState = GrabState.EXTEND_OUTTAKE;
-                }
-
-                break;
-            case EXTEND_OUTTAKE:
-                if (outtake.slideOutDiffLeft() < 40 || outtake.slideOutDiffRight() < 40) {
-
-                    grabState = GrabState.READY2;
-                }
-                break;
-            case READY2:
-                if (gamepad1.right_bumper){
-                    outtake.scoreDepositRight();
-                }
-                if (gamepad2.a) {
-
-                    outtake.transferDeposit();
-                    outtake.retractSlide();
                     outtake.setTurretMiddle();
 
-                    grabState = GrabState.RETRACT_OUTTAKE;
+                    scoreTimer.reset();
+                    scoreState = ScoreState.RETRACT_INTAKE;
                 }
                 break;
-            case RETRACT_OUTTAKE:
+            case RETRACT_INTAKE_TURRET_MIDDLE:
+                if (scoreTimer.seconds() >= flipTime) {
+                    intake.openClaw();
 
-                if (outtake.getExtend() < 50) {
-                    grabState = GrabState.READY;
+                    outtake.zeroOuttake();
+                    scoreTimer.reset();
+                    scoreState = ScoreState.FLIP;
                 }
-
                 break;
+            case FLIP:
+                if (scoreTimer.seconds() >= transferTime) {
+                    intake.readyPosition();
+                    intake.dropArm();
+
+                    scoreTimer.reset();
+                    scoreState = ScoreState.EXTEND_INTAKE;
+                }
+                break;
+            case EXTEND_INTAKE:
+                if (scoreTimer.seconds() >= intakeTime) {
+                    outtake.midDeposit();
+                    outtake.setTurretLeft();
+                    //outtake.extendSlideLeft();
+
+                    scoreState = ScoreState.EXTEND_OUTTAKE;
+                }
+                break;
+            case TURRET_MOVE:
+                if (outtake.turretFarLeftDiff() < 10) {
+                    outtake.midDeposit();
+                    //outtake.setTurretLeft();
+                    outtake.extendSlideLeft();
+                    outtake.guideUp();
+
+                    scoreState = ScoreState.EXTEND_OUTTAKE;
+                }
+                break;
+            case EXTEND_OUTTAKE:
+                if (outtake.slideOutDiffLeft() < depBuffer) {
+
+                    scoreState = ScoreState.READY;
+                }
+                break;
+            default:
+                // should never be reached, as liftState should never be null
+                scoreState = ScoreState.READY;
+                break;
+
         }
     }
+
+
+
 
 
 

@@ -23,7 +23,7 @@ public class Intake {
 
 
 
-    double clawClose = .27; //.24
+    double clawClose = .2; //.27
     double clawOpen = 0.0; //.75
 
     public static double flipDown = 0; //0.015
@@ -46,7 +46,7 @@ public class Intake {
     public static int slideInAuto = -5; //235
     public static int slideOutAuto = 417; //65
 
-    public static int slideOutAuto5R = 390; //65
+    public static int slideOutAuto5R = 385; //65
     public static int slideOutAuto4R = 390; //65
     public static int slideOutAuto3R = 390; //65
     public static int slideOutAuto2R = 395; //65

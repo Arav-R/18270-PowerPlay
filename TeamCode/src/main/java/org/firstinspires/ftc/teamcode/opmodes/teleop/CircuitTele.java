@@ -28,13 +28,13 @@ public class CircuitTele extends LinearOpMode {
     int coneHeight = 6;
 
 
-    public static double guideOffset = -0.2; //.9
+    public static double guideOffset = -0.4; //.9
     public static double depositTime = 0.6; //.9
     public static double grabTime = .4;
     public static double flipTime = .8; //.95
     public static double transferTime = .2; //.5
     public static double intakeTime = .25;
-    public static int depBuffer = 400;
+    public static int depBuffer = 380;
 
 
     // States
@@ -147,6 +147,7 @@ public class CircuitTele extends LinearOpMode {
 
         while (opModeIsActive()) {
             currentGamepad1.copy(gamepad1);
+            currentGamepad2.copy(gamepad2);
 
 
             // Drive
@@ -440,7 +441,8 @@ public class CircuitTele extends LinearOpMode {
             case OUTTAKE:
                 outtake.setTurretMiddle();
                 outtake.transferDeposit();
-                outtake.moveSlide(0, 0.5);
+                outtake.moveSlide(5, 0.5);
+                outtake.guideDown();
 
                 scoreTimer.reset();
                 retractState = RetractState.INTAKE;
@@ -448,7 +450,7 @@ public class CircuitTele extends LinearOpMode {
             case INTAKE:
 
                 if (scoreTimer.seconds() >= .7) {
-                    intake.moveToPos(0, 0.5);
+                    intake.moveToPos(5, 0.5);
                     intake.openClaw();
                     intake.contractArm();
 

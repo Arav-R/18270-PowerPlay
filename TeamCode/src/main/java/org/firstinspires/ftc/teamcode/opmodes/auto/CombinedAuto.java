@@ -222,7 +222,7 @@ public class CombinedAuto extends LinearOpMode {
                 .lineToLinearHeading(new Pose2d(35.4, -12.5, Math.toRadians(0)))
                 .build();
         Trajectory rightApril = drive.trajectoryBuilder(trajSeq.end())
-                .lineToLinearHeading(new Pose2d(59, -12.5, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(59, -13, Math.toRadians(0)))
                 .build();
 
 

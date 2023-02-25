@@ -20,6 +20,8 @@ public class Outtake {
     public static int leftHigh = 484;
     public static int rightHigh = 160;
     public static int turretTransfer = 315;
+    public static int leftHighFar = 550;
+    public static int rightHighFar = 130;
 
     public static int fullExtendLeft = 890;
     public static int fullExtendRight = 1030;
@@ -30,7 +32,7 @@ public class Outtake {
     public static int turretAutoLeft = 479; //510
     public static int turretAutoRight = 145; //510
 
-    public static double guideUpPos = .45; //510
+    public static double guideUpPos = .48; //510
     public static double guideScorePos = .52; //510
     public static double guideDownPos = .75; //510
 
@@ -107,6 +109,14 @@ public class Outtake {
 
     public int getTurret (){
         return turret.getCurrentPosition();
+    }
+
+    public int turretFarLeftDiff (){
+        return Math.abs(turret.getCurrentPosition() - leftHighFar);
+    }
+
+    public int turretFarRightDiff (){
+        return Math.abs(turret.getCurrentPosition() - rightHighFar);
     }
 
 

@@ -29,12 +29,13 @@ public class AutomatedTransfer extends LinearOpMode {
 
 
 
+    public static double guideOffset = -0.4; //.9
     public static double depositTime = 0.6; //.9
     public static double grabTime = .3;
     public static double flipTime = .8; //.95
     public static double transferTime = .2; //.5
     public static double intakeTime = .25;
-    public static int depBuffer = 400;
+    public static int depBuffer = 350;
 
 
     // States
@@ -58,6 +59,7 @@ public class AutomatedTransfer extends LinearOpMode {
 
     public enum ScoreState {
         READY,
+        UNGUIDE,
         DEPOSIT,
         PREPARE,
         GRAB,
@@ -65,7 +67,6 @@ public class AutomatedTransfer extends LinearOpMode {
         FLIP,
         EXTEND_INTAKE,
         EXTEND_OUTTAKE
-
     }
 
     public enum GrabState {
@@ -404,7 +405,8 @@ public class AutomatedTransfer extends LinearOpMode {
             case OUTTAKE:
                 outtake.setTurretMiddle();
                 outtake.transferDeposit();
-                outtake.moveSlide(0, 0.5);
+                outtake.moveSlide(5, 0.5);
+                outtake.guideDown();
 
                 scoreTimer.reset();
                 retractState = RetractState.INTAKE;
@@ -412,7 +414,7 @@ public class AutomatedTransfer extends LinearOpMode {
             case INTAKE:
 
                 if (scoreTimer.seconds() >= .7) {
-                    intake.moveToPos(0, 0.5);
+                    intake.moveToPos(5, 0.5);
                     intake.openClaw();
                     intake.contractArm();
 
@@ -434,8 +436,17 @@ public class AutomatedTransfer extends LinearOpMode {
                     outtake.scoreDepositLeft();
 
                     scoreTimer.reset();
+                    scoreState = ScoreState.UNGUIDE;
+                }
+                break;
+            case UNGUIDE:
+                if (scoreTimer.seconds() >= depositTime + guideOffset) {
+
+                    outtake.guideScore();
+
                     scoreState = ScoreState.DEPOSIT;
                 }
+
                 break;
             case DEPOSIT:
                 if (scoreTimer.seconds() >= depositTime) {
@@ -519,6 +530,14 @@ public class AutomatedTransfer extends LinearOpMode {
                     outtake.scoreDepositRight();
 
                     scoreTimer.reset();
+                    scoreState = ScoreState.UNGUIDE;
+                }
+                break;
+            case UNGUIDE:
+                if (scoreTimer.seconds() >= depositTime + guideOffset) {
+
+                    outtake.guideScore();
+
                     scoreState = ScoreState.DEPOSIT;
                 }
                 break;
