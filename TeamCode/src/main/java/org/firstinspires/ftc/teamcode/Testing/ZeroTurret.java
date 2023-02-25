@@ -48,7 +48,7 @@ public class ZeroTurret extends LinearOpMode {
             double strafe = gamepad1.left_stick_x;
             double turn = gamepad1.right_stick_x;
 
-            drive.drive(forward * .3, strafe * .3, turn * .3);
+            drive.drive(forward , strafe , turn );
 
 
             
