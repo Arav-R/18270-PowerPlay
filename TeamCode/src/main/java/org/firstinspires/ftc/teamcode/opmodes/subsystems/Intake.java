@@ -46,11 +46,11 @@ public class Intake {
     public static int slideInAuto = -5; //235
     public static int slideOutAuto = 417; //65
 
-    public static int slideOutAuto5R = 385; //65
-    public static int slideOutAuto4R = 390; //65
-    public static int slideOutAuto3R = 390; //65
-    public static int slideOutAuto2R = 395; //65
-    public static int slideOutAuto1R = 395; //65
+    public static int slideOutAuto5R = 395; //65
+    public static int slideOutAuto4R = 397; //65
+    public static int slideOutAuto3R = 397; //65
+    public static int slideOutAuto2R = 399; //65
+    public static int slideOutAuto1R = 399; //65
 
 
     public static int slideOutAuto5L = 473; //65

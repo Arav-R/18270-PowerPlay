@@ -81,7 +81,7 @@ public class  LeftAuto extends LinearOpMode {
     public static double flipTime = .8;
     public static double transferTime = .3;
     public static double intakeTime = .25;
-    public static int depBuffer = 400;
+    public static int depBuffer = 300;
 
 
     // States
@@ -516,7 +516,7 @@ public class  LeftAuto extends LinearOpMode {
 
         }
 
-        while (intake.intakeInDiff() > 10 && outtake.getTurret() > 10){
+        while (intake.intakeInDiff() > 10 && outtake.getTurret() > 10 && opModeIsActive()){
 
         }
 

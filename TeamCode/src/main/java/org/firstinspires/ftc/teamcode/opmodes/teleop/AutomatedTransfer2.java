@@ -403,7 +403,7 @@ public class AutomatedTransfer2 extends LinearOpMode {
             case OUTTAKE:
                 outtake.setTurretMiddle();
                 outtake.transferDeposit();
-                outtake.moveSlide(5, 0.5);
+                outtake.moveSlide(35, 0.5);
                 outtake.guideDown();
 
                 scoreTimer.reset();
