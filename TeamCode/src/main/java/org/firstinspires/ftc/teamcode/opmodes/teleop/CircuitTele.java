@@ -5,7 +5,6 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -212,7 +211,7 @@ public class CircuitTele extends LinearOpMode {
                             outtake.extendSlideLeft();
                             outtake.setTurretLeft();
                             outtake.midDeposit();
-                            outtake.guideUp();
+                            outtake.guideUpLeft();
 
                             scoreState = ScoreState.READY;
                             robotState = RobotState.LEFT;
@@ -228,7 +227,7 @@ public class CircuitTele extends LinearOpMode {
                             outtake.extendSlideRight();
                             outtake.setTurretRight();
                             outtake.midDeposit();
-                            outtake.guideUp();
+                            outtake.guideUpLeft();
 
                             scoreState = ScoreState.READY;
                             robotState = RobotState.RIGHT;
@@ -539,7 +538,7 @@ public class CircuitTele extends LinearOpMode {
                     outtake.midDeposit();
                     outtake.setTurretLeft();
                     outtake.extendSlideLeft();
-                    outtake.guideUp();
+                    outtake.guideUpLeft();
 
                     scoreState = ScoreState.EXTEND_OUTTAKE;
                 }
@@ -631,7 +630,7 @@ public class CircuitTele extends LinearOpMode {
                     outtake.midDeposit();
                     outtake.setTurretRight();
                     outtake.extendSlideRight();
-                    outtake.guideUp();
+                    outtake.guideUpLeft();
 
                     scoreState = ScoreState.EXTEND_OUTTAKE;
                 }
@@ -702,7 +701,7 @@ public class CircuitTele extends LinearOpMode {
                 if (gamepad2.x){
                     outtake.setTurretLeft();
                     outtake.extendSlideLeft();
-                    outtake.guideUp();
+                    outtake.guideUpLeft();
 
                     grabState = GrabState.EXTEND_OUTTAKE;
                 }
@@ -710,7 +709,7 @@ public class CircuitTele extends LinearOpMode {
                 if (gamepad2.b){
                     outtake.setTurretRight();
                     outtake.extendSlideRight();
-                    outtake.guideUp();
+                    outtake.guideUpLeft();
 
                     grabState = GrabState.EXTEND_OUTTAKE;
                 }

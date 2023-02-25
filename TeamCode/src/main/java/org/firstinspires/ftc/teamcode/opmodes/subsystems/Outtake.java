@@ -32,7 +32,8 @@ public class Outtake {
     public static int turretAutoLeft = 479; //510
     public static int turretAutoRight = 145; //510
 
-    public static double guideUpPos = .48; //510
+    public static double guideUpPosLeft = .48; //510
+    public static double guideUpPosRight = .5; //510
     public static double guideScorePos = .52; //510
     public static double guideDownPos = .75; //510
 
@@ -331,8 +332,11 @@ public class Outtake {
 
     // Guide
 
-    public void guideUp(){
-        guideServo.setPosition(guideUpPos);
+    public void guideUpLeft(){
+        guideServo.setPosition(guideUpPosLeft);
+    }
+    public void guideUpRight(){
+        guideServo.setPosition(guideUpPosRight);
     }
     public void guideScore(){
         guideServo.setPosition(guideScorePos);

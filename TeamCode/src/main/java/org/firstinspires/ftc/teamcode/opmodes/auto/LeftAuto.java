@@ -337,7 +337,7 @@ public class  LeftAuto extends LinearOpMode {
             outtake.extendSlidePreloadRight();
             outtake.setTurretAutoRightPreload();
             outtake.midDeposit();
-            outtake.guideUp();
+            outtake.guideUpLeft();
         }
 
 
@@ -431,7 +431,7 @@ public class  LeftAuto extends LinearOpMode {
                         outtake.midDeposit();
                         outtake.setTurretAutoRight();
                         outtake.extendSlideAutoRight();
-                        outtake.guideUp();
+                        outtake.guideUpLeft();
 
                         scoreState = ScoreState.EXTEND_OUTTAKE;
                     }

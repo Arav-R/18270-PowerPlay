@@ -8,14 +8,13 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-
 import org.firstinspires.ftc.teamcode.opmodes.subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.opmodes.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.opmodes.subsystems.Outtake;
 
 @Config
 @TeleOp
-public class AutomatedTransfer extends LinearOpMode {
+public class AutomatedTransfer2 extends LinearOpMode {
 
 
     boolean reverseToggle = true;

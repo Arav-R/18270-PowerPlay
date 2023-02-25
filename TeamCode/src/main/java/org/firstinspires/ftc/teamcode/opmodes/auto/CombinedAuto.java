@@ -339,7 +339,7 @@ public class CombinedAuto extends LinearOpMode {
             outtake.extendSlidePreloadLeft();
             outtake.setTurretAutoLeftPreload();
             outtake.midDeposit();
-            outtake.guideUp();
+            outtake.guideUpLeft();
         }
 
 
@@ -429,7 +429,7 @@ public class CombinedAuto extends LinearOpMode {
                         outtake.midDeposit();
                         outtake.setTurretAutoLeft();
                         outtake.extendSlideAutoLeft();
-                        outtake.guideUp();
+                        outtake.guideUpLeft();
 
                         scoreState = ScoreState.EXTEND_OUTTAKE;
                     }

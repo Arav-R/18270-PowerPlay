@@ -211,7 +211,7 @@ public class DoubleCycle extends LinearOpMode {
                             outtake.extendSlideLeft();
                             outtake.setTurretLeft();
                             outtake.midDeposit();
-                            outtake.guideUp();
+                            outtake.guideUpLeft();
 
                             scoreState = ScoreState.READY;
                             robotState = RobotState.LEFT;
@@ -227,7 +227,7 @@ public class DoubleCycle extends LinearOpMode {
                             outtake.extendSlideRight();
                             outtake.setTurretRight();
                             outtake.midDeposit();
-                            outtake.guideUp();
+                            outtake.guideUpLeft();
 
                             scoreState = ScoreState.READY;
                             robotState = RobotState.RIGHT;
@@ -516,7 +516,7 @@ public class DoubleCycle extends LinearOpMode {
                     outtake.midDeposit();
                     outtake.setTurretLeft();
                     outtake.extendSlideLeft();
-                    outtake.guideUp();
+                    outtake.guideUpLeft();
 
                     scoreState = ScoreState.EXTEND_OUTTAKE;
                 }
@@ -600,7 +600,7 @@ public class DoubleCycle extends LinearOpMode {
                     outtake.midDeposit();
                     outtake.setTurretRight();
                     outtake.extendSlideRight();
-                    outtake.guideUp();
+                    outtake.guideUpLeft();
 
                     scoreState = ScoreState.EXTEND_OUTTAKE;
                 }
@@ -697,7 +697,7 @@ public class DoubleCycle extends LinearOpMode {
                     outtake.midDeposit();
                     //outtake.setTurretLeft();
                     outtake.extendSlideLeft();
-                    outtake.guideUp();
+                    outtake.guideUpLeft();
 
                     scoreState = ScoreState.EXTEND_OUTTAKE;
                 }
