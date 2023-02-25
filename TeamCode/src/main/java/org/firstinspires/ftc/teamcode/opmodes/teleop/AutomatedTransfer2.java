@@ -421,6 +421,20 @@ public class AutomatedTransfer2 extends LinearOpMode {
                 break;
             case DONE:
 
+                // Test Placement
+                if (gamepad1.right_bumper) {
+                    outtake.scoreDepositLeft(); // Score
+                } else { // Falling edge detector
+                    outtake.transferDeposit(); // Go Back
+                }
+
+                // Test Placement
+                if (gamepad1.right_trigger > .15) {
+                    outtake.guideUpLeft(); // Score
+                } else { // Falling edge detector
+                    outtake.guideDown(); // Go Back
+                }
+
 
                 break;
         }
