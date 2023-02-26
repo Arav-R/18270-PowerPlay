@@ -334,7 +334,7 @@ public class CombinedAuto extends LinearOpMode {
             // Expand
             intake.readyPosition();
             intake.openClaw();
-            intake.dropArmAuto(2); //5 cone
+            intake.dropArmAutoR(2); //5 cone
 
             outtake.extendSlidePreloadLeft();
             outtake.setTurretAutoLeftPreload();
@@ -418,7 +418,7 @@ public class CombinedAuto extends LinearOpMode {
                     if (scoreTimer.seconds() >= transferTime) {
                         //intake.readyPosition();
                         intake.autoStackPositionRight(currentCycle + 2);
-                        intake.dropArmAuto(currentCycle + 2); // Starts at 2
+                        intake.dropArmAutoR(currentCycle + 2); // Starts at 2
 
                         scoreTimer.reset();
                         scoreState = ScoreState.EXTEND_INTAKE;
@@ -516,6 +516,8 @@ public class CombinedAuto extends LinearOpMode {
 
         while (intake.intakeInDiff() > 10 && outtake.getTurret() > 10 && opModeIsActive()){
 
+            telemetry.addLine("retracting");
+            telemetry.update();
         }
 
         telemetry.addLine("Auto Done");

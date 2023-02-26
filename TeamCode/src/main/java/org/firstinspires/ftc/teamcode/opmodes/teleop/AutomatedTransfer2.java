@@ -634,7 +634,7 @@ public class AutomatedTransfer2 extends LinearOpMode {
             case READY:
                 if (gamepad2.a) {
                     intake.openClaw();
-                    intake.dropArmAuto(coneHeight);
+                    intake.dropArmAutoR(coneHeight);
                     intake.intakePosition();
 
                     grabState = GrabState.EXTEND_INTAKE;

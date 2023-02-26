@@ -220,7 +220,7 @@ public class  LeftAuto extends LinearOpMode {
                 .lineToLinearHeading(new Pose2d(35.4, -12.5, Math.toRadians(180)))
                 .build();
         Trajectory rightApril = drive.trajectoryBuilder(trajSeq.end())
-                .lineToLinearHeading(new Pose2d(59, -13, Math.toRadians(180)))
+                .lineToLinearHeading(new Pose2d(59, -14, Math.toRadians(180)))
                 .build();
 
 
@@ -332,7 +332,7 @@ public class  LeftAuto extends LinearOpMode {
             // Expand
             intake.readyPosition();
             intake.openClaw();
-            intake.dropArmAuto(2); //5 cone
+            intake.dropArmAutoL(2); //5 cone
 
             outtake.extendSlidePreloadRight();
             outtake.setTurretAutoRightPreload();
@@ -420,7 +420,7 @@ public class  LeftAuto extends LinearOpMode {
                     if (scoreTimer.seconds() >= transferTime) {
                         //intake.readyPosition();
                         intake.autoStackPositionLeft(currentCycle + 2);
-                        intake.dropArmAuto(currentCycle + 2); // Starts at 2
+                        intake.dropArmAutoL(currentCycle + 2); // Starts at 2
 
                         scoreTimer.reset();
                         scoreState = ScoreState.EXTEND_INTAKE;

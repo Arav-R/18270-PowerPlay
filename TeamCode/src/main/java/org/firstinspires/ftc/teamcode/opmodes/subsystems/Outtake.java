@@ -27,7 +27,7 @@ public class Outtake {
     public static int fullExtendRight = 1030;
 
     public static int fullExtendAutoLeft = 912;
-    public static int fullExtendAutoRight = 980;
+    public static int fullExtendAutoRight = 983;
 
     public static int turretAutoLeft = 483; //510
     public static int turretAutoRight = 147; //510

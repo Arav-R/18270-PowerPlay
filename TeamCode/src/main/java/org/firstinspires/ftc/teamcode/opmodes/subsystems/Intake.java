@@ -31,11 +31,17 @@ public class Intake {
     public static double flipContract = 0.4;
     public static double flipStartingPosition = 0.51;
 
-    public static double flip5 = 0.072; //.095
+    public static double flip5 = 0.073; //.095
     public static double flip4 = 0.065; //.075
     public static double flip3 = 0.037; //.06
     public static double flip2 = .02; //0.03
     public static double flip1 = 0; //0.015
+
+    public static double flip5L = 0.074; //.095
+    public static double flip4L = 0.065; //.075
+    public static double flip3L = 0.037; //.06
+    public static double flip2L = .02; //0.03
+    public static double flip1L = 0; //0.015
 
 
 
@@ -46,14 +52,14 @@ public class Intake {
     public static int slideInAuto = -5; //235
     public static int slideOutAuto = 417; //65
 
-    public static int slideOutAuto5R = 395; //65
-    public static int slideOutAuto4R = 397; //65
-    public static int slideOutAuto3R = 397; //65
-    public static int slideOutAuto2R = 399; //65
-    public static int slideOutAuto1R = 399; //65
+    public static int slideOutAuto5R = 398; //65
+    public static int slideOutAuto4R = 400; //65
+    public static int slideOutAuto3R = 400; //65
+    public static int slideOutAuto2R = 402; //65
+    public static int slideOutAuto1R = 402; //65
 
 
-    public static int slideOutAuto5L = 470; //65
+    public static int slideOutAuto5L = 462; //65
     public static int slideOutAuto4L = 467; //65
     public static int slideOutAuto3L = 471; //65
     public static int slideOutAuto2L = 471; //65
@@ -289,7 +295,7 @@ public class Intake {
     }
 
     // For Auto
-    public void dropArmAuto (int cone){
+    public void dropArmAutoR(int cone){
 
         if (cone == 2) { // Top cone starting stack
             flip1Servo.setPosition(flip5);
@@ -306,6 +312,29 @@ public class Intake {
         } else if (cone == 6) {
             flip1Servo.setPosition(flip1);
             flip2Servo.setPosition(flip1);
+        }
+
+
+    }
+
+    // For Auto
+    public void dropArmAutoL(int cone){
+
+        if (cone == 2) { // Top cone starting stack
+            flip1Servo.setPosition(flip5L);
+            flip2Servo.setPosition(flip5L);
+        } else if (cone == 3) {
+            flip1Servo.setPosition(flip4L);
+            flip2Servo.setPosition(flip4L);
+        } else if (cone == 4) {
+            flip1Servo.setPosition(flip3L);
+            flip2Servo.setPosition(flip3L);
+        } else if (cone == 5) {
+            flip1Servo.setPosition(flip2L);
+            flip2Servo.setPosition(flip2L);
+        } else if (cone == 6) {
+            flip1Servo.setPosition(flip1L);
+            flip2Servo.setPosition(flip1L);
         }
 
 
