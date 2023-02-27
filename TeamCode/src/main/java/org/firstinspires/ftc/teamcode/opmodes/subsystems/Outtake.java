@@ -77,6 +77,8 @@ public class Outtake {
     }
 
     public void zeroTurret(){
+        turret.setPower(0);
+
         turret.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         turret.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
@@ -172,6 +174,9 @@ public class Outtake {
 
     // Outtake
     public void zeroOuttake(){
+        outtakeSlide1.setPower(0);
+        outtakeSlide2.setPower(0);
+
         outtakeSlide1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         outtakeSlide2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         outtakeSlide1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
