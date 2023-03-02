@@ -43,6 +43,17 @@ public class Outtake {
     public static int preloadTurretOffsetR = 0; //510
     public static int preloadRightExtendOffset = 0; //510
 
+
+
+
+    // different junctions left and right positions
+    public static int leftMid = 500;
+    public static int rightMid = 600;
+
+    public static int leftlow = 0;
+    public static int rightlow = 0;
+
+
     public void init(HardwareMap hardwareMap){
         outtakeSlide1 = hardwareMap.dcMotor.get("outtake1");
         outtakeSlide2 = hardwareMap.dcMotor.get("outtake2");
@@ -377,6 +388,31 @@ public class Outtake {
 //        outtakeSlide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 //        outtakeSlide1.setPower(speed);
 //    }
+
+
+    // Different junction positions
+
+    public void slideLeftMid(){
+        outtakeSlide1.setTargetPosition(leftMid);
+        outtakeSlide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        outtakeSlide1.setPower(1);
+
+        outtakeSlide2.setTargetPosition(leftMid);
+        outtakeSlide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        outtakeSlide2.setPower(1);
+    }
+
+    public void slideRightMid(){
+        outtakeSlide1.setTargetPosition(rightMid);
+        outtakeSlide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        outtakeSlide1.setPower(1);
+
+        outtakeSlide2.setTargetPosition(rightMid);
+        outtakeSlide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        outtakeSlide2.setPower(1);
+    }
+
+
 
 
 

@@ -359,6 +359,11 @@ public class Intake {
 
     }
 
+    // get arm position
+    public boolean isArmDown (){
+        return flip1Servo.getPosition() == flipDown;
+    }
+
     public void moveJoint1 (double pos){
         flip1Servo.setPosition(pos);
 
