@@ -22,6 +22,9 @@ public class AllPoles extends LinearOpMode {
     public static double depositTime = 0.6; //.9
 
 
+    int coneHeight = 6;
+
+
 
 
     // Grab FSM
@@ -114,8 +117,14 @@ public class AllPoles extends LinearOpMode {
 
             // arm and grab
 
+            if (currentGamepad2.dpad_up && !currentGamepad2.dpad_up &&    coneHeight < 6){
+                coneHeight++;
+            } else if (currentGamepad2.dpad_down && !currentGamepad2.dpad_down &&    coneHeight > 2){
+                coneHeight--;
+            }
+
             if (gamepad1.dpad_right) {
-                intake.dropArm();
+                intake.dropArmAutoR(coneHeight);
                 intake.openClaw();
             }
             // grab, flip, ungrab, retract FSM
