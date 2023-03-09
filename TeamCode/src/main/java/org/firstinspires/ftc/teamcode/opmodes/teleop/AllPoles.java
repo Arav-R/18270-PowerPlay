@@ -95,6 +95,16 @@ public class AllPoles extends LinearOpMode {
         outtake.zeroTurret();
         outtake.zeroOuttake();
 
+        // runon init
+
+        outtake.transferDeposit();
+        outtake.retractSlide();
+        outtake.setTurretMiddle();
+        outtake.guideDown();
+
+        intake.contractArm();
+        intake.openClaw();
+
         if (isStopRequested()) return;
 
         while (opModeIsActive()) {
