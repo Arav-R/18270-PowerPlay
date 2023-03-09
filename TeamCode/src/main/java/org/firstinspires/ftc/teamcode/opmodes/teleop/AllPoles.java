@@ -143,7 +143,7 @@ public class AllPoles extends LinearOpMode {
             switch (clawState) {
                 case READY:
 
-                    if (gamepad1.x && intake.isArmNotTransfer()) {
+                    if (gamepad1.x && intake.isArmDown()) {
                         intake.closeClaw();
 
                         clawTimer.reset();

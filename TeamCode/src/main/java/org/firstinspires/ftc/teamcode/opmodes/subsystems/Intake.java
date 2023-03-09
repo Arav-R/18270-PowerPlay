@@ -367,8 +367,8 @@ public class Intake {
     }
 
     // get arm position
-    public boolean isArmNotTransfer(){
-        return flip1Servo.getPosition() < flipUp;
+    public boolean isArmDown(){
+        return flip1Servo.getPosition() < flipContract;
     }
 
     public void moveJoint1 (double pos){
