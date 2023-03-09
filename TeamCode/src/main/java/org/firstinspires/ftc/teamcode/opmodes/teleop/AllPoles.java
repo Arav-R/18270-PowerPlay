@@ -241,7 +241,7 @@ public class AllPoles extends LinearOpMode {
 
             switch (scoreState) {
                 case READY:
-                    if (gamepad1.y && ((outtake.getTurret() < 300) || (outtake.getTurret() > 330))) { // y button and turret not middle
+                    if (gamepad1.right_bumper && ((outtake.getTurret() < 300) || (outtake.getTurret() > 330))) { // y button and turret not middle
 
                         outtake.scoreDepositLeft();
 
