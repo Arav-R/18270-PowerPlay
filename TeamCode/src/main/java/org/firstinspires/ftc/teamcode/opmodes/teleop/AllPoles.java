@@ -118,9 +118,9 @@ public class AllPoles extends LinearOpMode {
             double turn = gamepad1.right_stick_x;
 
             if(gamepad1.left_bumper) {
-                drive.drive(forward * .3, strafe * .3, turn * .3);
+                drive.driveReverse(forward * .3, strafe * .3, turn * .3);
             } else {
-                drive.drive(forward, strafe, turn);
+                drive.driveReverse(forward, strafe, turn);
             }
 
 
