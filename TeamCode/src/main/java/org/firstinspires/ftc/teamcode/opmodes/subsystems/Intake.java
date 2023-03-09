@@ -97,6 +97,7 @@ public class Intake {
     }
 
     public void zeroIntake(){
+
         intakeSlide.setPower(0);
 
         intakeSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);

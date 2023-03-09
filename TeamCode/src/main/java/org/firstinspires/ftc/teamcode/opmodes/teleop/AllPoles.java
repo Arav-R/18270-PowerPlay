@@ -154,7 +154,7 @@ public class AllPoles extends LinearOpMode {
 
                     if (clawTimer.seconds() > .3) {
                         intake.flipArm();
-                        intake.transferPosition();
+                        //intake.transferPosition();
 
                         outtake.transferDeposit();
                         outtake.retractSlide();
