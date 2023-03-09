@@ -188,7 +188,14 @@ public class AllPoles extends LinearOpMode {
             }
 
 
+            // retract
 
+            if (gamepad1.left_trigger > .15) { // left High
+                outtake.transferDeposit();
+                outtake.retractSlide();
+                outtake.setTurretMiddle();
+                outtake.guideDown();
+            }
 
             // left outtake positions
 
