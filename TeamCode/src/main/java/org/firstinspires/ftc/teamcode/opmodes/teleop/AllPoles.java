@@ -118,7 +118,7 @@ public class AllPoles extends LinearOpMode {
             double turn = gamepad1.right_stick_x;
 
             if(gamepad1.left_bumper) {
-                drive.driveReverse(forward * .3, strafe * .3, turn * .3);
+                drive.driveReverse(forward * .3, strafe * .3, turn * .3); // outtake forward
             } else {
                 drive.driveReverse(forward, strafe, turn);
             }
@@ -143,7 +143,7 @@ public class AllPoles extends LinearOpMode {
             switch (clawState) {
                 case READY:
 
-                    if (gamepad1.x && intake.isArmDown()) {
+                    if (gamepad1.x && intake.isArmNotTransfer()) {
                         intake.closeClaw();
 
                         clawTimer.reset();
