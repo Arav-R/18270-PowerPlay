@@ -104,6 +104,7 @@ public class AllPoles extends LinearOpMode {
 
         intake.contractArm();
         intake.openClaw();
+        intake.holdIntakeSlide();
 
         if (isStopRequested()) return;
 
@@ -154,7 +155,7 @@ public class AllPoles extends LinearOpMode {
 
                     if (clawTimer.seconds() > .3) {
                         intake.flipArm();
-                        //intake.transferPosition();
+                        intake.holdIntakeSlide();
 
                         outtake.transferDeposit();
                         outtake.retractSlide();
