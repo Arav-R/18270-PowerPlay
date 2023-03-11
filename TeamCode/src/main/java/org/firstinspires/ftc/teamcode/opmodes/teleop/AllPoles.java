@@ -134,6 +134,7 @@ public class AllPoles extends LinearOpMode {
                 coneHeight--;
             }
 
+            // arm down
             if (gamepad1.dpad_right) {
                 intake.dropArmAutoR(coneHeight);
                 intake.openClaw();
