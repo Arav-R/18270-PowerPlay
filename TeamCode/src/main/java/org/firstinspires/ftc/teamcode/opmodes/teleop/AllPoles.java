@@ -202,6 +202,8 @@ public class AllPoles extends LinearOpMode {
             else { // arm down
                 intake.dropArmAutoR(coneHeight);
                 intake.openClaw();
+
+                clawState = ClawState.READY;
             }
 
 
