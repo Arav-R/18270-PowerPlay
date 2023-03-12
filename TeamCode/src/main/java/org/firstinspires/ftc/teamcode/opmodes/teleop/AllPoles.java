@@ -17,6 +17,8 @@ import org.firstinspires.ftc.teamcode.opmodes.subsystems.Outtake;
 public class AllPoles extends LinearOpMode {
 
 
+    boolean intakeToggle = false;
+
     // Variables
     public static double guideOffset = -0.4; //.9
     public static double depositTime = 0.6; //.9
@@ -125,6 +127,83 @@ public class AllPoles extends LinearOpMode {
 
 
 
+            // toggle
+            // Rising edge detector
+            if (currentGamepad1.x && !previousGamepad1.x) {
+                // This will set intakeToggle to true if it was previously false
+                // and intakeToggle to false if it was previously true,
+                // providing a toggling behavior.
+                intakeToggle = !intakeToggle;
+            }
+
+            // Using the toggle variable to control the robot.
+            if (intakeToggle) {
+                // grab, flip, ungrab, retract FSM
+
+                switch (clawState) {
+                    case READY:
+
+                        if (gamepad1.x && intake.isArmDown()) {
+                            intake.closeClaw();
+
+                            clawTimer.reset();
+                            clawState = ClawState.GRAB;
+                        }
+
+                        break;
+                    case GRAB:
+
+                        if (clawTimer.seconds() > .3) {
+                            intake.flipArm();
+                            intake.holdIntakeSlide();
+
+                            outtake.transferDeposit();
+                            outtake.retractSlide();
+                            outtake.setTurretMiddle();
+                            outtake.guideDown();
+
+                            clawTimer.reset();
+                            clawState = ClawState.FLIP;
+                        }
+
+                        break;
+                    case FLIP:
+
+                        if (clawTimer.seconds() > .8) {
+                            intake.openClaw();
+
+                            outtake.zeroOuttake();
+
+                            clawTimer.reset();
+                            clawState = ClawState.RELEASE;
+                        }
+
+                        break;
+                    case RELEASE:
+
+                        if (clawTimer.seconds() > .2) {
+                            intake.contractArm();
+
+                            clawTimer.reset();
+                            clawState = ClawState.RETRACT;
+                        }
+
+                        break;
+                    case RETRACT:
+
+                        if (clawTimer.seconds() > .1) {
+                            clawState = ClawState.READY;
+                        }
+
+                        break;
+                }
+
+            }
+            else { // arm down
+                intake.dropArmAutoR(coneHeight);
+                intake.openClaw();
+            }
+
 
             // arm and grab
 
@@ -132,71 +211,6 @@ public class AllPoles extends LinearOpMode {
                 coneHeight++;
             } else if (currentGamepad2.dpad_down && !currentGamepad2.dpad_down &&    coneHeight > 2){
                 coneHeight--;
-            }
-
-            // arm down
-            if (gamepad1.dpad_right) {
-                intake.dropArmAutoR(coneHeight);
-                intake.openClaw();
-            }
-            // grab, flip, ungrab, retract FSM
-
-            switch (clawState) {
-                case READY:
-
-                    if (gamepad1.x && intake.isArmDown()) {
-                        intake.closeClaw();
-
-                        clawTimer.reset();
-                        clawState = ClawState.GRAB;
-                    }
-
-                    break;
-                case GRAB:
-
-                    if (clawTimer.seconds() > .3) {
-                        intake.flipArm();
-                        intake.holdIntakeSlide();
-
-                        outtake.transferDeposit();
-                        outtake.retractSlide();
-                        outtake.setTurretMiddle();
-                        outtake.guideDown();
-
-                        clawTimer.reset();
-                        clawState = ClawState.FLIP;
-                    }
-
-                    break;
-                case FLIP:
-
-                    if (clawTimer.seconds() > .8) {
-                        intake.openClaw();
-
-                        outtake.zeroOuttake();
-
-                        clawTimer.reset();
-                        clawState = ClawState.RELEASE;
-                    }
-
-                    break;
-                case RELEASE:
-
-                    if (clawTimer.seconds() > .2) {
-                        intake.contractArm();
-
-                        clawTimer.reset();
-                        clawState = ClawState.RETRACT;
-                    }
-
-                    break;
-                case RETRACT:
-
-                    if (clawTimer.seconds() > .1) {
-                        clawState = ClawState.READY;
-                    }
-
-                    break;
             }
 
 
