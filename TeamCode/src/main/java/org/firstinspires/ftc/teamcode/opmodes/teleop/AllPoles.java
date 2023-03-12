@@ -204,10 +204,14 @@ public class AllPoles extends LinearOpMode {
                 intake.openClaw();
 
                 clawState = ClawState.READY;
+
+                if (intake.getDistanceCM() < .5) {
+                    intakeToggle = true;
+                }
             }
 
 
-            // arm and grab
+            // arm height
 
             if (currentGamepad2.dpad_up && !currentGamepad2.dpad_up &&    coneHeight < 6){
                 coneHeight++;
@@ -323,7 +327,7 @@ public class AllPoles extends LinearOpMode {
             telemetry.addData("Extend Position: ", outtake.getExtend());
             telemetry.addData("Turret Position: ", outtake.getTurret());
             telemetry.addData("Intake Slide Position: ", intake.getSlide());
-            //telemetry.addData("Distance CM: ", intake.getDistanceCM());
+            telemetry.addData("Distance CM: ", intake.getDistanceCM());
 
             telemetry.update();
         }
