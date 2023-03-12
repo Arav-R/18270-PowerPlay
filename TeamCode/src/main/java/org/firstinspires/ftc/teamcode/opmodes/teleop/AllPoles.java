@@ -220,7 +220,7 @@ public class AllPoles extends LinearOpMode {
             }
 
 
-            // retract
+            // retract emergency
 
             if (gamepad1.left_trigger > .15) { // left High
                 outtake.transferDeposit();
@@ -235,14 +235,20 @@ public class AllPoles extends LinearOpMode {
                 outtake.setTurretLeft();
                 outtake.extendSlideLeft();
                 outtake.midDeposit();
+
+                scoreState = ScoreState.READY;
             } else if (gamepad1.dpad_left) { // left Medium
                 outtake.setTurretLeft();
                 outtake.slideLeftMid();
                 outtake.midDeposit();
+
+                scoreState = ScoreState.READY;
             } else if (gamepad1.dpad_down) { // left Low
                 outtake.setTurretLeft();
                 //outtake.slideLeftLow();
                 outtake.midDeposit();
+
+                scoreState = ScoreState.READY;
             }
 
             // right outtake positions
@@ -251,14 +257,20 @@ public class AllPoles extends LinearOpMode {
                 outtake.setTurretRight();
                 outtake.extendSlideRight();
                 outtake.midDeposit();
+
+                scoreState = ScoreState.READY;
             } else if (gamepad1.b) { // right Medium
                 outtake.setTurretRight();
                 outtake.slideRightMid();
                 outtake.midDeposit();
+
+                scoreState = ScoreState.READY;
             } else if (gamepad1.a) { // right Low
                 outtake.setTurretRight();
                 // outtake.extendLeftMedium
                 outtake.midDeposit();
+
+                scoreState = ScoreState.READY;
             }
 
 
@@ -273,7 +285,7 @@ public class AllPoles extends LinearOpMode {
 
             switch (scoreState) {
                 case READY:
-                    if (gamepad1.right_bumper && ((outtake.getTurret() < 300) || (outtake.getTurret() > 330))) { // y button and turret not middle
+                    if (gamepad1.right_bumper && ((outtake.getTurret() < 300) || (outtake.getTurret() > 330))) { // right bumper button and turret not middle
 
                         outtake.scoreDepositLeft();
 
