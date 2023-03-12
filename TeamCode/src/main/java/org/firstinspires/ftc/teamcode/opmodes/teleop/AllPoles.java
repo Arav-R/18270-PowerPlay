@@ -57,6 +57,8 @@ public class AllPoles extends LinearOpMode {
 
     ElapsedTime clawTimer = new ElapsedTime();
     ElapsedTime scoreTimer = new ElapsedTime();
+
+    ElapsedTime endgameTimer = new ElapsedTime();
     //ElapsedTime readyTimer = new ElapsedTime();
 
     Drivetrain drive = new Drivetrain();
@@ -92,6 +94,8 @@ public class AllPoles extends LinearOpMode {
         outtake.moveOuttakeZero();
 
         waitForStart();
+
+        endgameTimer.reset();
 
         intake.zeroIntake();
         outtake.zeroTurret();
@@ -228,6 +232,12 @@ public class AllPoles extends LinearOpMode {
             // Score FSM (Flip, auto retract)
 
             scoreCone();
+            
+
+            // Endgame timer
+            if (endgameTimer.seconds() == 90) {
+                gamepad1.rumble(1000); // rumble for 1 second
+            }
 
 
 
@@ -245,7 +255,7 @@ public class AllPoles extends LinearOpMode {
             telemetry.addData("Outtake Slide 2 Current: ", outtake.getOuttakeSlideCurrent2());
             telemetry.addData("Turret Current: ", outtake.getTurretCurrent());
 
-            
+
 
             telemetry.update();
         }
