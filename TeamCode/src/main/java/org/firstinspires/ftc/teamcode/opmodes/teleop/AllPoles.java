@@ -140,63 +140,7 @@ public class AllPoles extends LinearOpMode {
             if (intakeToggle) {
                 // grab, flip, ungrab, retract FSM
 
-                switch (clawState) {
-                    case READY:
-
-                        if (intake.isArmDown()) {
-                            intake.closeClaw();
-
-                            clawTimer.reset();
-                            clawState = ClawState.GRAB;
-                        }
-
-                        break;
-                    case GRAB:
-
-                        if (clawTimer.seconds() > .3) {
-                            intake.flipArm();
-                            intake.holdIntakeSlide();
-
-                            outtake.transferDeposit();
-                            outtake.retractSlide();
-                            outtake.setTurretMiddle();
-                            outtake.guideDown();
-
-                            clawTimer.reset();
-                            clawState = ClawState.FLIP;
-                        }
-
-                        break;
-                    case FLIP:
-
-                        if (clawTimer.seconds() > .8) {
-                            intake.openClaw();
-
-                            outtake.zeroOuttake();
-
-                            clawTimer.reset();
-                            clawState = ClawState.RELEASE;
-                        }
-
-                        break;
-                    case RELEASE:
-
-                        if (clawTimer.seconds() > .2) {
-                            intake.contractArm();
-
-                            clawTimer.reset();
-                            clawState = ClawState.RETRACT;
-                        }
-
-                        break;
-                    case RETRACT:
-
-                        if (clawTimer.seconds() > .1) {
-                            clawState = ClawState.READY;
-                        }
-
-                        break;
-                }
+                grabCone();
 
             }
             else { // arm down
@@ -283,44 +227,7 @@ public class AllPoles extends LinearOpMode {
 
             // Score FSM (Flip, auto retract)
 
-            switch (scoreState) {
-                case READY:
-                    if (gamepad1.right_bumper && ((outtake.getTurret() < 300) || (outtake.getTurret() > 330))) { // right bumper button and turret not middle
-
-                        outtake.scoreDepositLeft();
-
-                        scoreTimer.reset();
-                        scoreState = ScoreState.UNGUIDE;
-                    }
-                    break;
-                case UNGUIDE:
-                    if (scoreTimer.seconds() >= depositTime + guideOffset) {
-
-                        outtake.guideScore();
-
-                        scoreState = ScoreState.DEPOSIT;
-                    }
-
-                    break;
-                case DEPOSIT:
-                    if (scoreTimer.seconds() >= depositTime) {
-                        outtake.transferDeposit();
-                        outtake.retractSlide();
-                        outtake.setTurretMiddle();
-                        outtake.guideDown();
-
-
-                        scoreState = ScoreState.PREPARE;
-                    }
-                    break;
-                case PREPARE:
-                    if (outtake.getExtend() < 50) {
-
-                        scoreTimer.reset();
-                        scoreState = ScoreState.READY;
-                    }
-                    break;
-            }
+            scoreCone();
 
 
 
@@ -345,6 +252,108 @@ public class AllPoles extends LinearOpMode {
         }
     }
 
+    public void grabCone(){
+        switch (clawState) {
+            case READY:
+
+                if (intake.isArmDown()) {
+                    intake.closeClaw();
+
+                    clawTimer.reset();
+                    clawState = ClawState.GRAB;
+                }
+
+                break;
+            case GRAB:
+
+                if (clawTimer.seconds() > .3) {
+                    intake.flipArm();
+                    intake.holdIntakeSlide();
+
+                    outtake.transferDeposit();
+                    outtake.retractSlide();
+                    outtake.setTurretMiddle();
+                    outtake.guideDown();
+
+                    clawTimer.reset();
+                    clawState = ClawState.FLIP;
+                }
+
+                break;
+            case FLIP:
+
+                if (clawTimer.seconds() > .8) {
+                    intake.openClaw();
+
+                    outtake.zeroOuttake();
+
+                    clawTimer.reset();
+                    clawState = ClawState.RELEASE;
+                }
+
+                break;
+            case RELEASE:
+
+                if (clawTimer.seconds() > .2) {
+                    intake.contractArm();
+
+                    clawTimer.reset();
+                    clawState = ClawState.RETRACT;
+                }
+
+                break;
+            case RETRACT:
+
+                if (clawTimer.seconds() > .1) {
+                    clawState = ClawState.READY;
+                }
+
+                break;
+        }
+
+    }
+
+    public void scoreCone(){
+        switch (scoreState) {
+            case READY:
+                if (gamepad1.right_bumper && ((outtake.getTurret() < 300) || (outtake.getTurret() > 330))) { // right bumper button and turret not middle
+
+                    outtake.scoreDepositLeft();
+
+                    scoreTimer.reset();
+                    scoreState = ScoreState.UNGUIDE;
+                }
+                break;
+            case UNGUIDE:
+                if (scoreTimer.seconds() >= depositTime + guideOffset) {
+
+                    outtake.guideScore();
+
+                    scoreState = ScoreState.DEPOSIT;
+                }
+
+                break;
+            case DEPOSIT:
+                if (scoreTimer.seconds() >= depositTime) {
+                    outtake.transferDeposit();
+                    outtake.retractSlide();
+                    outtake.setTurretMiddle();
+                    outtake.guideDown();
+
+
+                    scoreState = ScoreState.PREPARE;
+                }
+                break;
+            case PREPARE:
+                if (outtake.getExtend() < 50) {
+
+                    scoreTimer.reset();
+                    scoreState = ScoreState.READY;
+                }
+                break;
+        }
+
+    }
 
 
 
