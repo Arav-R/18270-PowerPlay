@@ -3,13 +3,16 @@ package org.firstinspires.ftc.teamcode.opmodes.subsystems;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 
 @Config
 public class Outtake {
 
-    public DcMotor outtakeSlide1, outtakeSlide2, turret;
+    public DcMotorEx outtakeSlide1, outtakeSlide2, turret;
     private Servo depositServo, guideServo, lockServo;
 
     public static  double transferPos = 0.19; //0.18
@@ -59,9 +62,9 @@ public class Outtake {
 
 
     public void init(HardwareMap hardwareMap){
-        outtakeSlide1 = hardwareMap.dcMotor.get("outtake1");
-        outtakeSlide2 = hardwareMap.dcMotor.get("outtake2");
-        turret = hardwareMap.dcMotor.get("turret");
+        outtakeSlide1 = hardwareMap.get(DcMotorEx.class,"outtake1");
+        outtakeSlide2 = hardwareMap.get(DcMotorEx.class,"outtake2");
+        turret = hardwareMap.get(DcMotorEx.class,"turret");
         depositServo = hardwareMap.servo.get("deposit");
 
         guideServo = hardwareMap.servo.get("guide");
@@ -423,6 +426,23 @@ public class Outtake {
 
     public void setLockClosed(){
         lockServo.setPosition(lockClosePos);
+    }
+
+
+
+
+    // Outtake slide current
+
+    public double getOuttakeSlideCurrent1(){
+        return outtakeSlide1.getCurrent(CurrentUnit.AMPS);
+    }
+
+    public double getOuttakeSlideCurrent2(){
+        return outtakeSlide2.getCurrent(CurrentUnit.AMPS);
+    }
+
+    public double getTurretCurrent(){
+        return turret.getCurrent(CurrentUnit.AMPS);
     }
 
 

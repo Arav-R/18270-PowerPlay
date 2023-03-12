@@ -4,16 +4,18 @@ package org.firstinspires.ftc.teamcode.opmodes.subsystems;
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.ColorRangeSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 @Config
 public class Intake {
 
-    public DcMotor intakeSlide;
+    public DcMotorEx intakeSlide;
     private Servo clawServo, flip1Servo, flip2Servo;
 
     private ColorRangeSensor colorSensor;
@@ -67,7 +69,7 @@ public class Intake {
 
 
     public void init(HardwareMap hardwareMap){
-        intakeSlide = hardwareMap.dcMotor.get("intakeslide");
+        intakeSlide = hardwareMap.get(DcMotorEx.class, "intakeSlide");
         clawServo = hardwareMap.servo.get("claw");
 
         flip1Servo = hardwareMap.servo.get("flip1");
@@ -387,6 +389,13 @@ public class Intake {
     public double getDistanceCM (){
         return colorSensor.getDistance(DistanceUnit.CM);
     }
+
+    // Intake slide current
+
+    public double getIntakeSlideCurrent(){
+        return intakeSlide.getCurrent(CurrentUnit.AMPS);
+    }
+
 
 
 //    public double getDistanceCM(){
