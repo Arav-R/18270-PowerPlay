@@ -59,6 +59,8 @@ public class AllPoles extends LinearOpMode {
     ElapsedTime scoreTimer = new ElapsedTime();
 
     ElapsedTime endgameTimer = new ElapsedTime();
+
+
     //ElapsedTime readyTimer = new ElapsedTime();
 
     Drivetrain drive = new Drivetrain();
@@ -75,6 +77,22 @@ public class AllPoles extends LinearOpMode {
         Gamepad previousGamepad2 = new Gamepad();
 
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
+
+        Gamepad.RumbleEffect countdown = new Gamepad.RumbleEffect.Builder()
+                .addStep(1, 0, 500)  //  Rumble right motor 100% for 500 mSec
+                .addStep(0.0, 0.0, 500)  //  Pause for 300 mSec
+
+                .addStep(0, 1, 500)  //  Rumble left motor 100% for 250 mSec
+                .addStep(0.0, 0.0, 500)  //  Pause for 300 mSec
+
+                .addStep(1, 0, 500)  //  Rumble right motor 100% for 500 mSec
+                .addStep(0.0, 0.0, 500)  //  Pause for 300 mSec
+
+                .addStep(0, 1, 500)  //  Rumble left motor 100% for 250 mSec
+                .addStep(0.0, 0.0, 500)  //  Pause for 250 mSec
+
+                .addStep(1.0, 1, 500)  //  Rumble left motor 100% for 250 mSec
+                .build();
 
 
 
@@ -232,11 +250,15 @@ public class AllPoles extends LinearOpMode {
             // Score FSM (Flip, auto retract)
 
             scoreCone();
-            
+
 
             // Endgame timer
             if (endgameTimer.seconds() == 90) {
                 gamepad1.rumble(1000); // rumble for 1 second
+            }
+
+            if (endgameTimer.seconds() == 115) { // 5 seconds left
+                gamepad1.runRumbleEffect(countdown); // rumble for 1 second
             }
 
 
