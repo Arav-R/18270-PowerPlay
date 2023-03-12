@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class Outtake {
 
     public DcMotor outtakeSlide1, outtakeSlide2, turret;
-    private Servo depositServo, guideServo;
+    private Servo depositServo, guideServo, lockServo;
 
     public static  double transferPos = 0.19; //0.18
     public static double midPos = 0.38; //0.37
@@ -32,10 +32,14 @@ public class Outtake {
     public static int turretAutoLeft = 483; //510
     public static int turretAutoRight = 147; //510
 
-    public static double guideUpPosLeft = .48; //510
-    public static double guideUpPosRight = .5; //510
-    public static double guideScorePos = .52; //510
-    public static double guideDownPos = .75; //510
+    public static double guideUpPosLeft = .48;
+    public static double guideUpPosRight = .5;
+    public static double guideScorePos = .52;
+    public static double guideDownPos = .75;
+
+    public static double lockClosePos = .75;
+    public static double lockOpenPos = 0;
+
 
     public static int preloadTurretOffsetL = 0; //510
     public static int preloadLeftExtendOffset = 0; //510
@@ -61,6 +65,7 @@ public class Outtake {
         depositServo = hardwareMap.servo.get("deposit");
 
         guideServo = hardwareMap.servo.get("guide");
+        //lockServo = hardwareMap.servo.get("lock");
 
 
         outtakeSlide1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -410,6 +415,14 @@ public class Outtake {
         outtakeSlide2.setTargetPosition(rightMid);
         outtakeSlide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         outtakeSlide2.setPower(1);
+    }
+
+    public void setLockOpen(){
+        lockServo.setPosition(lockOpenPos);
+    }
+
+    public void setLockClosed(){
+        lockServo.setPosition(lockClosePos);
     }
 
 
