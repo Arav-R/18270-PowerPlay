@@ -189,9 +189,9 @@ public class AllPoles extends LinearOpMode {
 
             // arm height
 
-            if (currentGamepad2.dpad_up && !currentGamepad2.dpad_up &&    coneHeight < 6){
+            if (currentGamepad1.dpad_right && !currentGamepad1.dpad_right &&    coneHeight < 6){
                 coneHeight++;
-            } else if (currentGamepad2.dpad_down && !currentGamepad2.dpad_down &&    coneHeight > 2){
+            } else if (currentGamepad1.dpad_down && !currentGamepad1.dpad_down &&    coneHeight > 2){
                 coneHeight--;
             }
 
@@ -219,13 +219,14 @@ public class AllPoles extends LinearOpMode {
                 outtake.midDeposit();
 
                 scoreState = ScoreState.READY;
-            } else if (gamepad1.dpad_down) { // left Low
-                //outtake.setTurretLeft();
-                //outtake.slideLeftLow();
-                outtake.midDeposit();
-
-                scoreState = ScoreState.READY;
             }
+//            else if (gamepad1.dpad_down) { // left Low
+//                //outtake.setTurretLeft();
+//                //outtake.slideLeftLow();
+//                outtake.midDeposit();
+//
+//                scoreState = ScoreState.READY;
+//            }
 
             // right outtake positions
 
@@ -319,7 +320,7 @@ public class AllPoles extends LinearOpMode {
                 break;
             case GRAB:
 
-                if (clawTimer.seconds() > .3) {
+                if (clawTimer.seconds() > .35) {
                     intake.flipArm();
                     intake.holdIntakeSlide();
 
