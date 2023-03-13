@@ -390,6 +390,10 @@ public class Intake {
         return colorSensor.getDistance(DistanceUnit.CM);
     }
 
+    public int getRed(){
+        return colorSensor.red();
+    }
+
     // Intake slide current
 
     public double getIntakeSlideCurrent(){

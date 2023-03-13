@@ -19,6 +19,8 @@ public class AllPoles extends LinearOpMode {
 
     boolean intakeToggle = false;
 
+    boolean haveCone = false;
+
     // Variables
     public static double guideOffset = -0.4; //.9
     public static double depositTime = 0.6; //.9
@@ -218,7 +220,7 @@ public class AllPoles extends LinearOpMode {
 
                 scoreState = ScoreState.READY;
             } else if (gamepad1.dpad_down) { // left Low
-                outtake.setTurretLeft();
+                //outtake.setTurretLeft();
                 //outtake.slideLeftLow();
                 outtake.midDeposit();
 
@@ -240,7 +242,7 @@ public class AllPoles extends LinearOpMode {
 
                 scoreState = ScoreState.READY;
             } else if (gamepad1.a) { // right Low
-                outtake.setTurretRightLow();
+                //outtake.setTurretRightLow();
                 // outtake.extendLeftMedium
                 outtake.midDeposit();
 
@@ -342,10 +344,20 @@ public class AllPoles extends LinearOpMode {
                     clawState = ClawState.RELEASE;
                 }
 
+                // bypass if no cone
+                if (intake.getDistanceCM() > 3) {
+                    intake.contractArm();
+
+                    clawTimer.reset();
+                    clawState = ClawState.RETRACT;
+                }
+
                 break;
             case RELEASE:
 
                 if (clawTimer.seconds() > .35) {
+                    haveCone = true;
+
                     intake.contractArm();
 
                     clawTimer.reset();
@@ -367,7 +379,7 @@ public class AllPoles extends LinearOpMode {
     public void scoreCone(){
         switch (scoreState) {
             case READY:
-                if (gamepad1.right_bumper && ((outtake.getTurret() < 300) || (outtake.getTurret() > 330))) { // right bumper button and turret not middle
+                if (gamepad1.right_bumper && haveCone) { // right bumper button and have a cone
 
                     outtake.scoreDepositLeft();
 
