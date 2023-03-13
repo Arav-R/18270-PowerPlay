@@ -197,7 +197,7 @@ public class Outtake {
         turret.setTargetPosition(turretAutoRight + preloadTurretOffsetR);
         turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         turret.setPower(0.7);
-    } 
+    }
 
 
 
@@ -379,7 +379,7 @@ public class Outtake {
     }
 
     public void guideUpLow(){
-        guideServo.setPosition(guideUpPosRight);
+        guideServo.setPosition(guideUpLow);
     }
 
     public void guideScore(){
