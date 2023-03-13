@@ -270,13 +270,13 @@ public class AllPoles extends LinearOpMode {
             if (endgameTimer.seconds() == 90) {
                 gamepad1.rumble(1000); // rumble for 1 second
 
-                gamepad1.setLedColor(0, 1, 0, 30000);
+                gamepad1.setLedColor(0, 1, 0, Gamepad.LED_DURATION_CONTINUOUS);
             }
 
             if (endgameTimer.seconds() == 115) { // 5 seconds left
                 gamepad1.runRumbleEffect(countdown); // rumble for 1 second
 
-                gamepad1.setLedColor(1.0, 0, 0, 5000);
+                gamepad1.setLedColor(1.0, 0, 0, Gamepad.LED_DURATION_CONTINUOUS);
             }
 
 
