@@ -394,6 +394,10 @@ public class Intake {
         return colorSensor.red();
     }
 
+    public int getBlue(){
+        return colorSensor.red();
+    }
+
     // Intake slide current
 
     public double getIntakeSlideCurrent(){

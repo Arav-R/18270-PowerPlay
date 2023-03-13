@@ -61,6 +61,11 @@ public class ColorTest extends LinearOpMode {
 
             telemetry.addData("Distance: ", intake.getDistanceCM());
 
+            telemetry.addData("Blue: ", intake.getBlue());
+
+            telemetry.addData("Red: ", intake.getRed());
+
+
             telemetry.update();
         }
     }
