@@ -214,7 +214,7 @@ public class  LeftAuto extends LinearOpMode {
 
 
         Trajectory leftApril = drive.trajectoryBuilder(trajSeq.end())
-                .lineToLinearHeading(new Pose2d(10.5, -12, Math.toRadians(180)))
+                .lineToLinearHeading(new Pose2d(8, -12, Math.toRadians(180)))
                 .build();
         Trajectory midApril = drive.trajectoryBuilder(trajSeq.end())
                 .lineToLinearHeading(new Pose2d(35.4, -12.5, Math.toRadians(180)))

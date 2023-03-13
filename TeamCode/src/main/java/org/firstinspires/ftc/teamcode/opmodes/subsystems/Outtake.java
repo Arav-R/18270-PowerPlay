@@ -22,6 +22,9 @@ public class Outtake {
 
     public static int leftHigh = 488;
     public static int rightHigh = 160;
+
+    public static int rightHighLow = 120;
+
     public static int turretTransfer = 315;
     public static int leftHighFar = 550;
     public static int rightHighFar = 130;
@@ -40,6 +43,8 @@ public class Outtake {
     public static double guideScorePos = .52;
     public static double guideDownPos = .75;
 
+    public static double guideUpLow = .65;
+
     public static double lockClosePos = .75;
     public static double lockOpenPos = 0;
 
@@ -54,8 +59,8 @@ public class Outtake {
 
 
     // different junctions left and right positions
-    public static int leftMid = 500;
-    public static int rightMid = 600;
+    public static int leftMid = 325;
+    public static int rightMid = 400;
 
     public static int leftlow = 0;
     public static int rightlow = 0;
@@ -92,7 +97,7 @@ public class Outtake {
 
     // Turret Code
     public void moveTurretZero(){
-        turret.setPower(-.2);
+        turret.setPower(-.35);
     }
 
     public void zeroTurret(){
@@ -167,11 +172,17 @@ public class Outtake {
     public void setTurretMiddle (){
         turret.setTargetPosition(turretTransfer);
         turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        turret.setPower(0.5);
+        turret.setPower(.4);
     }
 
     public void setTurretRight (){
         turret.setTargetPosition(rightHigh);
+        turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        turret.setPower(0.7);
+    }
+
+    public void setTurretRightLow (){
+        turret.setTargetPosition(rightlow);
         turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         turret.setPower(0.7);
     }
@@ -186,7 +197,7 @@ public class Outtake {
         turret.setTargetPosition(turretAutoRight + preloadTurretOffsetR);
         turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         turret.setPower(0.7);
-    }
+    } 
 
 
 
@@ -292,6 +303,10 @@ public class Outtake {
         return outtakeSlide1.getCurrentPosition();
     }
 
+    public int getExtendTarget (){
+        return outtakeSlide1.getTargetPosition();
+    }
+
     public int slideOutDiffLeft(){
 
         return Math.abs(outtakeSlide1.getCurrentPosition() - fullExtendLeft);
@@ -362,6 +377,11 @@ public class Outtake {
     public void guideUpRight(){
         guideServo.setPosition(guideUpPosRight);
     }
+
+    public void guideUpLow(){
+        guideServo.setPosition(guideUpPosRight);
+    }
+
     public void guideScore(){
         guideServo.setPosition(guideScorePos);
     }
@@ -443,6 +463,13 @@ public class Outtake {
 
     public double getTurretCurrent(){
         return turret.getCurrent(CurrentUnit.AMPS);
+    }
+
+
+    // Outtake Velocity
+
+    public double getOuttakeSlideVelocity1(){
+        return outtakeSlide1.getVelocity();
     }
 
 

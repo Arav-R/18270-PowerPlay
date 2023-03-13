@@ -29,7 +29,7 @@ public class Intake {
     double clawOpen = 0.0; //.75
 
     public static double flipDown = 0; //0.015
-    public static double flipUp = 0.55; //.64
+    public static double flipUp = 0.57; //.64
     public static double flipContract = 0.4;
     public static double flipStartingPosition = 0.51;
 
@@ -69,7 +69,7 @@ public class Intake {
 
 
     public void init(HardwareMap hardwareMap){
-        intakeSlide = hardwareMap.get(DcMotorEx.class, "intakeSlide");
+        intakeSlide = hardwareMap.get(DcMotorEx.class, "intakeslide");
         clawServo = hardwareMap.servo.get("claw");
 
         flip1Servo = hardwareMap.servo.get("flip1");
@@ -370,7 +370,7 @@ public class Intake {
 
     // get arm position
     public boolean isArmDown(){
-        return flip1Servo.getPosition() < flipContract;
+        return flip1Servo.getPosition() < .1;
     }
 
     public void moveJoint1 (double pos){

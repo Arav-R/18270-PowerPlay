@@ -392,7 +392,15 @@ public class AutomatedTransfer2 extends LinearOpMode {
             telemetry.addData("Extend Position: ", outtake.getExtend());
             telemetry.addData("Turret Position: ", outtake.getTurret());
             telemetry.addData("Intake Slide Position: ", intake.getSlide());
-            //telemetry.addData("Distance CM: ", intake.getDistanceCM());
+            telemetry.addData("Distance CM: ", intake.getDistanceCM());
+
+            // motor currents
+            telemetry.addData("Intake Slide Current: ", intake.getIntakeSlideCurrent());
+            telemetry.addData("Outtake Slide 1 Current: ", outtake.getOuttakeSlideCurrent1());
+            telemetry.addData("Outtake Slide 2 Current: ", outtake.getOuttakeSlideCurrent2());
+            telemetry.addData("Turret Current: ", outtake.getTurretCurrent());
+
+
 
             telemetry.update();
         }

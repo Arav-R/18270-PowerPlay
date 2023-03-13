@@ -106,6 +106,8 @@ public class AllPoles extends LinearOpMode {
 
         // Zero mechanisms
         outtake.transferDeposit();
+        intake.contractArm();
+
 
         intake.moveIntakeZero();
         outtake.moveTurretZero();
@@ -171,9 +173,15 @@ public class AllPoles extends LinearOpMode {
 
                 clawState = ClawState.READY;
 
-                if (intake.getDistanceCM() < .5) {
+                if (intake.getDistanceCM() < 1) {
                     intakeToggle = true;
                 }
+
+                // Velocity auto zero outtake
+                if (outtake.getExtend() < 100 && Math.abs(outtake.getOuttakeSlideVelocity1()) < 0.1 && outtake.getExtendTarget() == 0) {
+                    outtake.zeroOuttake();
+                }
+
             }
 
 
@@ -232,7 +240,7 @@ public class AllPoles extends LinearOpMode {
 
                 scoreState = ScoreState.READY;
             } else if (gamepad1.a) { // right Low
-                outtake.setTurretRight();
+                outtake.setTurretRightLow();
                 // outtake.extendLeftMedium
                 outtake.midDeposit();
 
@@ -242,7 +250,11 @@ public class AllPoles extends LinearOpMode {
 
             //guide and score
             if (gamepad1.right_trigger > .15) {
-                outtake.guideUpLeft();
+                if (outtake.getExtend() < 100) {
+                    outtake.guideUpLow();
+                } else {
+                    outtake.guideUpLeft();
+                }
             }else {
                 outtake.guideDown();
             }
@@ -255,11 +267,17 @@ public class AllPoles extends LinearOpMode {
             // Endgame timer
             if (endgameTimer.seconds() == 90) {
                 gamepad1.rumble(1000); // rumble for 1 second
+
+                gamepad1.setLedColor(0, 1, 0, 30000);
             }
 
             if (endgameTimer.seconds() == 115) { // 5 seconds left
                 gamepad1.runRumbleEffect(countdown); // rumble for 1 second
+
+                gamepad1.setLedColor(1.0, 0, 0, 5000);
             }
+
+
 
 
 
@@ -276,6 +294,8 @@ public class AllPoles extends LinearOpMode {
             telemetry.addData("Outtake Slide 1 Current: ", outtake.getOuttakeSlideCurrent1());
             telemetry.addData("Outtake Slide 2 Current: ", outtake.getOuttakeSlideCurrent2());
             telemetry.addData("Turret Current: ", outtake.getTurretCurrent());
+
+            telemetry.addData("Outtake Velocity: ", outtake.getOuttakeSlideVelocity1());
 
 
 
@@ -313,7 +333,7 @@ public class AllPoles extends LinearOpMode {
                 break;
             case FLIP:
 
-                if (clawTimer.seconds() > .8) {
+                if (clawTimer.seconds() > .9) {
                     intake.openClaw();
 
                     outtake.zeroOuttake();
@@ -325,7 +345,7 @@ public class AllPoles extends LinearOpMode {
                 break;
             case RELEASE:
 
-                if (clawTimer.seconds() > .2) {
+                if (clawTimer.seconds() > .35) {
                     intake.contractArm();
 
                     clawTimer.reset();

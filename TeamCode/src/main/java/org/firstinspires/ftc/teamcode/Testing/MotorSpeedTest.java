@@ -15,7 +15,7 @@ public class MotorSpeedTest extends LinearOpMode {
 //    public static int motorPos = 0;
 //    public static double motorSpeed = 0.7;
 
-    public static String motorName = "turret";
+    public static String motorName = "outtake1";
 
 
     @Override
