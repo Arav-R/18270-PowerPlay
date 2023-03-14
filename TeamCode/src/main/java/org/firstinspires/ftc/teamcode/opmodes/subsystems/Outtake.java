@@ -334,11 +334,11 @@ public class Outtake {
     public void retractSlide (){
         outtakeSlide1.setTargetPosition(0);
         outtakeSlide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        outtakeSlide1.setPower(0.4);
+        outtakeSlide1.setPower(0.5);
 
         outtakeSlide2.setTargetPosition(0);
         outtakeSlide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        outtakeSlide2.setPower(0.4);
+        outtakeSlide2.setPower(0.5);
     }
 
     public int retractDiff (){
