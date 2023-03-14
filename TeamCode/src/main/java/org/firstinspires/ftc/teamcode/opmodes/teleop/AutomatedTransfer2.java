@@ -83,7 +83,7 @@ public class AutomatedTransfer2 extends LinearOpMode {
 
     RobotState robotState = RobotState.CONTRACT;
 
-    RetractState retractState = RetractState.DONE;
+    RetractState retractState = RetractState.OUTTAKE;
 
     ScoreState scoreState = ScoreState.READY;
 

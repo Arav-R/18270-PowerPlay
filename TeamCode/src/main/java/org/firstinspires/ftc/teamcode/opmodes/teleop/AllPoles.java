@@ -80,9 +80,7 @@ public class AllPoles extends LinearOpMode {
     public enum RobotState {
         CONTRACT,
         LEFT,
-        RIGHT,
-        GROUND,
-        SEPARATE
+        RIGHT
 
     }
 
@@ -107,7 +105,7 @@ public class AllPoles extends LinearOpMode {
     
     RobotState robotState = RobotState.CONTRACT;
 
-    RetractState retractState = RetractState.DONE;
+    RetractState retractState = RetractState.OUTTAKE;
 
     CycleState cycleState = CycleState.READY;
 
@@ -208,6 +206,17 @@ public class AllPoles extends LinearOpMode {
                 // This will set intakeToggle to true if it was previously false
                 // and intakeToggle to false if it was previously true,
                 // providing a toggling behavior.
+                outtake.transferDeposit();
+                outtake.retractSlide();
+                outtake.setTurretMiddle();
+                outtake.guideDown();
+
+                intake.contractArm();
+                intake.openClaw();
+                intake.holdIntakeSlide();
+
+
+
                 circuitToggle = !circuitToggle;
             }
 
@@ -379,17 +388,6 @@ public class AllPoles extends LinearOpMode {
                                 robotState = RobotState.RIGHT;
                             }
 
-                            // Rising edge detector
-                            if (currentGamepad1.dpad_down && !previousGamepad1.dpad_down) {
-
-                                robotState = RobotState.GROUND;
-                            }
-
-                            // Rising edge detector
-                            if (currentGamepad2.dpad_down && !previousGamepad2.dpad_down) {
-
-                                robotState = RobotState.GROUND;
-                            }
                         }
 
                         break;

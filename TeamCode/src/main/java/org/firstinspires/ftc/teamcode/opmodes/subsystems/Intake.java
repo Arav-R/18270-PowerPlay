@@ -108,7 +108,6 @@ public class Intake {
 
 
 
-
     public void moveToPos (int pos, double speed){
         intakeSlide.setTargetPosition(pos);
         intakeSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
