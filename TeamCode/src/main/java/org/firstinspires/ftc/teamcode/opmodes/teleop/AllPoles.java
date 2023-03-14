@@ -282,21 +282,24 @@ public class AllPoles extends LinearOpMode {
                     outtake.guideDown();
                 }
 
-                // left outtake positions
 
-                if (gamepad1.dpad_up) { // left High
-                    outtake.setTurretLeft();
-                    outtake.extendSlideLeft();
-                    outtake.midDeposit();
+                if (clawState == ClawState.READY) {
 
-                    scoreState = ScoreState.READY;
-                } else if (gamepad1.dpad_left) { // left Medium
-                    outtake.setTurretLeft();
-                    outtake.slideLeftMid();
-                    outtake.midDeposit();
+                    // left outtake positions
 
-                    scoreState = ScoreState.READY;
-                }
+                    if (gamepad1.dpad_up) { // left High
+                        outtake.setTurretLeft();
+                        outtake.extendSlideLeft();
+                        outtake.midDeposit();
+
+                        scoreState = ScoreState.READY;
+                    } else if (gamepad1.dpad_left) { // left Medium
+                        outtake.setTurretLeft();
+                        outtake.slideLeftMid();
+                        outtake.midDeposit();
+
+                        scoreState = ScoreState.READY;
+                    }
 //            else if (gamepad1.dpad_down) { // left Low
 //                //outtake.setTurretLeft();
 //                //outtake.slideLeftLow();
@@ -305,27 +308,31 @@ public class AllPoles extends LinearOpMode {
 //                scoreState = ScoreState.READY;
 //            }
 
-                // right outtake positions
+                    // right outtake positions
 
-                if (gamepad1.y) { // right High
-                    outtake.setTurretRight();
-                    outtake.extendSlideRight();
-                    outtake.midDeposit();
 
-                    scoreState = ScoreState.READY;
-                } else if (gamepad1.b) { // right Medium
-                    outtake.setTurretRight();
-                    outtake.slideRightMid();
-                    outtake.midDeposit();
+                    if (gamepad1.y) { // right High
+                        outtake.setTurretRight();
+                        outtake.extendSlideRight();
+                        outtake.midDeposit();
 
-                    scoreState = ScoreState.READY;
-                } else if (gamepad1.a) { // right Low
-                    //outtake.setTurretRightLow();
-                    // outtake.extendLeftMedium
-                    outtake.midDeposit();
+                        scoreState = ScoreState.READY;
+                    } else if (gamepad1.b) { // right Medium
+                        outtake.setTurretRight();
+                        outtake.slideRightMid();
+                        outtake.midDeposit();
 
-                    scoreState = ScoreState.READY;
+                        scoreState = ScoreState.READY;
+                    } else if (gamepad1.a) { // right Low
+                        //outtake.setTurretRightLow();
+                        // outtake.extendLeftMedium
+                        outtake.midDeposit();
+
+                        scoreState = ScoreState.READY;
+                    }
+
                 }
+
 
 
                 //guide and score
