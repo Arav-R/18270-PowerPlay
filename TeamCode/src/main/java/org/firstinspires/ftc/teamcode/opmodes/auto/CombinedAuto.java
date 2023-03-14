@@ -376,7 +376,7 @@ public class CombinedAuto extends LinearOpMode {
                     break;
                 case PREPARE:
                     if (intake.intakeOutAutoDiffR(currentCycle + 1) < 20 || intake.getDistanceCM() < 1) {
-                        intake.closeClaw();
+                        intake.closeClawAuto(currentCycle + 1);
 
 
 

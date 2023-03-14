@@ -211,6 +211,12 @@ public class AllPoles extends LinearOpMode {
                 circuitToggle = !circuitToggle;
             }
 
+
+
+
+
+
+
             // Using the toggle variable to control the robot.
             if (circuitToggle) { // default
 

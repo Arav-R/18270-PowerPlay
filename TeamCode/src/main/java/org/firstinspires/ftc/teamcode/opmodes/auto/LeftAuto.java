@@ -378,7 +378,7 @@ public class  LeftAuto extends LinearOpMode {
                     break;
                 case PREPARE:
                     if (intake.intakeOutAutoDiffL(currentCycle + 1) < 20 || intake.getDistanceCM() < 1) {
-                        intake.closeClaw();
+                        intake.closeClawAuto(currentCycle + 1);
 
 
 
