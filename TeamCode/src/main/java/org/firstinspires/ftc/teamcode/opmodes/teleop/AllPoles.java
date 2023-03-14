@@ -42,7 +42,8 @@ public class AllPoles extends LinearOpMode {
         GRAB,
         FLIP,
         RELEASE,
-        RETRACT
+        RETRACT,
+        BEACON
     }
 
     ClawState clawState = ClawState.READY;
@@ -268,10 +269,6 @@ public class AllPoles extends LinearOpMode {
                         intakeToggle = true;
                     }
 
-                    // Velocity auto zero outtake
-                    if (outtake.getExtend() < 100 && Math.abs(outtake.getOuttakeSlideVelocity1()) < 0.1 && outtake.getExtendTarget() == 0) {
-                        outtake.zeroOuttake();
-                    }
 
                 }
 
@@ -282,6 +279,11 @@ public class AllPoles extends LinearOpMode {
                     coneHeight++;
                 } else if (currentGamepad1.dpad_down && !currentGamepad1.dpad_down &&    coneHeight > 2){
                     coneHeight--;
+                }
+
+                // Velocity auto zero outtake
+                if (outtake.getExtend() < 100 && Math.abs(outtake.getOuttakeSlideVelocity1()) < 0.1 && outtake.getExtendTarget() == 0) {
+                    outtake.zeroOuttake();
                 }
 
 
@@ -555,10 +557,27 @@ public class AllPoles extends LinearOpMode {
                     clawState = ClawState.GRAB;
                 }
 
+                if (gamepad1.share) {
+                    intake.flipArm();
+
+                    clawTimer.reset();
+                    clawState = ClawState.BEACON;
+                }
+
                 break;
             case GRAB:
 
                 if (clawTimer.seconds() > .35) {
+
+                    // beacon
+                    if (haveCone) {
+                        intake.contractArm();
+
+                        clawTimer.reset();
+                        clawState = ClawState.RETRACT;
+                    }
+
+
                     intake.flipArm();
                     intake.holdIntakeSlide();
 
@@ -575,8 +594,8 @@ public class AllPoles extends LinearOpMode {
             case FLIP:
 
                 if (clawTimer.seconds() > .9) {
-                    intake.openClaw();
 
+                    intake.openClaw();
                     outtake.zeroOuttake();
 
                     clawTimer.reset();
@@ -586,6 +605,7 @@ public class AllPoles extends LinearOpMode {
                 // bypass if no cone
                 if (intake.getDistanceCM() > 3) {
                     intake.contractArm();
+                    intake.closeClaw();
 
                     clawTimer.reset();
                     clawState = ClawState.RETRACT;
@@ -598,6 +618,7 @@ public class AllPoles extends LinearOpMode {
                     haveCone = true;
 
                     intake.contractArm();
+                    intake.closeClaw();
 
                     clawTimer.reset();
                     clawState = ClawState.RETRACT;
@@ -608,6 +629,15 @@ public class AllPoles extends LinearOpMode {
 
                 if (clawTimer.seconds() > .1) {
                     clawState = ClawState.READY;
+                }
+
+                break;
+            case BEACON:
+                if (clawTimer.seconds() > .3) { // arm from retract to flip
+                    intake.openClaw();
+                    outtake.zeroOuttake();
+                    
+                    clawState = ClawState.RELEASE;
                 }
 
                 break;
@@ -637,6 +667,8 @@ public class AllPoles extends LinearOpMode {
                 break;
             case DEPOSIT:
                 if (scoreTimer.seconds() >= depositTime) {
+                    haveCone = false;
+
                     outtake.transferDeposit();
                     outtake.retractSlide();
                     outtake.setTurretMiddle();
@@ -656,7 +688,12 @@ public class AllPoles extends LinearOpMode {
         }
 
     }
-    
+
+
+
+
+
+
     
     // Cycle Functions
 
