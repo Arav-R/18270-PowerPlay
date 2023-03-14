@@ -216,6 +216,18 @@ public class AllPoles extends LinearOpMode {
                 intake.holdIntakeSlide();
 
 
+                // Circuit
+                ClawState clawState = ClawState.READY;
+                ScoreState scoreState = ScoreState.READY;
+
+
+                // Cycle
+                RobotState robotState = RobotState.CONTRACT;
+                RetractState retractState = RetractState.OUTTAKE;
+                CycleState cycleState = CycleState.READY;
+
+
+
 
                 circuitToggle = !circuitToggle;
             }
