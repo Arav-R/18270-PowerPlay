@@ -39,7 +39,7 @@ public class Intake {
     public static double flip2 = .02; //0.03
     public static double flip1 = 0; //0.015
 
-    public static double flip5L = 0.074; //.095
+    public static double flip5L = 0.076; //.095
     public static double flip4L = 0.065; //.075
     public static double flip3L = 0.037; //.06
     public static double flip2L = .02; //0.03
