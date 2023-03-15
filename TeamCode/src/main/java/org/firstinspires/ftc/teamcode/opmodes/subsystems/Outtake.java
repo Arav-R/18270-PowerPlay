@@ -22,18 +22,21 @@ public class Outtake {
     public static double scorePosRight = .85; //.82
     public static double scorePosLow = 0.92; //.82
 
-    public static int leftHighTurret = 488;
-    public static int leftMidTurret = 500;
 
-    public static int rightHighTurret = 160;
-    public static int rightMidTurret = 148;
+    // turret
+    public static int turretTransfer = 312;
+
+    public static int leftHighTurret = turretTransfer + 176; // 488
+    public static int leftMidTurret = turretTransfer + 210; // 500
+
+    public static int rightHighTurret = turretTransfer - 152; // 160
+    public static int rightMidTurret = turretTransfer - 186; // 148
 
 
     public static int rightHighLow = 120;
 
-    public static int turretTransfer = 312;
-    public static int leftHighFar = 550;
-    public static int rightHighFar = 130;
+    public static int leftHighFar = 550; // ground to high
+    public static int rightHighFar = 130; // ground to high
 
     public static int fullExtendLeft = 910;
     public static int fullExtendRight = 1030;
