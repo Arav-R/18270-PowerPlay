@@ -33,19 +33,23 @@ public class Outtake {
     public static int rightMidTurret = turretTransfer - 186; // 148
 
 
+    public static int turretAutoLeft = turretTransfer + 171; //483
+    public static int turretAutoRight = turretTransfer - 163; //149
+
+
     public static int rightHighLow = 120;
 
     public static int leftHighFar = 550; // ground to high
     public static int rightHighFar = 130; // ground to high
 
+    // outtake slides
     public static int fullExtendLeft = 910;
     public static int fullExtendRight = 1030;
 
     public static int fullExtendAutoLeft = 934; //912
     public static int fullExtendAutoRight = 990; //983
 
-    public static int turretAutoLeft = 483; //483
-    public static int turretAutoRight = 149; //147
+
 
     public static double guideUpPosLeft = .48;
     public static double guideUpPosRight = .5;
