@@ -457,6 +457,9 @@ public class CombinedAuto extends LinearOpMode {
             telemetry.addData("Outtake Slide: ", outtake.getExtend());
             telemetry.addData("Turret Pos: ", outtake.getTurret());
 
+            telemetry.addData("Distance: ", intake.getDistanceCM());
+
+
 
             telemetry.update();
 
