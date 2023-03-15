@@ -275,9 +275,9 @@ public class AllPoles extends LinearOpMode {
 
                 // arm height
 
-                if (currentGamepad1.dpad_right && !currentGamepad1.dpad_right &&    coneHeight < 6){
+                if (currentGamepad1.dpad_right && !previousGamepad1.dpad_right &&    coneHeight < 6){
                     coneHeight++;
-                } else if (currentGamepad1.dpad_down && !currentGamepad1.dpad_down &&    coneHeight > 2){
+                } else if (currentGamepad1.dpad_down && !previousGamepad1.dpad_down &&    coneHeight > 2){
                     coneHeight--;
                 }
 
@@ -537,6 +537,9 @@ public class AllPoles extends LinearOpMode {
 
             telemetry.addData("Intake Slide Power: ", intake.getIntakePower());
             telemetry.addData("Intake Slide Target: ", intake.getIntakeTarget());
+
+            telemetry.addData("coneHeight: ", coneHeight);
+
 
 
 
