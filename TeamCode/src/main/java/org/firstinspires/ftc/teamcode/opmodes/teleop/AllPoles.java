@@ -22,7 +22,7 @@ public class AllPoles extends LinearOpMode {
     boolean circuitToggle = true;
 
 
-    boolean intakeToggle = false;
+    boolean intakeToggle = true;
 
     boolean haveCone = false;
 
@@ -265,7 +265,7 @@ public class AllPoles extends LinearOpMode {
 
                     clawState = ClawState.READY;
 
-                    if (intake.getDistanceCM() < 1) {
+                    if (intake.getDistanceCM() < 2) {
                         intakeToggle = true;
                     }
 
