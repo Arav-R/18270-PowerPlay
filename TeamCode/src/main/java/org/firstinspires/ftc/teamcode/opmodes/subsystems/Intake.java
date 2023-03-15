@@ -195,9 +195,17 @@ public class Intake {
     }
 
     public void holdIntakeSlide (){
-        intakeSlide.setTargetPosition(1);
+        intakeSlide.setTargetPosition(5);
         intakeSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        intakeSlide.setPower(.1);
+        intakeSlide.setPower(.01);
+    }
+
+    public double getIntakePower (){
+        return intakeSlide.getPower();
+    }
+
+    public double getIntakeTarget (){
+        return intakeSlide.getTargetPosition();
     }
 
     public void transferPositionAuto (){

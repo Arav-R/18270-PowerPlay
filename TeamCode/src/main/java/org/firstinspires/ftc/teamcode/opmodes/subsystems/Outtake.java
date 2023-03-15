@@ -15,28 +15,34 @@ public class Outtake {
     public DcMotorEx outtakeSlide1, outtakeSlide2, turret;
     private Servo depositServo, guideServo, lockServo;
 
+    // deposit
     public static  double transferPos = 0.19; //0.18
     public static double midPos = 0.38; //0.37
     public static double scorePosLeft = 0.81; //.82
     public static double scorePosRight = .85; //.82
+    public static double scorePosLow = 0.92; //.82
 
-    public static int leftHigh = 488;
-    public static int rightHigh = 160;
+    public static int leftHighTurret = 488;
+    public static int leftMidTurret = 500;
+
+    public static int rightHighTurret = 160;
+    public static int rightMidTurret = 148;
+
 
     public static int rightHighLow = 120;
 
-    public static int turretTransfer = 315;
+    public static int turretTransfer = 312;
     public static int leftHighFar = 550;
     public static int rightHighFar = 130;
 
     public static int fullExtendLeft = 910;
     public static int fullExtendRight = 1030;
 
-    public static int fullExtendAutoLeft = 940; //912
-    public static int fullExtendAutoRight = 1000; //983
+    public static int fullExtendAutoLeft = 934; //912
+    public static int fullExtendAutoRight = 990; //983
 
-    public static int turretAutoLeft = 475; //483
-    public static int turretAutoRight = 147; //147
+    public static int turretAutoLeft = 483; //483
+    public static int turretAutoRight = 149; //147
 
     public static double guideUpPosLeft = .48;
     public static double guideUpPosRight = .5;
@@ -59,7 +65,7 @@ public class Outtake {
 
 
     // different junctions left and right positions
-    public static int leftMid = 325;
+    public static int leftMid = 380;
     public static int rightMid = 400;
 
     public static int leftlow = 0;
@@ -121,17 +127,17 @@ public class Outtake {
 
 
     public void nudgeLeftLeft(){
-        leftHigh += 2;
+        leftHighTurret += 2;
     }
     public void nudgeLeftRight(){
-        leftHigh -= 2;
+        leftHighTurret -= 2;
     }
 
     public void nudgeRightLeft(){
-        rightHigh += 2;
+        rightHighTurret += 2;
     }
     public void nudgeRightRight(){
-        rightHigh -= 2;
+        rightHighTurret -= 2;
     }
 
     public int getTurret (){
@@ -149,8 +155,14 @@ public class Outtake {
 
 
 
-    public void setTurretLeft (){
-        turret.setTargetPosition(leftHigh);
+    public void setTurretLeftHigh(){
+        turret.setTargetPosition(leftHighTurret);
+        turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        turret.setPower(0.7);
+    }
+
+    public void setTurretLeftMid(){
+        turret.setTargetPosition(leftMidTurret);
         turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         turret.setPower(0.7);
     }
@@ -175,8 +187,14 @@ public class Outtake {
         turret.setPower(.4);
     }
 
-    public void setTurretRight (){
-        turret.setTargetPosition(rightHigh);
+    public void setTurretRightHigh(){
+        turret.setTargetPosition(rightHighTurret);
+        turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        turret.setPower(0.7);
+    }
+
+    public void setTurretRightMid(){
+        turret.setTargetPosition(rightMidTurret);
         turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         turret.setPower(0.7);
     }
@@ -366,6 +384,10 @@ public class Outtake {
 
     public void scoreDepositRight(){
         depositServo.setPosition(scorePosRight);
+    }
+
+    public void scoreDepositLow(){
+        depositServo.setPosition(scorePosLow);
     }
 
 

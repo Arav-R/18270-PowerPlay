@@ -302,13 +302,13 @@ public class AllPoles extends LinearOpMode {
                     // left outtake positions
 
                     if (gamepad1.dpad_up) { // left High
-                        outtake.setTurretLeft();
+                        outtake.setTurretLeftHigh();
                         outtake.extendSlideLeft();
                         outtake.midDeposit();
 
                         scoreState = ScoreState.READY;
                     } else if (gamepad1.dpad_left) { // left Medium
-                        outtake.setTurretLeft();
+                        outtake.setTurretLeftMid();
                         outtake.slideLeftMid();
                         outtake.midDeposit();
 
@@ -326,13 +326,13 @@ public class AllPoles extends LinearOpMode {
 
 
                     if (gamepad1.y) { // right High
-                        outtake.setTurretRight();
+                        outtake.setTurretRightHigh();
                         outtake.extendSlideRight();
                         outtake.midDeposit();
 
                         scoreState = ScoreState.READY;
                     } else if (gamepad1.b) { // right Medium
-                        outtake.setTurretRight();
+                        outtake.setTurretRightMid();
                         outtake.slideRightMid();
                         outtake.midDeposit();
 
@@ -351,10 +351,12 @@ public class AllPoles extends LinearOpMode {
 
                 //guide and score
                 if (gamepad1.right_trigger > .15) {
-                    if (outtake.getExtend() < 100) {
-                        outtake.guideUpLow();
-                    } else {
-                        outtake.guideUpLeft();
+                    if (scoreState != ScoreState.UNGUIDE && scoreState != ScoreState.DEPOSIT) {
+                        if (outtake.getExtend() < 100) {
+                            outtake.guideUpLow();
+                        } else {
+                            outtake.guideUpLeft();
+                        }
                     }
                 }else {
                     outtake.guideDown();
@@ -385,7 +387,7 @@ public class AllPoles extends LinearOpMode {
                                 intake.dropArm();
 
                                 outtake.extendSlideLeft();
-                                outtake.setTurretLeft();
+                                outtake.setTurretLeftHigh();
                                 outtake.midDeposit();
                                 outtake.guideUpLeft();
 
@@ -401,7 +403,7 @@ public class AllPoles extends LinearOpMode {
                                 intake.dropArm();
 
                                 outtake.extendSlideRight();
-                                outtake.setTurretRight();
+                                outtake.setTurretRightHigh();
                                 outtake.midDeposit();
                                 outtake.guideUpLeft();
 
@@ -531,6 +533,13 @@ public class AllPoles extends LinearOpMode {
 
             telemetry.addData("Outtake Velocity: ", outtake.getOuttakeSlideVelocity1());
 
+            telemetry.addData("haveCone: ", haveCone);
+
+            telemetry.addData("Intake Slide Power: ", intake.getIntakePower());
+            telemetry.addData("Intake Slide Target: ", intake.getIntakeTarget());
+
+
+
 
 
             telemetry.update();
@@ -573,8 +582,12 @@ public class AllPoles extends LinearOpMode {
                     if (haveCone) {
                         intake.contractArm();
 
+                        telemetry.addLine("BEACON");
+
                         clawTimer.reset();
                         clawState = ClawState.RETRACT;
+
+                        break;
                     }
 
 
@@ -636,7 +649,8 @@ public class AllPoles extends LinearOpMode {
                 if (clawTimer.seconds() > .3) { // arm from retract to flip
                     intake.openClaw();
                     outtake.zeroOuttake();
-                    
+
+                    clawTimer.reset();
                     clawState = ClawState.RELEASE;
                 }
 
@@ -650,7 +664,12 @@ public class AllPoles extends LinearOpMode {
             case READY:
                 if (gamepad1.right_bumper && haveCone) { // right bumper button and have a cone
 
-                    outtake.scoreDepositLeft();
+                    if (outtake.getExtend() < 100) {
+                        outtake.scoreDepositLow();
+                    } else {
+                        outtake.scoreDepositLeft();
+                    }
+
 
                     scoreTimer.reset();
                     scoreState = ScoreState.UNGUIDE;
@@ -659,7 +678,13 @@ public class AllPoles extends LinearOpMode {
             case UNGUIDE:
                 if (scoreTimer.seconds() >= depositTime + guideOffset) {
 
-                    outtake.guideScore();
+                    if (outtake.getExtend() < 100) {
+                        outtake.guideDown();
+                    } else {
+                        outtake.guideScore();
+                    }
+
+
 
                     scoreState = ScoreState.DEPOSIT;
                 }
@@ -812,7 +837,7 @@ public class AllPoles extends LinearOpMode {
             case EXTEND_INTAKE:
                 if (scoreTimer.seconds() >= intakeTime) {
                     outtake.midDeposit();
-                    outtake.setTurretLeft();
+                    outtake.setTurretLeftHigh();
                     outtake.extendSlideLeft();
                     outtake.guideUpLeft();
 
@@ -904,7 +929,7 @@ public class AllPoles extends LinearOpMode {
             case EXTEND_INTAKE:
                 if (scoreTimer.seconds() >= intakeTime) {
                     outtake.midDeposit();
-                    outtake.setTurretRight();
+                    outtake.setTurretRightHigh();
                     outtake.extendSlideRight();
                     outtake.guideUpLeft();
 

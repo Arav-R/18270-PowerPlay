@@ -207,7 +207,7 @@ public class AutomatedTransfer2 extends LinearOpMode {
                             intake.dropArm();
 
                             outtake.extendSlideLeft();
-                            outtake.setTurretLeft();
+                            outtake.setTurretLeftHigh();
                             outtake.midDeposit();
                             outtake.guideUpLeft();
 
@@ -223,7 +223,7 @@ public class AutomatedTransfer2 extends LinearOpMode {
                             intake.dropArm();
 
                             outtake.extendSlideRight();
-                            outtake.setTurretRight();
+                            outtake.setTurretRightHigh();
                             outtake.midDeposit();
                             outtake.guideUpLeft();
 
@@ -521,7 +521,7 @@ public class AutomatedTransfer2 extends LinearOpMode {
             case EXTEND_INTAKE:
                 if (scoreTimer.seconds() >= intakeTime) {
                     outtake.midDeposit();
-                    outtake.setTurretLeft();
+                    outtake.setTurretLeftHigh();
                     outtake.extendSlideLeft();
                     outtake.guideUpLeft();
 
@@ -613,7 +613,7 @@ public class AutomatedTransfer2 extends LinearOpMode {
             case EXTEND_INTAKE:
                 if (scoreTimer.seconds() >= intakeTime) {
                     outtake.midDeposit();
-                    outtake.setTurretRight();
+                    outtake.setTurretRightHigh();
                     outtake.extendSlideRight();
                     outtake.guideUpLeft();
 
@@ -684,14 +684,14 @@ public class AutomatedTransfer2 extends LinearOpMode {
                 break;
             case WAIT:
                 if (gamepad2.x){
-                    outtake.setTurretLeft();
+                    outtake.setTurretLeftHigh();
                     outtake.extendSlideLeft();
 
                     grabState = GrabState.EXTEND_OUTTAKE;
                 }
 
                 if (gamepad2.b){
-                    outtake.setTurretRight();
+                    outtake.setTurretRightHigh();
                     outtake.extendSlideRight();
 
                     grabState = GrabState.EXTEND_OUTTAKE;

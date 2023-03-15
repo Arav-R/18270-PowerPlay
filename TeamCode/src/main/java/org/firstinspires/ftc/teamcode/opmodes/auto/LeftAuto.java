@@ -199,7 +199,7 @@ public class  LeftAuto extends LinearOpMode {
 
                 .waitSeconds(0.35)
                 .forward(forwardDistance)
-                .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
+                .UNSTABLE_addTemporalMarkerOffset(-1, () -> {
                     intake.flipArm();
                 })
                 .turn(Math.toRadians(92))
@@ -214,7 +214,7 @@ public class  LeftAuto extends LinearOpMode {
 
 
         Trajectory leftApril = drive.trajectoryBuilder(trajSeq.end())
-                .lineToLinearHeading(new Pose2d(8, -12, Math.toRadians(180)))
+                .lineToLinearHeading(new Pose2d(7, -12, Math.toRadians(180)))
                 .build();
         Trajectory midApril = drive.trajectoryBuilder(trajSeq.end())
                 .lineToLinearHeading(new Pose2d(35.4, -12.5, Math.toRadians(180)))
