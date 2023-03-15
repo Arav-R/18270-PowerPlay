@@ -20,7 +20,7 @@ public class Outtake {
     public static double midPos = 0.38; //0.37
     public static double scorePosLeft = 0.81; //.82
     public static double scorePosRight = .85; //.82
-    public static double scorePosLow = 0.92; //.82
+    public static double scorePosLow = 1; //.82
 
 
     // turret

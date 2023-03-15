@@ -669,8 +669,14 @@ public class AllPoles extends LinearOpMode {
 
                     if (outtake.getExtend() < 100) {
                         outtake.scoreDepositLow();
+
+                        depositTime = .8;
+                        guideOffset = -.1;
                     } else {
                         outtake.scoreDepositLeft();
+
+                        depositTime = .6;
+                        guideOffset = -.4;
                     }
 
 
