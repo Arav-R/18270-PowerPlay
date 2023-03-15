@@ -377,10 +377,15 @@ public class  LeftAuto extends LinearOpMode {
                     }
                     break;
                 case PREPARE:
-                    if (intake.intakeOutAutoDiffL(currentCycle + 1) < 20 || intake.getDistanceCM() < 1) {
+                    if (intake.intakeOutAutoDiffL(currentCycle + 1) < 20 || intake.getDistanceCM() < 2) {
                         intake.closeClawAuto(currentCycle + 1);
 
 
+                        if (currentCycle == 2) {
+                            grabTime = 1;
+                        } else {
+                            grabTime = .8;
+                        }
 
                         scoreTimer.reset();
                         scoreState = ScoreState.GRAB;
