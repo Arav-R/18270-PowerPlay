@@ -432,6 +432,12 @@ public class Intake {
         return intakeSlide.getCurrent(CurrentUnit.AMPS);
     }
 
+    // Outtake Velocity
+
+    public double getIntakeSlideVelocity1(){
+        return intakeSlide.getVelocity();
+    }
+
 
 
 //    public double getDistanceCM(){

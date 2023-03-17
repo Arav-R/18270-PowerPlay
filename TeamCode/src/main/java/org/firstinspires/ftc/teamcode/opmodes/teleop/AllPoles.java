@@ -309,6 +309,13 @@ public class AllPoles extends LinearOpMode {
                     outtake.zeroOuttake();
                 }
 
+                // Velocity auto zero intake
+                if (intake.getSlide() < 25 && Math.abs(intake.getIntakeSlideVelocity1()) < 0.1 && intake.getIntakeTarget() <= 0) {
+                    intake.zeroIntake();
+
+                    intake.holdIntakeSlide();
+                }
+
 
                 // retract emergency
 
