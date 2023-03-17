@@ -337,13 +337,14 @@ public class AllPoles extends LinearOpMode {
                         outtake.midDeposit();
 
                         scoreState = ScoreState.READY;
-                    } else if (gamepad1.a) { // right Low
-                        //outtake.setTurretRightLow();
-                        // outtake.extendLeftMedium
-                        outtake.midDeposit();
-
-                        scoreState = ScoreState.READY;
                     }
+//                    else if (gamepad1.a) { // right Low
+//                        //outtake.setTurretRightLow();
+//                        // outtake.extendLeftMedium
+//                        outtake.midDeposit();
+//
+//                        scoreState = ScoreState.READY;
+//                    }
 
                 }
 
