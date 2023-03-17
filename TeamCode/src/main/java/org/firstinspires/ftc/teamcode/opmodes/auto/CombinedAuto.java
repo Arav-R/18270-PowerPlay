@@ -134,6 +134,8 @@ public class CombinedAuto extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
 
         //PhotonCore.enable(); // Enable PhotonCore
+        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
+
 
 
         // APRILTAG
@@ -378,7 +380,11 @@ public class CombinedAuto extends LinearOpMode {
                     if (intake.intakeOutAutoDiffR(currentCycle + 1) < 20 || intake.getDistanceCM() < 1) {
                         intake.closeClawAuto(currentCycle + 1);
 
-
+                        if (currentCycle == 2) {
+                            grabTime = 1;
+                        } else {
+                            grabTime = .8;
+                        }
 
                         scoreTimer.reset();
                         scoreState = ScoreState.GRAB;

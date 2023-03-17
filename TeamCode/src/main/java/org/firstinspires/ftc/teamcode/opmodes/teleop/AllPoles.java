@@ -286,7 +286,7 @@ public class AllPoles extends LinearOpMode {
                     clawState = ClawState.READY;
 
                     if (intake.getDistanceCM() < 2) {
-                        intakeToggle = true;
+                        //intakeToggle = true;
                     }
 
 
@@ -298,9 +298,9 @@ public class AllPoles extends LinearOpMode {
 
                 // arm height
 
-                if (currentGamepad1.dpad_right && !previousGamepad1.dpad_right &&    coneHeight < 6){
+                if (currentGamepad1.dpad_down && !previousGamepad1.dpad_down &&    coneHeight < 6){
                     coneHeight++;
-                } else if (currentGamepad1.dpad_down && !previousGamepad1.dpad_down &&    coneHeight > 2){
+                } else if (currentGamepad1.dpad_right && !previousGamepad1.dpad_right &&    coneHeight > 2){
                     coneHeight--;
                 }
 
@@ -707,8 +707,8 @@ public class AllPoles extends LinearOpMode {
                     if (outtake.getExtend() < 100) {
                         outtake.scoreDepositLow();
 
-                        depositTime = .8;
-                        guideOffset = -.1;
+                        depositTime = 1;
+                        guideOffset = -.3;
                     } else {
                         outtake.scoreDepositLeft();
 

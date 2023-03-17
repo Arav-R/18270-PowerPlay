@@ -26,11 +26,11 @@ public class Outtake {
     // turret
     public static int turretTransfer = 312;
 
-    public static int leftHighTurret = turretTransfer + 176; // 488
-    public static int leftMidTurret = turretTransfer + 210; // 500
+    public static int leftHighTurret = turretTransfer + 182; // 488
+    public static int leftMidTurret = turretTransfer + 230; // 500
 
-    public static int rightHighTurret = turretTransfer - 152; // 160
-    public static int rightMidTurret = turretTransfer - 186; // 148
+    public static int rightHighTurret = turretTransfer - 160; // 160
+    public static int rightMidTurret = turretTransfer - 210; // 148
 
 
     public static int turretAutoLeft = turretTransfer + 171; //483

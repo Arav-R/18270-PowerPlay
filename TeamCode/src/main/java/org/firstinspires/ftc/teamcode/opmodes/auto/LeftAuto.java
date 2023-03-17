@@ -132,6 +132,7 @@ public class  LeftAuto extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
 
         //PhotonCore.enable(); // Enable PhotonCore
+        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
 
         // APRILTAG
@@ -217,7 +218,7 @@ public class  LeftAuto extends LinearOpMode {
                 .lineToLinearHeading(new Pose2d(7, -12, Math.toRadians(180)))
                 .build();
         Trajectory midApril = drive.trajectoryBuilder(trajSeq.end())
-                .lineToLinearHeading(new Pose2d(35.4, -12.5, Math.toRadians(180)))
+                .lineToLinearHeading(new Pose2d(34, -12.5, Math.toRadians(180)))
                 .build();
         Trajectory rightApril = drive.trajectoryBuilder(trajSeq.end())
                 .lineToLinearHeading(new Pose2d(59, -14, Math.toRadians(180)))
