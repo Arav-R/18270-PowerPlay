@@ -34,13 +34,13 @@ public class Intake {
     public static double flipStartingPosition = 0.51;
     public static double flipLowPole = .3;
 
-    public static double flip5 = 0.075; //.095
+    public static double flip5 = 0.077; //.095
     public static double flip4 = 0.065; //.075
     public static double flip3 = 0.037; //.06
     public static double flip2 = .02; //0.03
     public static double flip1 = 0; //0.015
 
-    public static double flip5L = 0.075; //.095
+    public static double flip5L = 0.077; //.095
     public static double flip4L = 0.065; //.075
     public static double flip3L = 0.037; //.06
     public static double flip2L = .02; //0.03
