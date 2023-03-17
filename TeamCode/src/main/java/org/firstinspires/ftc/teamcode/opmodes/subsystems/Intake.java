@@ -81,6 +81,8 @@ public class Intake {
         //sensorRange = hardwareMap.get(DistanceSensor.class, "sensor_range");
 
 
+        // intake brake
+        intakeSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         intakeSlide.setDirection(DcMotor.Direction.REVERSE);
 
