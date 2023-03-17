@@ -59,12 +59,25 @@ public class AllPoles extends LinearOpMode {
 
     ScoreState scoreState = ScoreState.READY;
 
+    // Low Pole Arm FSM
+    public enum LowState {
+        READY,
+        GRAB,
+        LIFT,
+        READY2,
+        RELEASE
+    }
+
+    LowState lowState = LowState.READY;
+
 
 
     // Instantiate Classes
 
     ElapsedTime clawTimer = new ElapsedTime();
     ElapsedTime scoreTimer = new ElapsedTime();
+    ElapsedTime lowTimer = new ElapsedTime();
+
 
     ElapsedTime endgameTimer = new ElapsedTime();
     
@@ -278,6 +291,9 @@ public class AllPoles extends LinearOpMode {
 
 
                 }
+
+                // low pole with arm FSM
+                lowPoleArm();
 
 
                 // arm height
@@ -731,6 +747,58 @@ public class AllPoles extends LinearOpMode {
 
                     scoreTimer.reset();
                     scoreState = ScoreState.READY;
+                }
+                break;
+        }
+
+    }
+
+
+
+    public void lowPoleArm(){
+        switch (lowState) {
+            case READY:
+                if (gamepad1.touchpad) { // right bumper button and have a cone
+
+                    intake.closeClaw();
+
+                    lowTimer.reset();
+                    lowState = LowState.GRAB;
+                }
+                break;
+            case GRAB:
+                if (lowTimer.seconds() >= grabTime) {
+
+                    intake.armLowPole();
+
+                    lowTimer.reset();
+                    lowState = LowState.LIFT;
+                }
+
+                break;
+            case LIFT:
+                if (lowTimer.seconds() >= .5) {
+
+                    lowState = LowState.READY2;
+                }
+                break;
+            case READY2:
+                if (gamepad1.touchpad) { // right bumper button and have a cone
+
+                    intake.openClaw();
+
+                    lowState = LowState.RELEASE;
+                }
+                break;
+            case RELEASE:
+                if (lowTimer.seconds() >= .3) {
+
+                    intake.contractArm();
+
+                    intakeToggle = true;
+                    clawState = ClawState.READY;
+
+                    lowState = LowState.READY;
                 }
                 break;
         }

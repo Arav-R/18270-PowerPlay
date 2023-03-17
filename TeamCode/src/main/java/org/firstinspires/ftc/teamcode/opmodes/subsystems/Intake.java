@@ -32,6 +32,7 @@ public class Intake {
     public static double flipUp = 0.57; //.64
     public static double flipContract = 0.4;
     public static double flipStartingPosition = 0.51;
+    public static double flipLowPole = .3;
 
     public static double flip5 = 0.073; //.095
     public static double flip4 = 0.065; //.075
@@ -401,6 +402,12 @@ public class Intake {
 
     public void moveJoint2 (double pos){
         flip2Servo.setPosition(pos);
+
+    }
+
+    public void armLowPole (){
+        flip1Servo.setPosition(flipLowPole);
+        flip2Servo.setPosition(flipLowPole);
 
     }
 
