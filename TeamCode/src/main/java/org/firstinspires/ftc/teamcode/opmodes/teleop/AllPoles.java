@@ -245,7 +245,7 @@ public class AllPoles extends LinearOpMode {
 
                 // toggle
                 // Rising edge detector
-                if (currentGamepad1.x && !previousGamepad1.x) {
+                if ((currentGamepad1.x && !previousGamepad1.x) || (currentGamepad1.a && !previousGamepad1.a)){
                     // This will set intakeToggle to true if it was previously false
                     // and intakeToggle to false if it was previously true,
                     // providing a toggling behavior.
@@ -260,8 +260,15 @@ public class AllPoles extends LinearOpMode {
 
                 }
                 else { // arm down
-                    intake.dropArmAutoR(coneHeight);
-                    intake.openClaw();
+                    if (gamepad1.x) {
+                        intake.dropArmAutoR(coneHeight);
+                        intake.openClaw();
+                    } else if (gamepad1.a) {
+                        intake.dropArmAutoR(coneHeight);
+                        intake.openClaw();
+
+                        intake.intakePosition();
+                    }
 
                     clawState = ClawState.READY;
 
@@ -570,6 +577,8 @@ public class AllPoles extends LinearOpMode {
                     clawState = ClawState.GRAB;
                 }
 
+
+                // beacon retract-transfer-retract
                 if (gamepad1.share) {
                     intake.flipArm();
 
@@ -596,8 +605,12 @@ public class AllPoles extends LinearOpMode {
 
 
                     intake.flipArm();
-                    intake.holdIntakeSlide();
 
+                    if (intake.getSlide() < 10) {
+                        intake.holdIntakeSlide();
+                    } else {
+                        intake.transferPosition(); // fast retraction
+                    }
                     outtake.transferDeposit();
                     outtake.retractSlide();
                     outtake.setTurretMiddle();
@@ -610,7 +623,7 @@ public class AllPoles extends LinearOpMode {
                 break;
             case FLIP:
 
-                if (clawTimer.seconds() > .9) {
+                if (clawTimer.seconds() > .9 && intake.getSlide() < 10) {
 
                     intake.openClaw();
                     outtake.zeroOuttake();
