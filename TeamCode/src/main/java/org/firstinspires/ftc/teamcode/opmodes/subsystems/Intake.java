@@ -299,7 +299,7 @@ public class Intake {
 
     public void closeClawAuto (int cone){
         if (cone == 2) { // Top cone starting stack
-            clawServo.setPosition(clawClose - 0.02);
+            clawServo.setPosition(clawClose); //0.02
         } else if (cone == 3) {
             clawServo.setPosition(clawClose);
         } else if (cone == 4) {
