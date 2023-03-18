@@ -32,7 +32,7 @@ public class Intake {
     public static double flipUp = 0.57; //.64
     public static double flipContract = 0.4;
     public static double flipStartingPosition = 0.51;
-    public static double flipLowPole = .3;
+    public static double flipLowPole = .25;
 
     public static double flip5 = 0.077; //.095
     public static double flip4 = 0.065; //.075
