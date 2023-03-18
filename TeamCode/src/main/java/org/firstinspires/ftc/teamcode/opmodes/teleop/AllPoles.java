@@ -777,6 +777,11 @@ public class AllPoles extends LinearOpMode {
                 if (lowTimer.seconds() >= grabTime) {
 
                     intake.armLowPole();
+                    if (intake.getSlide() < 10) {
+                        intake.holdIntakeSlide();
+                    } else {
+                        intake.transferPosition(); // fast retraction
+                    }
 
                     lowTimer.reset();
                     lowState = LowState.LIFT;
