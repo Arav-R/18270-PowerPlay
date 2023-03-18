@@ -48,7 +48,11 @@ public class Gamepad extends LinearOpMode {
         while (opModeIsActive()) {
             //currentGamepad1.copy(gamepad1);
 
-            gamepad1.rumble(1000);
+            if (loopTimer.seconds() == 5) {
+                gamepad1.rumble(3000);
+
+            }
+
 
             gamepad1.setLedColor(1.0, 0, 0, 1000);
 
