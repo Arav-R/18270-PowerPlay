@@ -674,7 +674,7 @@ public class AutomatedStack extends LinearOpMode {
                 }
 
                 // bypass if no cone
-                if (intake.getDistanceCM() > 3) {
+                if (intake.getDistanceCM() > 5) {
                     intake.contractArm();
                     intake.closeClaw();
 
@@ -707,6 +707,8 @@ public class AutomatedStack extends LinearOpMode {
                 if (clawTimer.seconds() > .3) { // arm from retract to flip
                     intake.openClaw();
                     outtake.zeroOuttake();
+
+                    beacon = false;
 
                     clawTimer.reset();
                     clawState = ClawState.RELEASE;
