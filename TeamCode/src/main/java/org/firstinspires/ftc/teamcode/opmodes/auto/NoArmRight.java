@@ -202,7 +202,7 @@ public class NoArmRight extends LinearOpMode {
                 .waitSeconds(0.5)
                 .forward(forwardDistance)
                 .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
-                    //intake.flipArm();
+                    intake.flipArm();
                 })
                 .turn(Math.toRadians(-94))
                 .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
