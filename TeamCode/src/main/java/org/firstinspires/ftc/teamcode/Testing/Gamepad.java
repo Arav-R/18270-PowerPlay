@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Testing;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -11,6 +12,7 @@ import org.firstinspires.ftc.teamcode.opmodes.subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.opmodes.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.opmodes.subsystems.Outtake;
 
+@Disabled
 
 @TeleOp()
 public class Gamepad extends LinearOpMode {

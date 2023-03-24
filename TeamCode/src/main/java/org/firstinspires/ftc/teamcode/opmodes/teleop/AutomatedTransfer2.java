@@ -12,6 +12,7 @@ import org.firstinspires.ftc.teamcode.opmodes.subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.opmodes.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.opmodes.subsystems.Outtake;
 
+
 @Config
 @TeleOp
 public class AutomatedTransfer2 extends LinearOpMode {
