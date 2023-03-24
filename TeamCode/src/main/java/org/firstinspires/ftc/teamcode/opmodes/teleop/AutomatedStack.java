@@ -268,6 +268,11 @@ public class AutomatedStack extends LinearOpMode {
 
                     if (intakeToggle && intake.getDistanceCM() < 3) { // fsm and have cone on press
                         intake.flipArm();
+                        if (intake.getSlide() < 10) {
+                            intake.holdIntakeSlide();
+                        } else {
+                            intake.transferPosition(); // fast retraction
+                        }
 
                         clawTimer.reset();
                         clawState = ClawState.BEACON;
