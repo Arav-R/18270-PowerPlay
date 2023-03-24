@@ -201,7 +201,7 @@ public class CombinedAuto extends LinearOpMode {
                     intake.openClaw();
                 })
 
-                .waitSeconds(0.25)
+                .waitSeconds(0.5)
                 .forward(forwardDistance)
                 .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
                     intake.flipArm();

@@ -43,11 +43,11 @@ public class Outtake {
     public static int rightHighFar = 130; // ground to high
 
     // outtake slides
-    public static int fullExtendLeft = 910;
-    public static int fullExtendRight = 1030;
+    public static int fullExtendLeft = 935; // 910
+    public static int fullExtendRight = 1040; // 1030
 
-    public static int fullExtendAutoLeft = 934; //912
-    public static int fullExtendAutoRight = 990; //983
+    public static int fullExtendAutoLeft = 952; // 934
+    public static int fullExtendAutoRight = 1000; // 990
 
 
 
@@ -72,8 +72,8 @@ public class Outtake {
 
 
     // different junctions left and right positions
-    public static int leftMid = 380;
-    public static int rightMid = 400;
+    public static int leftMid = 390; // 380
+    public static int rightMid = 410; // 400
 
     public static int leftlow = 0;
     public static int rightlow = 0;

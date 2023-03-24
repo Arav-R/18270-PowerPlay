@@ -28,7 +28,7 @@ import java.util.ArrayList;
 
 @Config
 @Autonomous(group = "drive")
-public class  LeftAuto extends LinearOpMode {
+public class NoArmRight extends LinearOpMode {
 
 
     // APRILTAG STUFF
@@ -67,7 +67,7 @@ public class  LeftAuto extends LinearOpMode {
     public static int cones = 6;
     public static double cycleDelay = 0;
 
-    public static double forwardDistance  = 52;
+    public static double forwardDistance  = 49;
 
 
     int currentCycle = 0;
@@ -135,6 +135,7 @@ public class  LeftAuto extends LinearOpMode {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
 
+
         // APRILTAG
 
         // with live view port
@@ -194,19 +195,19 @@ public class  LeftAuto extends LinearOpMode {
 
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     intake.zeroPosition();
-                    intake.dropArm();
+                    //intake.dropArm();
                     intake.openClaw();
                 })
 
-                .waitSeconds(0.45)
+                .waitSeconds(0.5)
                 .forward(forwardDistance)
-                .UNSTABLE_addTemporalMarkerOffset(-.9, () -> {
-                    intake.flipArm();
+                .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
+                    //intake.flipArm();
                 })
-                .turn(Math.toRadians(92))
+                .turn(Math.toRadians(-94))
                 .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
                     outtake.transferDeposit();
-                    outtake.setTurretAutoRightPreload();
+                    outtake.setTurretAutoLeftPreload();
                 })
 
 
@@ -215,13 +216,13 @@ public class  LeftAuto extends LinearOpMode {
 
 
         Trajectory leftApril = drive.trajectoryBuilder(trajSeq.end())
-                .lineToLinearHeading(new Pose2d(7, -12, Math.toRadians(180)))
+                .lineToLinearHeading(new Pose2d(10.5, -12, Math.toRadians(0)))
                 .build();
         Trajectory midApril = drive.trajectoryBuilder(trajSeq.end())
-                .lineToLinearHeading(new Pose2d(34, -12.5, Math.toRadians(180)))
+                .lineToLinearHeading(new Pose2d(35.4, -12.5, Math.toRadians(0)))
                 .build();
         Trajectory rightApril = drive.trajectoryBuilder(trajSeq.end())
-                .lineToLinearHeading(new Pose2d(59, -14, Math.toRadians(180)))
+                .lineToLinearHeading(new Pose2d(59, -13, Math.toRadians(0)))
                 .build();
 
 
@@ -333,10 +334,10 @@ public class  LeftAuto extends LinearOpMode {
             // Expand
             intake.readyPosition();
             intake.openClaw();
-            intake.dropArmAutoL(2); //5 cone
+            intake.dropArmAutoR(2); //5 cone
 
-            outtake.extendSlidePreloadRight();
-            outtake.setTurretAutoRightPreload();
+            outtake.extendSlidePreloadLeft();
+            outtake.setTurretAutoLeftPreload();
             outtake.midDeposit();
             outtake.guideUpLeft();
         }
@@ -350,7 +351,7 @@ public class  LeftAuto extends LinearOpMode {
                 case READY:
                     if (scoreTimer.seconds() >= cycleDelay) {
 
-                        outtake.scoreDepositRight();
+                        outtake.scoreDepositLeft();
 
                         scoreTimer.reset();
                         scoreState = ScoreState.DEPOSIT;
@@ -358,10 +359,6 @@ public class  LeftAuto extends LinearOpMode {
                     }
                     break;
                 case DEPOSIT:
-                    if (scoreTimer.seconds() >= depositTime - .4) {
-                        outtake.guideScore();
-                    }
-
                     if (scoreTimer.seconds() >= depositTime) {
                         currentCycle++;
 
@@ -371,16 +368,15 @@ public class  LeftAuto extends LinearOpMode {
                         outtake.guideDown();
 
                         intake.openClaw();
-                        intake.autoStackPositionLeft(currentCycle + 1);
+                        intake.autoStackPositionRight(currentCycle + 1);
 
 
                         scoreState = ScoreState.PREPARE;
                     }
                     break;
                 case PREPARE:
-                    if (intake.intakeOutAutoDiffL(currentCycle + 1) < 20 || intake.getDistanceCM() < 2) {
+                    if (intake.intakeOutAutoDiffR(currentCycle + 1) < 20 || intake.getDistanceCM() < 1) {
                         intake.closeClawAuto(currentCycle + 1);
-
 
                         if (currentCycle == 2) {
                             grabTime = 1;
@@ -425,8 +421,8 @@ public class  LeftAuto extends LinearOpMode {
                 case FLIP:
                     if (scoreTimer.seconds() >= transferTime) {
                         //intake.readyPosition();
-                        intake.autoStackPositionLeft(currentCycle + 2);
-                        intake.dropArmAutoL(currentCycle + 2); // Starts at 2
+                        intake.autoStackPositionRight(currentCycle + 2);
+                        intake.dropArmAutoR(currentCycle + 2); // Starts at 2
 
                         scoreTimer.reset();
                         scoreState = ScoreState.EXTEND_INTAKE;
@@ -435,15 +431,15 @@ public class  LeftAuto extends LinearOpMode {
                 case EXTEND_INTAKE:
                     if (scoreTimer.seconds() >= intakeTime) {
                         outtake.midDeposit();
-                        outtake.setTurretAutoRight();
-                        outtake.extendSlideAutoRight();
+                        outtake.setTurretAutoLeft();
+                        outtake.extendSlideAutoLeft();
                         outtake.guideUpLeft();
 
                         scoreState = ScoreState.EXTEND_OUTTAKE;
                     }
                     break;
                 case EXTEND_OUTTAKE:
-                    if (outtake.slideOutDiffAutoRight() < depBuffer) {
+                    if (outtake.slideOutDiffAutoLeft() < depBuffer) {
 
                         cycleTime = cycleTimer.seconds();
 
@@ -466,6 +462,7 @@ public class  LeftAuto extends LinearOpMode {
             telemetry.addData("Turret Pos: ", outtake.getTurret());
 
             telemetry.addData("Distance: ", intake.getDistanceCM());
+
 
 
             telemetry.update();
@@ -526,6 +523,8 @@ public class  LeftAuto extends LinearOpMode {
 
         while (intake.intakeInDiff() > 10 && outtake.getTurret() > 10 && opModeIsActive()){
 
+            telemetry.addLine("retracting");
+            telemetry.update();
         }
 
         telemetry.addLine("Auto Done");
