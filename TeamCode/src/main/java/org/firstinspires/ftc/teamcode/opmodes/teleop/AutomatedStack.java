@@ -430,7 +430,7 @@ public class AutomatedStack extends LinearOpMode {
 
                                 intake.readyPosition();
                                 intake.openClaw();
-                                intake.dropArm();
+                                intake.dropArmAutoR(coneHeight);
 
                                 outtake.extendSlideLeft();
                                 outtake.setTurretLeftHigh();
@@ -446,7 +446,7 @@ public class AutomatedStack extends LinearOpMode {
 
                                 intake.readyPosition();
                                 intake.openClaw();
-                                intake.dropArm();
+                                intake.dropArmAutoR(coneHeight);
 
                                 outtake.extendSlideRight();
                                 outtake.setTurretRightHigh();
@@ -528,6 +528,13 @@ public class AutomatedStack extends LinearOpMode {
                     robotState = RobotState.CONTRACT;
                 }
 
+                if (gamepad1.share) {
+                    coneHeight = 2;
+                } else if ((currentGamepad1.left_trigger > .5) && !(previousGamepad1.left_trigger > .5) &&    coneHeight < 6){ // down
+                    coneHeight++;
+                } else if ((currentGamepad1.right_trigger > .5) && !(previousGamepad1.right_trigger > .5) &&    coneHeight > 2){ // up
+                    coneHeight--;
+                }
 
 
             }
@@ -885,6 +892,8 @@ public class AutomatedStack extends LinearOpMode {
 
                     outtake.scoreDepositLeft();
 
+                    intake.dropArmAutoR(coneHeight);
+
                     scoreTimer.reset();
                     cycleState = CycleState.UNGUIDE;
                 }
@@ -900,6 +909,7 @@ public class AutomatedStack extends LinearOpMode {
                 break;
             case DEPOSIT:
                 if (scoreTimer.seconds() >= depositTime) {
+
                     outtake.transferDeposit();
                     outtake.retractSlide();
                     outtake.setTurretMiddle();
@@ -913,7 +923,7 @@ public class AutomatedStack extends LinearOpMode {
                 }
                 break;
             case PREPARE:
-                if (intake.intakeOutDiff() < 20 || intake.getDistanceCM() < 1) {
+                if (intake.intakeOutDiff() < 20 || intake.getDistanceCM() < 1.75) {
                     intake.closeClaw();
 
 
@@ -923,6 +933,11 @@ public class AutomatedStack extends LinearOpMode {
                 break;
             case GRAB:
                 if (scoreTimer.seconds() >= grabTime) {
+
+                    if (intake.getDistanceCM() < 4) { // have cone
+                        coneHeight++; // arm lower next cycle
+                    }
+
                     intake.transferPosition();
                     intake.flipArm();
 
@@ -942,7 +957,7 @@ public class AutomatedStack extends LinearOpMode {
             case FLIP:
                 if (scoreTimer.seconds() >= transferTime) {
                     intake.readyPosition();
-                    intake.dropArm();
+                    intake.dropArmAutoR(coneHeight);
 
                     scoreTimer.reset();
                     cycleState = CycleState.EXTEND_INTAKE;
@@ -979,6 +994,8 @@ public class AutomatedStack extends LinearOpMode {
 
                     outtake.scoreDepositRight();
 
+                    intake.dropArmAutoR(coneHeight);
+
                     scoreTimer.reset();
                     cycleState = CycleState.UNGUIDE;
                 }
@@ -1006,7 +1023,7 @@ public class AutomatedStack extends LinearOpMode {
                 }
                 break;
             case PREPARE:
-                if (intake.intakeOutDiff() < 20) {
+                if (intake.intakeOutDiff() < 20 || intake.getDistanceCM() < 1.75) {
                     intake.closeClaw();
 
 
@@ -1016,6 +1033,12 @@ public class AutomatedStack extends LinearOpMode {
                 break;
             case GRAB:
                 if (scoreTimer.seconds() >= grabTime) {
+
+
+                    if (intake.getDistanceCM() < 4) { // have cone
+                        coneHeight++; // arm lower next cycle
+                    }
+
                     intake.transferPosition();
                     intake.flipArm();
 
@@ -1034,7 +1057,7 @@ public class AutomatedStack extends LinearOpMode {
             case FLIP:
                 if (scoreTimer.seconds() >= transferTime) {
                     intake.readyPosition();
-                    intake.dropArm();
+                    intake.dropArmAutoR(coneHeight);
 
                     scoreTimer.reset();
                     cycleState = CycleState.EXTEND_INTAKE;
