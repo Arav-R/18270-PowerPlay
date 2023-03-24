@@ -69,7 +69,7 @@ public class CombinedAuto extends LinearOpMode {
     public static int cones = 6;
     public static double cycleDelay = 0;
 
-    public static double forwardDistance  = 49;
+    public static double forwardDistance  = 49.7;
 
 
     int currentCycle = 0;
