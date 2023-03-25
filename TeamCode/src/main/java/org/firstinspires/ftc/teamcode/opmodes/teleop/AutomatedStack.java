@@ -296,6 +296,12 @@ public class AutomatedStack extends LinearOpMode {
                     if (gamepad1.x) {
                         intake.dropArmAutoR(coneHeight);
                         intake.openClaw();
+
+                        if (intake.getSlide() < 10) {
+                            intake.holdIntakeSlide();
+                        } else {
+                            intake.transferPosition(); // fast retraction
+                        }
                     } else if (gamepad1.a) {
                         intake.dropArmAutoR(coneHeight);
                         intake.openClaw();
@@ -548,13 +554,13 @@ public class AutomatedStack extends LinearOpMode {
 
 
             // Endgame timer
-            if (endgameTimer.seconds() >= 90) {
-                gamepad1.rumble(1000); // rumble for 1 second
+            if (endgameTimer.seconds() >= 90 && endgameTimer.seconds() < 92) { // rumble for 2 seconds at endgame start
+                gamepad1.rumble(2000); // rumble for 1 second
 
                 //gamepad1.setLedColor(0, 1, 0, Gamepad.LED_DURATION_CONTINUOUS);
             }
 
-            if (endgameTimer.seconds() >= 115) { // 5 seconds left
+            if (endgameTimer.seconds() >= 115 && endgameTimer.seconds() < 115.5) { // 5 seconds left
                 gamepad1.runRumbleEffect(countdown); // rumble for 1 second
 
                 //gamepad1.setLedColor(1.0, 0, 0, Gamepad.LED_DURATION_CONTINUOUS);
@@ -790,7 +796,7 @@ public class AutomatedStack extends LinearOpMode {
     public void lowPoleArm(){
         switch (lowState) {
             case READY:
-                if (gamepad1.touchpad) { // right bumper button and have a cone
+                if (gamepad1.touchpad && intake.isArmDown()) { // right bumper button and have a cone
 
                     intake.closeClaw();
 
