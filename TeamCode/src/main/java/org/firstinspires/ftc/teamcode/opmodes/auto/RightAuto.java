@@ -30,7 +30,7 @@ import java.util.ArrayList;
 
 @Config
 @Autonomous(group = "drive")
-public class CombinedAuto extends LinearOpMode {
+public class RightAuto extends LinearOpMode {
 
 
     // APRILTAG STUFF
