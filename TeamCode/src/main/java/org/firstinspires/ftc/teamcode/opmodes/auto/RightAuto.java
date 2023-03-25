@@ -203,7 +203,7 @@ public class RightAuto extends LinearOpMode {
 
                 .waitSeconds(0.5)
                 .forward(forwardDistance)
-                .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
+                .UNSTABLE_addTemporalMarkerOffset(-0.8, () -> {
                     intake.flipArm();
                 })
                 .turn(Math.toRadians(-94))
@@ -221,7 +221,7 @@ public class RightAuto extends LinearOpMode {
                 .lineToLinearHeading(new Pose2d(10.5, -12, Math.toRadians(0)))
                 .build();
         Trajectory midApril = drive.trajectoryBuilder(trajSeq.end())
-                .lineToLinearHeading(new Pose2d(35.4, -12.5, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(36, -12.5, Math.toRadians(0)))
                 .build();
         Trajectory rightApril = drive.trajectoryBuilder(trajSeq.end())
                 .lineToLinearHeading(new Pose2d(59, -13, Math.toRadians(0)))
@@ -377,7 +377,7 @@ public class RightAuto extends LinearOpMode {
                     }
                     break;
                 case PREPARE:
-                    if (intake.intakeOutAutoDiffR(currentCycle + 1) < 20 || intake.getDistanceCM() < 1) {
+                    if (intake.intakeOutAutoDiffR(currentCycle + 1) < 20 || intake.getDistanceCM() < 2) {
                         intake.closeClawAuto(currentCycle + 1);
 
                         if (currentCycle == 2) {
@@ -462,6 +462,8 @@ public class RightAuto extends LinearOpMode {
 
             telemetry.addData("Outtake Slide: ", outtake.getExtend());
             telemetry.addData("Turret Pos: ", outtake.getTurret());
+
+            telemetry.addData("Intake Pos: ", intake.getSlide());
 
             telemetry.addData("Distance: ", intake.getDistanceCM());
 

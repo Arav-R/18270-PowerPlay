@@ -48,25 +48,27 @@ public class Intake {
 
 
 
-    public static int slideOut = 420;
+    public static int slideOut = 420; // 420
+    public static int slideOutExtend = 400; // 420
+
 
     public static int slideIn = 0; //65
 
     public static int slideInAuto = 0; //235
     public static int slideOutAuto = 417; //65
 
-    public static int slideOutAuto5R = 398; //65
-    public static int slideOutAuto4R = 400; //65
-    public static int slideOutAuto3R = 400; //65
-    public static int slideOutAuto2R = 402; //65
-    public static int slideOutAuto1R = 402; //65
+    public static int slideOutAuto5R = 418; //65
+    public static int slideOutAuto4R = 420; //65
+    public static int slideOutAuto3R = 420; //65
+    public static int slideOutAuto2R = 422; //65
+    public static int slideOutAuto1R = 422; //65
 
 
-    public static int slideOutAuto5L = 462; //65
-    public static int slideOutAuto4L = 467; //65
-    public static int slideOutAuto3L = 471; //65
-    public static int slideOutAuto2L = 471; //65
-    public static int slideOutAuto1L = 485; //65
+    public static int slideOutAuto5L = 457; //462
+    public static int slideOutAuto4L = 462; //467
+    public static int slideOutAuto3L = 470; //471
+    public static int slideOutAuto2L = 470; //471
+    public static int slideOutAuto1L = 484; //485
 
 
     public void init(HardwareMap hardwareMap){
@@ -122,6 +124,13 @@ public class Intake {
         intakeSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         intakeSlide.setPower(1);
         
+    }
+
+    public void intakePositionCircuit (){
+        intakeSlide.setTargetPosition(slideOutExtend);
+        intakeSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        intakeSlide.setPower(1);
+
     }
 /*
     public void autoStackPosition(){

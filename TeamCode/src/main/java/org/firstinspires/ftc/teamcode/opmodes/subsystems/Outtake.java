@@ -27,13 +27,13 @@ public class Outtake {
     public static int turretTransfer = 312;
 
     public static int leftHighTurret = turretTransfer + 182; // 488
-    public static int leftMidTurret = turretTransfer + 230; // 500
+    public static int leftMidTurret = turretTransfer + 280; // 250
 
     public static int rightHighTurret = turretTransfer - 160; // 160
-    public static int rightMidTurret = turretTransfer - 210; // 148
+    public static int rightMidTurret = turretTransfer - 260; // 210
 
 
-    public static int turretAutoLeft = turretTransfer + 171; //483
+    public static int turretAutoLeft = turretTransfer + 175; //483
     public static int turretAutoRight = turretTransfer - 163; //149
 
 
@@ -43,11 +43,11 @@ public class Outtake {
     public static int rightHighFar = 130; // ground to high
 
     // outtake slides
-    public static int fullExtendLeft = 935; // 910
+    public static int fullExtendLeft = 995; // 935
     public static int fullExtendRight = 1040; // 1030
 
-    public static int fullExtendAutoLeft = 964; // 934
-    public static int fullExtendAutoRight = 1000; // 990
+    public static int fullExtendAutoLeft = 1050; // 934
+    public static int fullExtendAutoRight = 1050; // 990
 
 
 
@@ -71,9 +71,9 @@ public class Outtake {
 
 
 
-    // different junctions left and right positions
-    public static int leftMid = 390; // 380
-    public static int rightMid = 410; // 400
+    // different junctions left and right positions Outtake
+    public static int leftMid = 415; // 390
+    public static int rightMid = 410; // 410
 
     public static int leftlow = 0;
     public static int rightlow = 0;
@@ -254,6 +254,16 @@ public class Outtake {
         outtakeSlide1.setPower(1);
 
         outtakeSlide2.setTargetPosition(fullExtendLeft);
+        outtakeSlide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        outtakeSlide2.setPower(1);
+    }
+
+    public void extendSlideLeftCycle(){
+        outtakeSlide1.setTargetPosition(fullExtendLeft + 15);
+        outtakeSlide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        outtakeSlide1.setPower(1);
+
+        outtakeSlide2.setTargetPosition(fullExtendLeft + 15);
         outtakeSlide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         outtakeSlide2.setPower(1);
     }

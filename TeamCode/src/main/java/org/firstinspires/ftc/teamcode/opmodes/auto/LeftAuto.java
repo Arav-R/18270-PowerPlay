@@ -200,7 +200,7 @@ public class  LeftAuto extends LinearOpMode {
 
                 .waitSeconds(0.45)
                 .forward(forwardDistance)
-                .UNSTABLE_addTemporalMarkerOffset(-.9, () -> {
+                .UNSTABLE_addTemporalMarkerOffset(-.8, () -> {
                     intake.flipArm();
                 })
                 .turn(Math.toRadians(92))
@@ -465,6 +465,7 @@ public class  LeftAuto extends LinearOpMode {
             telemetry.addData("Outtake Slide: ", outtake.getExtend());
             telemetry.addData("Turret Pos: ", outtake.getTurret());
 
+            telemetry.addData("Intake Pos: ", intake.getSlide());
             telemetry.addData("Distance: ", intake.getDistanceCM());
 
 

@@ -307,7 +307,7 @@ public class AutomatedStack extends LinearOpMode {
                         intake.dropArmAutoR(coneHeight);
                         intake.openClaw();
 
-                        intake.intakePosition();
+                        intake.intakePositionCircuit();
                     }
 
                     clawState = ClawState.READY;
@@ -444,7 +444,7 @@ public class AutomatedStack extends LinearOpMode {
                                 intake.openClaw();
                                 intake.dropArmAutoR(coneHeight);
 
-                                outtake.extendSlideLeft();
+                                outtake.extendSlideLeftCycle();
                                 outtake.setTurretLeftHigh();
                                 outtake.midDeposit();
                                 outtake.guideUpLeft();
@@ -983,7 +983,7 @@ public class AutomatedStack extends LinearOpMode {
                 if (scoreTimer.seconds() >= intakeTime) {
                     outtake.midDeposit();
                     outtake.setTurretLeftHigh();
-                    outtake.extendSlideLeft();
+                    outtake.extendSlideLeftCycle();
                     outtake.guideUpLeft();
 
                     cycleState = CycleState.EXTEND_OUTTAKE;
