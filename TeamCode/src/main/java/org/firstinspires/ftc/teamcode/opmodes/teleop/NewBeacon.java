@@ -292,11 +292,11 @@ public class NewBeacon extends LinearOpMode {
                         intake.dropArmAutoR(coneHeight);
                         intake.openClaw();
 
-                        if (intake.getSlide() < 10) {
-                            intake.holdIntakeSlide();
-                        } else {
-                            intake.transferPosition(); // fast retraction
-                        }
+//                        if (intake.getSlide() < 10) {
+//                            intake.holdIntakeSlide();
+//                        } else {
+//                            intake.transferPosition(); // fast retraction
+//                        }
                     } else if (gamepad1.a) {
                         intake.dropArmAutoR(coneHeight);
                         intake.openClaw();

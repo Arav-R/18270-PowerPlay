@@ -92,6 +92,7 @@ public class AutomatedStack extends LinearOpMode {
     public static double transferTime = .2; //.5
     public static double intakeTime = .25;
     public static int depBuffer = 350;
+    public static double depositTime2 = 0.6; //.9
 
     public enum RobotState {
         CONTRACT,
@@ -912,7 +913,7 @@ public class AutomatedStack extends LinearOpMode {
                 }
                 break;
             case UNGUIDE:
-                if (scoreTimer.seconds() >= depositTime + guideOffset) {
+                if (scoreTimer.seconds() >= depositTime2 + guideOffset) {
 
                     outtake.guideScore();
 
@@ -921,7 +922,7 @@ public class AutomatedStack extends LinearOpMode {
 
                 break;
             case DEPOSIT:
-                if (scoreTimer.seconds() >= depositTime) {
+                if (scoreTimer.seconds() >= depositTime2) {
 
                     outtake.transferDeposit();
                     outtake.retractSlide();
@@ -948,7 +949,9 @@ public class AutomatedStack extends LinearOpMode {
                 if (scoreTimer.seconds() >= grabTime) {
 
                     if (intake.getDistanceCM() < 4) { // have cone
-                        coneHeight++; // arm lower next cycle
+                        if (coneHeight < 6) {
+                            coneHeight++; // arm lower next cycle
+                        }
                     }
 
                     intake.transferPosition();
@@ -1014,7 +1017,7 @@ public class AutomatedStack extends LinearOpMode {
                 }
                 break;
             case UNGUIDE:
-                if (scoreTimer.seconds() >= depositTime + guideOffset) {
+                if (scoreTimer.seconds() >= depositTime2 + guideOffset) {
 
                     outtake.guideScore();
 
@@ -1022,7 +1025,7 @@ public class AutomatedStack extends LinearOpMode {
                 }
                 break;
             case DEPOSIT:
-                if (scoreTimer.seconds() >= depositTime) {
+                if (scoreTimer.seconds() >= depositTime2) {
                     outtake.transferDeposit();
                     outtake.retractSlide();
                     outtake.setTurretMiddle();
@@ -1049,7 +1052,9 @@ public class AutomatedStack extends LinearOpMode {
 
 
                     if (intake.getDistanceCM() < 4) { // have cone
-                        coneHeight++; // arm lower next cycle
+                        if (coneHeight < 6) {
+                            coneHeight++; // arm lower next cycle
+                        }
                     }
 
                     intake.transferPosition();
