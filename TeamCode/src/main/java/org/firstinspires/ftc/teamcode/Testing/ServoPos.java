@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.opmodes.subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.opmodes.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.opmodes.subsystems.Outtake;
 
-@Disabled
+//@Disabled
 @Config
 @TeleOp
 public class ServoPos extends LinearOpMode {
@@ -32,7 +32,7 @@ public class ServoPos extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
 
         Servo servo = hardwareMap.servo.get(servoName);
-        intake.init(hardwareMap);
+        //intake.init(hardwareMap);
 
 
 
