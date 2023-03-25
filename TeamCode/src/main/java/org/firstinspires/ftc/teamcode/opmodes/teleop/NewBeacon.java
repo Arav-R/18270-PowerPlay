@@ -266,7 +266,7 @@ public class NewBeacon extends LinearOpMode {
                         beacon = true;
                     }
 
-                    if (intakeToggle && intake.getDistanceCM() < 3) { // fsm and have cone on press
+                    if (intakeToggle && intake.getDistanceCM() < 3) { // fsm and have cone on press (no need to click share again)
                         intake.flipArm();
 
                         clawTimer.reset();
@@ -291,6 +291,12 @@ public class NewBeacon extends LinearOpMode {
                     if (gamepad1.x) {
                         intake.dropArmAutoR(coneHeight);
                         intake.openClaw();
+
+                        if (intake.getSlide() < 10) {
+                            intake.holdIntakeSlide();
+                        } else {
+                            intake.transferPosition(); // fast retraction
+                        }
                     } else if (gamepad1.a) {
                         intake.dropArmAutoR(coneHeight);
                         intake.openClaw();
