@@ -403,7 +403,7 @@ public class NewBeacon extends LinearOpMode {
 
                 //guide and score
                 if (gamepad1.right_trigger > .15) {
-                    if (scoreState != ScoreState.UNGUIDE && scoreState != ScoreState.DEPOSIT) {
+                    if (scoreState != ScoreState.UNGUIDE && scoreState != ScoreState.DEPOSIT) { // doesnt interfere with guide fsm
                         if (outtake.getExtend() < 100) {
                             outtake.guideUpLow();
                         } else {
@@ -782,7 +782,7 @@ public class NewBeacon extends LinearOpMode {
     public void lowPoleArm(){
         switch (lowState) {
             case READY:
-                if (gamepad1.touchpad) { // right bumper button and have a cone
+                if (gamepad1.touchpad && intake.isArmDown()) { // right bumper button and have a cone
 
                     intake.closeClaw();
 
