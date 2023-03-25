@@ -25,7 +25,7 @@ public class Intake {
 
 
 
-    double clawClose = .2; //.27
+    double clawClose = .3; //.27
     double clawOpen = 0.0; //.75
 
     public static double flipDown = 0; //0.015
@@ -86,7 +86,7 @@ public class Intake {
 
         intakeSlide.setDirection(DcMotor.Direction.REVERSE);
 
-        flip2Servo.setDirection(Servo.Direction.REVERSE);
+        flip1Servo.setDirection(Servo.Direction.REVERSE);
 
         intakeSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         intakeSlide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
