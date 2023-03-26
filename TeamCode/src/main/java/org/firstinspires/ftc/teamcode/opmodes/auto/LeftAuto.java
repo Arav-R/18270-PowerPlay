@@ -67,7 +67,7 @@ public class  LeftAuto extends LinearOpMode {
     public static int cones = 6;
     public static double cycleDelay = 0;
 
-    public static double forwardDistance  = 52;
+    public static double forwardDistance  = 51.6;
 
 
     int currentCycle = 0;

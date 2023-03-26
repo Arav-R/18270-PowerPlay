@@ -15,6 +15,7 @@ import org.firstinspires.ftc.teamcode.opmodes.subsystems.Outtake;
 
 //@Disabled
 
+@Disabled
 @Config
 @TeleOp
 public class AllPoles extends LinearOpMode {
