@@ -644,6 +644,12 @@ public class AutomatedStack extends LinearOpMode {
                     if (haveCone) {
                         intake.contractArm();
 
+                        if (intake.getSlide() < 10) {
+                            intake.holdIntakeSlide();
+                        } else {
+                            intake.transferPosition(); // fast retraction
+                        }
+
                         telemetry.addLine("BEACON");
 
                         clawTimer.reset();
