@@ -320,7 +320,7 @@ public class AutomatedStack extends LinearOpMode {
                 }
 
                 // low pole with arm FSM
-                lowPoleArm();
+                //lowPoleArm();
 
 
                 // arm height
