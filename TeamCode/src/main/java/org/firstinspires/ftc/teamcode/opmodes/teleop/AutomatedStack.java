@@ -561,7 +561,7 @@ public class AutomatedStack extends LinearOpMode {
                 //gamepad1.setLedColor(0, 1, 0, Gamepad.LED_DURATION_CONTINUOUS);
             }
 
-            if (endgameTimer.seconds() >= 115 && endgameTimer.seconds() < 115.5) { // 5 seconds left
+            if (endgameTimer.seconds() >= 110 && endgameTimer.seconds() < 110.5) { // 5 seconds left
                 gamepad1.runRumbleEffect(countdown); // rumble for 1 second
 
                 //gamepad1.setLedColor(1.0, 0, 0, Gamepad.LED_DURATION_CONTINUOUS);
