@@ -28,7 +28,7 @@ import java.util.ArrayList;
 
 @Config
 @Autonomous(group = "drive")
-public class  LeftAuto extends LinearOpMode {
+public class LeftAuto4 extends LinearOpMode {
 
 
     // APRILTAG STUFF
@@ -64,12 +64,13 @@ public class  LeftAuto extends LinearOpMode {
 
     public static double expansionDelay = 0.8;
 
-    public static int cones = 6;
+    public static int cones = 5;
     public static double cycleDelay = 0;
 
     public static double forwardDistance  = 51.6;
 
     public static double armFlipTime  = -0.8;
+
 
 
     int currentCycle = 0;
@@ -192,7 +193,7 @@ public class  LeftAuto extends LinearOpMode {
         TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(startPose)
 
 
-                //.waitSeconds(9)
+                .waitSeconds(4.2)
 
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     intake.zeroPosition();

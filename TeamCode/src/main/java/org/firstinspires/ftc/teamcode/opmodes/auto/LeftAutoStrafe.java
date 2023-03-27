@@ -28,7 +28,7 @@ import java.util.ArrayList;
 
 @Config
 @Autonomous(group = "drive")
-public class  LeftAuto extends LinearOpMode {
+public class LeftAutoStrafe extends LinearOpMode {
 
 
     // APRILTAG STUFF
@@ -194,18 +194,18 @@ public class  LeftAuto extends LinearOpMode {
 
                 //.waitSeconds(9)
 
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    intake.zeroPosition();
-                    intake.dropArm();
-                    intake.openClaw();
-                })
+//                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+//                    intake.zeroPosition();
+//                    intake.dropArm();
+//                    intake.openClaw();
+//                })
 
-                .waitSeconds(0.45)
-                .forward(forwardDistance)
+                //.waitSeconds(0.45)
+                .strafeRight(forwardDistance)
                 .UNSTABLE_addTemporalMarkerOffset(armFlipTime, () -> {
                     intake.flipArm();
                 })
-                .turn(Math.toRadians(92))
+                //.turn(Math.toRadians(92))
                 .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
                     outtake.transferDeposit();
                     outtake.setTurretAutoRightPreload();

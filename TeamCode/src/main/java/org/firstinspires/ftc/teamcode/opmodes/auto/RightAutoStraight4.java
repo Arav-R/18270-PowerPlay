@@ -28,7 +28,7 @@ import java.util.ArrayList;
 
 @Config
 @Autonomous(group = "drive")
-public class  LeftAuto extends LinearOpMode {
+public class RightAutoStraight4 extends LinearOpMode {
 
 
     // APRILTAG STUFF
@@ -64,10 +64,10 @@ public class  LeftAuto extends LinearOpMode {
 
     public static double expansionDelay = 0.8;
 
-    public static int cones = 6;
+    public static int cones = 5;
     public static double cycleDelay = 0;
 
-    public static double forwardDistance  = 51.6;
+    public static double forwardDistance  = 45;
 
     public static double armFlipTime  = -0.8;
 
@@ -192,7 +192,7 @@ public class  LeftAuto extends LinearOpMode {
         TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(startPose)
 
 
-                //.waitSeconds(9)
+                .waitSeconds(3)
 
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     intake.zeroPosition();
@@ -205,25 +205,28 @@ public class  LeftAuto extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(armFlipTime, () -> {
                     intake.flipArm();
                 })
-                .turn(Math.toRadians(92))
+                .turn(Math.toRadians(-85))
                 .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
                     outtake.transferDeposit();
-                    outtake.setTurretAutoRightPreload();
+                    outtake.setTurretMiddle();
                 })
 
 
                 .build();
 
 
+        Trajectory placement = drive.trajectoryBuilder(trajSeq.end())
+                .lineToLinearHeading(new Pose2d(35, -12, Math.toRadians(-180)))
+                .build();
 
-        Trajectory leftApril = drive.trajectoryBuilder(trajSeq.end())
-                .lineToLinearHeading(new Pose2d(7, -12, Math.toRadians(180)))
+        Trajectory leftApril = drive.trajectoryBuilder(placement.end())
+                .lineToLinearHeading(new Pose2d(7, -12, Math.toRadians(-180)))
                 .build();
-        Trajectory midApril = drive.trajectoryBuilder(trajSeq.end())
-                .lineToLinearHeading(new Pose2d(34, -12.5, Math.toRadians(180)))
+        Trajectory midApril = drive.trajectoryBuilder(placement.end())
+                .lineToLinearHeading(new Pose2d(34, -12.5, Math.toRadians(-180)))
                 .build();
-        Trajectory rightApril = drive.trajectoryBuilder(trajSeq.end())
-                .lineToLinearHeading(new Pose2d(59, -14, Math.toRadians(180)))
+        Trajectory rightApril = drive.trajectoryBuilder(placement.end())
+                .lineToLinearHeading(new Pose2d(59, -14, Math.toRadians(-180)))
                 .build();
 
 
@@ -338,7 +341,7 @@ public class  LeftAuto extends LinearOpMode {
             intake.dropArmAutoL(2); //5 cone
 
             outtake.extendSlidePreloadRight();
-            outtake.setTurretAutoRightPreload();
+            outtake.setTurretMiddle();
             outtake.midDeposit();
             outtake.guideUpLeft();
         }
@@ -437,7 +440,7 @@ public class  LeftAuto extends LinearOpMode {
                 case EXTEND_INTAKE:
                     if (scoreTimer.seconds() >= intakeTime) {
                         outtake.midDeposit();
-                        outtake.setTurretAutoRight();
+                        outtake.setTurretMiddle();
                         outtake.extendSlideAutoRight();
                         outtake.guideUpLeft();
 
@@ -509,6 +512,7 @@ public class  LeftAuto extends LinearOpMode {
 
 
         // PARK
+        drive.followTrajectory(placement);
 
         if(tagOfInterest == null || tagOfInterest.id == LEFT){
             //trajectory
