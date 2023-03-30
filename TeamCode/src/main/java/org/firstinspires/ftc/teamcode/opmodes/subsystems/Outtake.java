@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.opmodes.subsystems;
 
 
 import com.acmerobotics.dashboard.config.Config;
+import com.arcrobotics.ftclib.controller.PIDController;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -14,6 +15,16 @@ public class Outtake {
 
     public DcMotorEx outtakeSlide1, outtakeSlide2, turret;
     private Servo depositServo, guideServo, lockServo;
+
+    // outtake slide PIDF
+    private PIDController controller;
+
+    public static double p = 0, i = 0, d = 0;
+    public static double f = 0;
+    public static int target = 0;
+
+
+
 
     // deposit
     public static  double transferPos = 0.19; //0.18
@@ -509,6 +520,29 @@ public class Outtake {
 
     public double getOuttakeSlideVelocity1(){
         return outtakeSlide1.getVelocity();
+    }
+
+
+
+
+    // Slide PID
+    public void initSlidePID(){
+        controller = new PIDController(p, i , d);
+    }
+
+    public void setSlidePID(double p, double i, double d){
+        controller.setPID(p, i, d);
+    }
+
+    public void powerSlidePID(){
+        int motorPos = outtakeSlide1.getCurrentPosition();
+        double pid = controller.calculate(motorPos, target);
+
+        double power = pid + f;
+
+        outtakeSlide1.setPower(power);
+        outtakeSlide2.setPower(power);
+
     }
 
 

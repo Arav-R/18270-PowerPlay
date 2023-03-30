@@ -87,12 +87,12 @@ public class AutomatedStack extends LinearOpMode {
 
     //public static double guideOffset = -0.4; //.9
     //public static double depositTime = 0.6; //.9
-    public static double grabTime = .3;
-    public static double flipTime = .8; //.95
-    public static double transferTime = .2; //.5
-    public static double intakeTime = .25;
-    public static int depBuffer = 350;
-    public static double depositTime2 = 0.6; //.9
+    public static double grabTime = .25; //
+    public static double flipTime = .72; //.7
+    public static double transferTime = .15; //.1
+    public static double intakeTime = .25; //
+    public static int depBuffer = 650; // 650
+    public static double depositTime2 = 0.55; //.9
 
     public enum RobotState {
         CONTRACT,

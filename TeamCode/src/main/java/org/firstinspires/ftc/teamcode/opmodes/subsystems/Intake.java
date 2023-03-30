@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.opmodes.subsystems;
 
 
 import com.acmerobotics.dashboard.config.Config;
+import com.arcrobotics.ftclib.controller.PIDController;
 import com.qualcomm.robotcore.hardware.ColorRangeSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -22,6 +23,13 @@ public class Intake {
 
     // Distance Sensor
     private DistanceSensor sensorRange;
+
+    // slide PIDF
+    private PIDController controller;
+
+    public static double p = 0, i = 0, d = 0;
+    public static double f = 0;
+    public static int target = 0;
 
 
 
@@ -454,6 +462,29 @@ public class Intake {
 //    public double getDistanceCM(){
 //        return sensorRange.getDistance(DistanceUnit.CM);
 //    }
+
+
+
+    // PID
+    public void initPID(){
+        controller = new PIDController(p, i , d);
+    }
+
+    public void setPID(double p, double i, double d){
+        controller.setPID(p, i, d);
+    }
+
+    public void powerPID(){
+        int motorPos = intakeSlide.getCurrentPosition();
+        double pid = controller.calculate(motorPos, target);
+
+        double power = pid + f;
+
+        intakeSlide.setPower(power);
+
+    }
+
+
 
 
 }
