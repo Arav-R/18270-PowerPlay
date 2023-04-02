@@ -6,6 +6,7 @@ import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.opmodes.subsystems.Drivetrain;
@@ -82,8 +83,14 @@ public class AutomatedStack extends LinearOpMode {
 
 
     ElapsedTime endgameTimer = new ElapsedTime();
-    
+
+    // get battery voltage
+    private VoltageSensor batteryVoltageSensor;
+    private double batteryVoltage;
+
+
     // cycle variables
+
 
     //public static double guideOffset = -0.4; //.9
     //public static double depositTime = 0.6; //.9
@@ -93,6 +100,9 @@ public class AutomatedStack extends LinearOpMode {
     public static double intakeTime = .25; //
     public static int depBuffer = 650; // 650
     public static double depositTime2 = 0.55; //.9
+
+
+
 
     public enum RobotState {
         CONTRACT,
@@ -135,6 +145,22 @@ public class AutomatedStack extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
+
+        batteryVoltageSensor = hardwareMap.voltageSensor.iterator().next();
+
+        batteryVoltage = batteryVoltageSensor.getVoltage();
+        // voltage comp
+        guideOffset = guideOffset * (12 / batteryVoltage);
+        depositTime = depositTime * (12 / batteryVoltage);
+
+
+        grabTime = grabTime * (12 / batteryVoltage);
+        flipTime = flipTime * (12 / batteryVoltage);
+        transferTime = transferTime * (12 / batteryVoltage);
+        intakeTime = intakeTime * (12 / batteryVoltage);
+        depositTime2 = depositTime2 * (12 / batteryVoltage);
+
+
 
         Gamepad currentGamepad1 = new Gamepad();
         Gamepad previousGamepad1 = new Gamepad();
@@ -202,6 +228,10 @@ public class AutomatedStack extends LinearOpMode {
 
         while (opModeIsActive()) {
             currentGamepad1.copy(gamepad1);
+
+
+            // Voltage
+            batteryVoltage = batteryVoltageSensor.getVoltage();
 
 
             // Drive
@@ -584,6 +614,8 @@ public class AutomatedStack extends LinearOpMode {
 
             previousGamepad1.copy(currentGamepad1);
             previousGamepad2.copy(currentGamepad2);
+
+            telemetry.addData("Voltage: ", batteryVoltage);
 
             telemetry.addData("Extend Position: ", outtake.getExtend());
             telemetry.addData("Turret Position: ", outtake.getTurret());
