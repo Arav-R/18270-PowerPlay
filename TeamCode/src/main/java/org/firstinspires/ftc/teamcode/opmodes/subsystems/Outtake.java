@@ -387,6 +387,16 @@ public class Outtake {
         outtakeSlide2.setPower(0.5);
     }
 
+    public void retractSlideSlow (){
+        outtakeSlide1.setTargetPosition(0);
+        outtakeSlide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        outtakeSlide1.setPower(0.25);
+
+        outtakeSlide2.setTargetPosition(0);
+        outtakeSlide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        outtakeSlide2.setPower(0.25);
+    }
+
     public int retractDiff (){
 
         return outtakeSlide1.getCurrentPosition();

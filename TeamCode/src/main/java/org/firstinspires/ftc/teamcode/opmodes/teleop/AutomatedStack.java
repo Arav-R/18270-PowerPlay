@@ -376,11 +376,11 @@ public class AutomatedStack extends LinearOpMode {
 
                 // retract emergency
 
-                if (gamepad1.left_trigger > .15) { // left High
+                if (gamepad1.left_trigger > .15) {
                     outtake.transferDeposit();
-                    outtake.retractSlide();
+                    outtake.retractSlideSlow();
                     outtake.setTurretMiddle();
-                    outtake.guideDown();
+                    //outtake.guideDown();
                 }
 
 
