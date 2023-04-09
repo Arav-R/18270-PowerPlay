@@ -33,6 +33,16 @@ public class AutomatedStack extends LinearOpMode {
     public static double guideOffset = -0.4; //.9
     public static double depositTime = 0.6; //.9
 
+    public static double grabTime = .35; //
+    public static double flipTime = .9; //.7
+    public static double transferTime = .35; //.1
+    public static double intakeTime = .1; //
+    public static double beaconTime = .3; //
+
+
+
+
+
 
     int coneHeight = 6;
 
@@ -94,10 +104,10 @@ public class AutomatedStack extends LinearOpMode {
 
     //public static double guideOffset = -0.4; //.9
     //public static double depositTime = 0.6; //.9
-    public static double grabTime = .25; //
-    public static double flipTime = .72; //.7
-    public static double transferTime = .15; //.1
-    public static double intakeTime = .25; //
+    public static double grabTime2 = .25; //
+    public static double flipTime2 = .72; //.7
+    public static double transferTime2 = .15; //.1
+    public static double intakeTime2 = .25; //
     public static int depBuffer = 650; // 650
     public static double depositTime2 = 0.55; //.9
 
@@ -153,11 +163,16 @@ public class AutomatedStack extends LinearOpMode {
         guideOffset = guideOffset * (12 / batteryVoltage);
         depositTime = depositTime * (12 / batteryVoltage);
 
-
         grabTime = grabTime * (12 / batteryVoltage);
         flipTime = flipTime * (12 / batteryVoltage);
         transferTime = transferTime * (12 / batteryVoltage);
         intakeTime = intakeTime * (12 / batteryVoltage);
+
+
+        grabTime2 = grabTime2 * (12 / batteryVoltage);
+        flipTime2 = flipTime2 * (12 / batteryVoltage);
+        transferTime2 = transferTime2 * (12 / batteryVoltage);
+        intakeTime2 = intakeTime2 * (12 / batteryVoltage);
         depositTime2 = depositTime2 * (12 / batteryVoltage);
 
 
@@ -674,7 +689,7 @@ public class AutomatedStack extends LinearOpMode {
                 break;
             case GRAB:
 
-                if (clawTimer.seconds() > .35) {
+                if (clawTimer.seconds() > grabTime) {
 
                     // beacon
                     if (haveCone) {
@@ -714,7 +729,7 @@ public class AutomatedStack extends LinearOpMode {
                 break;
             case FLIP:
 
-                if (clawTimer.seconds() > .9 && intake.getSlide() < 10) {
+                if (clawTimer.seconds() > flipTime && intake.getSlide() < 10) {
 
                     if (beacon) {
                         intake.closeClaw();
@@ -739,7 +754,7 @@ public class AutomatedStack extends LinearOpMode {
                 break;
             case RELEASE:
 
-                if (clawTimer.seconds() > .35) {
+                if (clawTimer.seconds() > transferTime) {
                     haveCone = true;
 
                     intake.contractArm();
@@ -752,13 +767,13 @@ public class AutomatedStack extends LinearOpMode {
                 break;
             case RETRACT:
 
-                if (clawTimer.seconds() > .1) {
+                if (clawTimer.seconds() > intakeTime) {
                     clawState = ClawState.READY;
                 }
 
                 break;
             case BEACON:
-                if (clawTimer.seconds() > .3) { // arm from retract to flip
+                if (clawTimer.seconds() > beaconTime) { // arm from retract to flip
                     intake.openClaw();
                     outtake.zeroOuttake();
 
@@ -848,7 +863,7 @@ public class AutomatedStack extends LinearOpMode {
                 }
                 break;
             case GRAB:
-                if (lowTimer.seconds() >= grabTime) {
+                if (lowTimer.seconds() >= grabTime2) {
 
                     intake.armLowPole();
                     if (intake.getSlide() < 10) {
@@ -988,7 +1003,7 @@ public class AutomatedStack extends LinearOpMode {
                 }
                 break;
             case GRAB:
-                if (scoreTimer.seconds() >= grabTime) {
+                if (scoreTimer.seconds() >= grabTime2) {
 
                     if (intake.getDistanceCM() < 4) { // have cone
                         if (coneHeight < 6) {
@@ -1004,7 +1019,7 @@ public class AutomatedStack extends LinearOpMode {
                 }
                 break;
             case RETRACT_INTAKE:
-                if (scoreTimer.seconds() >= flipTime) {
+                if (scoreTimer.seconds() >= flipTime2) {
                     intake.openClaw();
 
                     outtake.zeroOuttake();
@@ -1013,7 +1028,7 @@ public class AutomatedStack extends LinearOpMode {
                 }
                 break;
             case FLIP:
-                if (scoreTimer.seconds() >= transferTime) {
+                if (scoreTimer.seconds() >= transferTime2) {
                     intake.readyPosition();
                     intake.dropArmAutoR(coneHeight);
 
@@ -1022,7 +1037,7 @@ public class AutomatedStack extends LinearOpMode {
                 }
                 break;
             case EXTEND_INTAKE:
-                if (scoreTimer.seconds() >= intakeTime) {
+                if (scoreTimer.seconds() >= intakeTime2) {
                     outtake.midDeposit();
                     outtake.setTurretLeftHigh();
                     outtake.extendSlideLeftCycle();
@@ -1090,7 +1105,7 @@ public class AutomatedStack extends LinearOpMode {
                 }
                 break;
             case GRAB:
-                if (scoreTimer.seconds() >= grabTime) {
+                if (scoreTimer.seconds() >= grabTime2) {
 
 
                     if (intake.getDistanceCM() < 4) { // have cone
@@ -1107,7 +1122,7 @@ public class AutomatedStack extends LinearOpMode {
                 }
                 break;
             case RETRACT_INTAKE:
-                if (scoreTimer.seconds() >= flipTime) {
+                if (scoreTimer.seconds() >= flipTime2) {
                     intake.openClaw();
                     outtake.zeroOuttake();
                     scoreTimer.reset();
@@ -1115,7 +1130,7 @@ public class AutomatedStack extends LinearOpMode {
                 }
                 break;
             case FLIP:
-                if (scoreTimer.seconds() >= transferTime) {
+                if (scoreTimer.seconds() >= transferTime2) {
                     intake.readyPosition();
                     intake.dropArmAutoR(coneHeight);
 
@@ -1124,7 +1139,7 @@ public class AutomatedStack extends LinearOpMode {
                 }
                 break;
             case EXTEND_INTAKE:
-                if (scoreTimer.seconds() >= intakeTime) {
+                if (scoreTimer.seconds() >= intakeTime2) {
                     outtake.midDeposit();
                     outtake.setTurretRightHigh();
                     outtake.extendSlideRight();
