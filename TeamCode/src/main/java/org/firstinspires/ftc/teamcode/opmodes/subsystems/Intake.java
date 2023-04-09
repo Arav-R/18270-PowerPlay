@@ -475,6 +475,9 @@ public class Intake {
     }
 
     public void powerPID(){
+        // motors run without encoders
+        intakeSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
         int motorPos = intakeSlide.getCurrentPosition();
         double pid = controller.calculate(motorPos, target);
 

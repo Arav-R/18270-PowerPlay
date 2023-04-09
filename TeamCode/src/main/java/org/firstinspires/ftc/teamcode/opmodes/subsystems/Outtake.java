@@ -545,6 +545,10 @@ public class Outtake {
     }
 
     public void powerSlidePID(){
+        // motors run without encoders
+        outtakeSlide1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        outtakeSlide2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
         int motorPos = outtakeSlide1.getCurrentPosition();
         double pid = controller.calculate(motorPos, target);
 
