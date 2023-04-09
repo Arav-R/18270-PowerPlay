@@ -260,8 +260,12 @@ public class AutomatedStack extends LinearOpMode {
 
                 intake.contractArm();
                 intake.openClaw();
-                intake.holdIntakeSlide();
 
+                if (intake.getSlide() < 10) {
+                    intake.holdIntakeSlide();
+                } else {
+                    intake.transferPosition(); // fast retraction
+                }
 
                 // Circuit
                 ClawState clawState = ClawState.READY;
