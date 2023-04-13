@@ -37,7 +37,7 @@ public class Intake {
     double clawOpen = 0.0; //.75
 
     public static double flipDown = 0; //0.015
-    public static double flipUp = 0.57; //.64
+    public static double flipUp = 0.555; //.57
     public static double flipContract = 0.4;
     public static double flipStartingPosition = 0.51;
     public static double flipLowPole = .23;
