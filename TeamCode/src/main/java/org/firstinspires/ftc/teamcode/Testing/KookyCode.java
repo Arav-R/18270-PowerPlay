@@ -22,7 +22,7 @@ public class KookyCode extends OpMode{
 
     public static int target = 0;
 
-    public static String motorName = "turret";
+    public static String motorName = "intakeslide";
 
     private DcMotorEx motor;
 
@@ -33,8 +33,8 @@ public class KookyCode extends OpMode{
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
         motor = hardwareMap.get(DcMotorEx.class, motorName);
-        //motor.setDirection(DcMotor.Direction.REVERSE);
-        //motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motor.setDirection(DcMotor.Direction.REVERSE);
+        motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
 
     }
