@@ -736,6 +736,7 @@ public class AutomatedStack extends LinearOpMode {
                         intake.closeClaw();
                     } else {
                         intake.openClaw();
+                        outtake.captureDeposit(); // goes up a little
                     }
                     outtake.zeroOuttake();
 
