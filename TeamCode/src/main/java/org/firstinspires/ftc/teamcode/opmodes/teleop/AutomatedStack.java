@@ -33,9 +33,9 @@ public class AutomatedStack extends LinearOpMode {
     public static double guideOffset = -0.4; //.9
     public static double depositTime = 0.6; //.9
 
-    public static double grabTime = .35; //
+    public static double grabTime = .5; //.35
     public static double flipTime = .9; //.7
-    public static double transferTime = .35; //.1
+    public static double transferTime = .9; //.35
     public static double intakeTime = .1; //
     public static double beaconTime = .3; //
 
