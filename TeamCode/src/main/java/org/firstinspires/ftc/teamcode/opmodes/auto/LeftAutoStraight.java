@@ -67,7 +67,7 @@ public class LeftAutoStraight extends LinearOpMode {
     public static int cones = 6;
     public static double cycleDelay = 0;
 
-    public static double forwardDistance  = 48;
+    public static double forwardDistance  = 46.5;
 
     public static double armFlipTime  = -0.8;
 
