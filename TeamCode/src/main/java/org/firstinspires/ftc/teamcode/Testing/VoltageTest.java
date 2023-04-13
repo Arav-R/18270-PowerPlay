@@ -2,25 +2,17 @@ package org.firstinspires.ftc.teamcode.Testing;
 
 
 import com.acmerobotics.dashboard.config.Config;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.ElapsedTime;
-
-
-import org.firstinspires.ftc.teamcode.opmodes.subsystems.Drivetrain;
-import org.firstinspires.ftc.teamcode.opmodes.subsystems.Intake;
-import org.firstinspires.ftc.teamcode.opmodes.subsystems.Outtake;
+import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 //@Disabled
 @Config
 @TeleOp
-public class Debug extends LinearOpMode {
+public class VoltageTest extends LinearOpMode {
 
     private DcMotor backleft;
     private DcMotor backright;
@@ -30,14 +22,25 @@ public class Debug extends LinearOpMode {
     public DcMotorEx intakeSlide;
     public DcMotorEx outtakeSlide1, outtakeSlide2, turret;
 
+    // get battery voltage
+    private VoltageSensor batteryVoltageSensor;
+    private double batteryVoltage;
+
 
     public static double servoPos = 0;
+    public static double testValue = 100;
 
     public static String servoName = "deposit";
 
 
     @Override
     public void runOpMode() throws InterruptedException {
+
+        batteryVoltageSensor = hardwareMap.voltageSensor.iterator().next();
+
+        batteryVoltage = batteryVoltageSensor.getVoltage();
+        // voltage comp
+        testValue = testValue * (12 / batteryVoltage);
 
 
         frontleft = hardwareMap.dcMotor.get("frontleft");
@@ -50,8 +53,6 @@ public class Debug extends LinearOpMode {
 
 
         intakeSlide = hardwareMap.get(DcMotorEx.class, "intakeslide");
-        intakeSlide.setDirection(DcMotor.Direction.REVERSE);
-
 
         outtakeSlide1 = hardwareMap.get(DcMotorEx.class,"outtake1");
         outtakeSlide2 = hardwareMap.get(DcMotorEx.class,"outtake2");
@@ -70,27 +71,17 @@ public class Debug extends LinearOpMode {
 
         while (opModeIsActive()) {
 
-            servo.setPosition(servoPos);
+            batteryVoltage = batteryVoltageSensor.getVoltage();
 
 
 
 
-            telemetry.addLine("//Drivetrain encoders: ");
-            telemetry.addData("frontleft: ", frontleft.getCurrentPosition());
-            telemetry.addData("frontright: ", frontright.getCurrentPosition());
-            telemetry.addData("backleft: ", backleft.getCurrentPosition());
-            telemetry.addData("backright: ", backright.getCurrentPosition());
 
-            telemetry.addLine("/////////////////////////////////////////////////");
-            telemetry.addData("Intake encoders: ", intakeSlide.getCurrentPosition());
+            telemetry.addData("Voltage: ", batteryVoltage);
+            telemetry.addData("Test Value: ", testValue);
 
-            telemetry.addLine("/////////////////////////////////////////////////");
-            telemetry.addData("Turret Encoders: ", turret.getCurrentPosition());
-            telemetry.addData("Outtake Slide1: ", outtakeSlide1.getCurrentPosition());
-            telemetry.addData("Outtake Slide2: ", outtakeSlide2.getCurrentPosition());
 
-            telemetry.addLine("/////////////////////////////////////////////////");
-            telemetry.addData("Servo Set Position: ", servoPos);
+
 
             telemetry.update();
         }
