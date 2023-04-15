@@ -378,6 +378,12 @@ public class Outtake {
 
     }
 
+    public int slideOutDiffAutoRightMid(){
+
+        return Math.abs(outtakeSlide1.getCurrentPosition() - rightMid);
+
+    }
+
     public void retractSlide (){
         outtakeSlide1.setTargetPosition(0);
         outtakeSlide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);

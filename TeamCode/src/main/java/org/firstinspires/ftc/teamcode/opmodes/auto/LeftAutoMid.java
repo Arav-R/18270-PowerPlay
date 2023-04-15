@@ -28,7 +28,7 @@ import java.util.ArrayList;
 
 @Config
 @Autonomous(group = "drive")
-public class LeftAutoStraight extends LinearOpMode {
+public class LeftAutoMid extends LinearOpMode {
 
 
     // APRILTAG STUFF
@@ -79,7 +79,8 @@ public class LeftAutoStraight extends LinearOpMode {
 
 
     public static double depositTime = 0.6;
-    public static double grabTime = .8;
+    public static double grabTime = .95;
+    public static double unStackTime = .2;
     public static double flipTime = .8;
     public static double transferTime = .3;
     public static double intakeTime = .25;
@@ -208,7 +209,7 @@ public class LeftAutoStraight extends LinearOpMode {
                 .turn(Math.toRadians(86.5))
                 .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
                     outtake.transferDeposit();
-                    outtake.setTurretMiddle();
+                    outtake.setTurretAutoRightPreload();
                 })
 
 
@@ -341,8 +342,8 @@ public class LeftAutoStraight extends LinearOpMode {
             intake.openClaw();
             intake.dropArmAutoL(2); //5 cone
 
-            outtake.extendSlidePreloadRight();
-            outtake.setTurretMiddle();
+            outtake.slideRightMid();
+            outtake.setTurretRightMid();
             outtake.midDeposit();
             outtake.guideUpLeft();
         }
@@ -410,7 +411,7 @@ public class LeftAutoStraight extends LinearOpMode {
                     }
                     break;
                 case UNSTACK:
-                    if (scoreTimer.seconds() >= .1) {
+                    if (scoreTimer.seconds() >= unStackTime) {
 
 
                         intake.transferPosition();
@@ -441,15 +442,15 @@ public class LeftAutoStraight extends LinearOpMode {
                 case EXTEND_INTAKE:
                     if (scoreTimer.seconds() >= intakeTime) {
                         outtake.midDeposit();
-                        outtake.setTurretMiddle();
-                        outtake.extendSlideAutoRight();
+                        outtake.setTurretRightMid();
+                        outtake.slideRightMid();
                         outtake.guideUpLeft();
 
                         scoreState = ScoreState.EXTEND_OUTTAKE;
                     }
                     break;
                 case EXTEND_OUTTAKE:
-                    if (outtake.slideOutDiffAutoRight() < depBuffer) {
+                    if (outtake.slideOutDiffAutoRightMid() < depBuffer) {
 
                         cycleTime = cycleTimer.seconds();
 
@@ -513,7 +514,7 @@ public class LeftAutoStraight extends LinearOpMode {
 
 
         // PARK
-
+        // PARK
         drive.followTrajectory(placement);
 
         if(tagOfInterest == null || tagOfInterest.id == LEFT){

@@ -31,7 +31,12 @@ public class MotionProfileTest extends LinearOpMode {
     public static double servoPos = 0;
     public static double testValue = 100;
 
-    public static String servoName = "deposit";
+    public static double x = .555;
+    public static double v = 1;
+    public static double a = 5;
+    public static double j = 1000000;
+
+    //public static String servoName = "deposit";
 
     public boolean motion = false;
 
@@ -65,10 +70,10 @@ public class MotionProfileTest extends LinearOpMode {
 
         MotionProfile profile = MotionProfileGenerator.generateSimpleMotionProfile(
                 new MotionState(0, 0, 0),
-                new MotionState(.555, 0, 0),
-                .1,
-                .1,
-                1
+                new MotionState(x, 0, 0),
+                v,
+                a,
+                j
         );
 
         ElapsedTime elapsedTime = new ElapsedTime();

@@ -160,20 +160,20 @@ public class AutomatedStack extends LinearOpMode {
 
         batteryVoltage = batteryVoltageSensor.getVoltage();
         // voltage comp
-        guideOffset = guideOffset * (12 / batteryVoltage);
-        depositTime = depositTime * (12 / batteryVoltage);
-
-        grabTime = grabTime * (12 / batteryVoltage);
-        flipTime = flipTime * (12 / batteryVoltage);
-        transferTime = transferTime * (12 / batteryVoltage);
-        intakeTime = intakeTime * (12 / batteryVoltage);
-
-
-        grabTime2 = grabTime2 * (12 / batteryVoltage);
-        flipTime2 = flipTime2 * (12 / batteryVoltage);
-        transferTime2 = transferTime2 * (12 / batteryVoltage);
-        intakeTime2 = intakeTime2 * (12 / batteryVoltage);
-        depositTime2 = depositTime2 * (12 / batteryVoltage);
+//        guideOffset = guideOffset * (12 / batteryVoltage);
+//        depositTime = depositTime * (12 / batteryVoltage);
+//
+//        grabTime = grabTime * (12 / batteryVoltage);
+//        flipTime = flipTime * (12 / batteryVoltage);
+//        transferTime = transferTime * (12 / batteryVoltage);
+//        intakeTime = intakeTime * (12 / batteryVoltage);
+//
+//
+//        grabTime2 = grabTime2 * (12 / batteryVoltage);
+//        flipTime2 = flipTime2 * (12 / batteryVoltage);
+//        transferTime2 = transferTime2 * (12 / batteryVoltage);
+//        intakeTime2 = intakeTime2 * (12 / batteryVoltage);
+//        depositTime2 = depositTime2 * (12 / batteryVoltage);
 
 
 

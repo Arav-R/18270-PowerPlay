@@ -33,7 +33,7 @@ public class Intake {
 
 
 
-    double clawClose = .3; //.2
+    double clawClose = .22; //.2
     double clawOpen = 0.0; //.75
 
     public static double flipDown = 0; //0.015
@@ -48,10 +48,10 @@ public class Intake {
     public static double flip2 = .015; //0.03
     public static double flip1 = 0; //0.015
 
-    public static double flip5L = 0.077; //.095
-    public static double flip4L = 0.061; //.075
-    public static double flip3L = 0.037; //.06
-    public static double flip2L = .015; //0.03
+    public static double flip5L = 0.080; //.0.077
+    public static double flip4L = 0.07; //.075
+    public static double flip3L = 0.042; //0.037
+    public static double flip2L = .017; //0.015
     public static double flip1L = 0; //0.015
 
 
@@ -73,11 +73,11 @@ public class Intake {
     public static int slideOutAuto1R = 309; //432
 
 
-    public static int slideOutAuto5L = 327; //457
-    public static int slideOutAuto4L = 331; //462
-    public static int slideOutAuto3L = 336; //470
-    public static int slideOutAuto2L = 336; //470
-    public static int slideOutAuto1L = 346; //484
+    public static int slideOutAuto5L = 325; //457
+    public static int slideOutAuto4L = 329; //462
+    public static int slideOutAuto3L = 333; //470
+    public static int slideOutAuto2L = 333; //470
+    public static int slideOutAuto1L = 341; //484
 
 
     public void init(HardwareMap hardwareMap){
