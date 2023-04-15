@@ -22,7 +22,6 @@ public class KookyCode extends OpMode{
 
     public static int target = 0;
 
-    public static String motorName = "intakeslide";
 
     private DcMotorEx motor;
 
@@ -32,7 +31,7 @@ public class KookyCode extends OpMode{
         controller = new PIDController(p, i , d);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
-        motor = hardwareMap.get(DcMotorEx.class, motorName);
+        motor = hardwareMap.get(DcMotorEx.class, "intakeslide");
         motor.setDirection(DcMotor.Direction.REVERSE);
         motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
@@ -56,7 +55,8 @@ public class KookyCode extends OpMode{
         telemetry.addData("p: ", p);
         telemetry.addData("i: ", i);
         telemetry.addData("d: ", d);
-        telemetry.addData("power: ", power);
+        telemetry.addData("power from motor: ", motor.getPower());
+        telemetry.addData("power to motor: ", power);
         telemetry.update();
 
 

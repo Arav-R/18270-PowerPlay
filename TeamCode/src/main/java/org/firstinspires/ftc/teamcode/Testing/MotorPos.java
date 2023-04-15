@@ -15,7 +15,7 @@ import org.firstinspires.ftc.teamcode.opmodes.subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.opmodes.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.opmodes.subsystems.Outtake;
 
-@Disabled
+//@Disabled
 @Config
 @TeleOp
 public class MotorPos extends LinearOpMode {
@@ -23,7 +23,7 @@ public class MotorPos extends LinearOpMode {
     public static int motorPos = 0;
     public static double motorSpeed = 0.7;
 
-    public static String motorName = "turret";
+    public static String motorName = "intakeslide";
 
 
     @Override

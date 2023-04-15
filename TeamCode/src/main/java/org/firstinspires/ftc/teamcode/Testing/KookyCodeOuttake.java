@@ -32,7 +32,9 @@ public class KookyCodeOuttake extends OpMode{
         outtakeSlide1 = hardwareMap.get(DcMotorEx.class,"outtake1");
         outtakeSlide2 = hardwareMap.get(DcMotorEx.class,"outtake2");
         outtakeSlide2.setDirection(DcMotorEx.Direction.REVERSE);
-        //motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+//        outtakeSlide1.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+//        outtakeSlide2.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
 
     }
 
