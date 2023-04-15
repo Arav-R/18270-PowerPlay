@@ -356,6 +356,7 @@ public class AutomatedStack extends LinearOpMode {
                         intake.dropArmAutoR(coneHeight);
                         intake.openClaw();
 
+
                         intake.intakePositionCircuit();
                     }
 
@@ -629,6 +630,12 @@ public class AutomatedStack extends LinearOpMode {
 
 
 
+            // fix intake overshoot
+            if(intake.getIntakeTarget() > 100) {
+                intake.intakeLessP(); // 3.5
+            } else {
+                intake.intakeMoreP(); // 5
+            }
 
 
 

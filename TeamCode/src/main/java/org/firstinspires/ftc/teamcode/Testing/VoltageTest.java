@@ -79,6 +79,8 @@ public class VoltageTest extends LinearOpMode {
 
             telemetry.addData("Voltage: ", batteryVoltage);
             telemetry.addData("Test Value: ", testValue);
+            telemetry.addData("PID: ", intakeSlide.getPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION).p);
+
 
 
 

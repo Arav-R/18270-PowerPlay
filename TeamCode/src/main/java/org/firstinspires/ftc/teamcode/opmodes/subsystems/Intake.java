@@ -102,6 +102,9 @@ public class Intake {
         intakeSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         intakeSlide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+        // intake slide pid
+        //intakeSlide.setPositionPIDFCoefficients(3.5);
+
 
         // V3 color
         colorSensor = hardwareMap.get(ColorRangeSensor.class, "sensor_color");
@@ -138,8 +141,15 @@ public class Intake {
     public void intakePositionCircuit (){
         intakeSlide.setTargetPosition(slideOutExtend);
         intakeSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        intakeSlide.setPower(.8);
+        intakeSlide.setPower(1);
 
+    }
+
+    public void intakeLessP (){
+        intakeSlide.setPositionPIDFCoefficients(3.5);
+    }
+    public void intakeMoreP (){
+        intakeSlide.setPositionPIDFCoefficients(5);
     }
 /*
     public void autoStackPosition(){
