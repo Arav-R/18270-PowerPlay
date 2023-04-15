@@ -377,6 +377,12 @@ public class AutomatedTransfer2 extends LinearOpMode {
 
 
 
+            // fix intake overshoot
+            if(intake.getIntakeTarget() > 100) {
+                intake.intakeLessP(); // 3.5
+            } else {
+                intake.intakeMoreP(); // 5
+            }
 
 
 
