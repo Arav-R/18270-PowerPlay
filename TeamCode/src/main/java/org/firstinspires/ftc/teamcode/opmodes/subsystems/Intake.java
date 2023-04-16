@@ -49,9 +49,9 @@ public class Intake {
     public static double flip1 = 0; //0.015
 
     public static double flip5L = 0.080; //.0.077
-    public static double flip4L = 0.07; //.075
+    public static double flip4L = 0.067; //.075
     public static double flip3L = 0.042; //0.037
-    public static double flip2L = .017; //0.015
+    public static double flip2L = .02; //0.017
     public static double flip1L = 0; //0.015
 
 
@@ -73,11 +73,11 @@ public class Intake {
     public static int slideOutAuto1R = 309; //432
 
 
-    public static int slideOutAuto5L = 325; //457
-    public static int slideOutAuto4L = 329; //462
-    public static int slideOutAuto3L = 333; //470
-    public static int slideOutAuto2L = 333; //470
-    public static int slideOutAuto1L = 341; //484
+    public static int slideOutAuto5L = 348; //457 330
+    public static int slideOutAuto4L = 351; //462
+    public static int slideOutAuto3L = 354; //470
+    public static int slideOutAuto2L = 375; //470
+    public static int slideOutAuto1L = 400; //484
 
 
     public void init(HardwareMap hardwareMap){
@@ -132,6 +132,8 @@ public class Intake {
     }
 
     public void intakePosition (){
+        intakeSlide.setPositionPIDFCoefficients(3.5);
+
         intakeSlide.setTargetPosition(slideOut);
         intakeSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         intakeSlide.setPower(1);
@@ -139,9 +141,12 @@ public class Intake {
     }
 
     public void intakePositionCircuit (){
+        intakeSlide.setPositionPIDFCoefficients(3.5);
+
         intakeSlide.setTargetPosition(slideOutExtend);
         intakeSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         intakeSlide.setPower(1);
+
 
     }
 
@@ -149,7 +154,7 @@ public class Intake {
         intakeSlide.setPositionPIDFCoefficients(3.5);
     }
     public void intakeMoreP (){
-        intakeSlide.setPositionPIDFCoefficients(5);
+        intakeSlide.setPositionPIDFCoefficients(10);
     }
 /*
     public void autoStackPosition(){
@@ -159,6 +164,7 @@ public class Intake {
     }
 */
     public void autoStackPositionRight(int cone){
+        intakeSlide.setPositionPIDFCoefficients(5);
 
         if (cone == 2) { // Top cone starting stack
             intakeSlide.setTargetPosition(slideOutAuto5R);
@@ -183,9 +189,11 @@ public class Intake {
         }
 
 
+
     }
 
     public void autoStackPositionLeft(int cone){
+        intakeSlide.setPositionPIDFCoefficients(5);
 
         if (cone == 2) { // Top cone starting stack
             intakeSlide.setTargetPosition(slideOutAuto5L);
@@ -202,30 +210,38 @@ public class Intake {
         } else if (cone == 5) {
             intakeSlide.setTargetPosition(slideOutAuto2L);
             intakeSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            intakeSlide.setPower(0.7);
+            intakeSlide.setPower(0.85);
         } else if (cone == 6) {
             intakeSlide.setTargetPosition(slideOutAuto1L);
             intakeSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            intakeSlide.setPower(0.7);
+            intakeSlide.setPower(0.95);
         }
+
 
 
     }
 
 
     public void readyPosition (){
+        intakeSlide.setPositionPIDFCoefficients(3.5);
+
         intakeSlide.setTargetPosition(slideOut - 250);
         intakeSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         intakeSlide.setPower(0.7);
+
     }
 
     public void transferPosition (){
+        intakeSlide.setPositionPIDFCoefficients(25);
+
         intakeSlide.setTargetPosition(0);
         intakeSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         intakeSlide.setPower(1);
     }
 
     public void holdIntakeSlide (){
+        intakeSlide.setPositionPIDFCoefficients(10);
+
         intakeSlide.setTargetPosition(3);
         intakeSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         intakeSlide.setPower(.01);
@@ -246,6 +262,8 @@ public class Intake {
     }
 
     public void zeroPosition(){
+        intakeSlide.setPositionPIDFCoefficients(10);
+
         intakeSlide.setTargetPosition(-15);
         intakeSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         intakeSlide.setPower(0.7);

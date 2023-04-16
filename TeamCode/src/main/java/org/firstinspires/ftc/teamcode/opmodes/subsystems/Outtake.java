@@ -283,21 +283,21 @@ public class Outtake {
     public void extendSlideAutoLeft(){
         outtakeSlide1.setTargetPosition(fullExtendAutoLeft);
         outtakeSlide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        outtakeSlide1.setPower(0.8);
+        outtakeSlide1.setPower(1);
 
         outtakeSlide2.setTargetPosition(fullExtendAutoLeft);
         outtakeSlide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        outtakeSlide2.setPower(0.8);
+        outtakeSlide2.setPower(1);
     }
 
     public void extendSlidePreloadLeft(){
         outtakeSlide1.setTargetPosition(fullExtendAutoLeft + preloadLeftExtendOffset);
         outtakeSlide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        outtakeSlide1.setPower(0.8);
+        outtakeSlide1.setPower(1);
 
         outtakeSlide2.setTargetPosition(fullExtendAutoLeft + preloadLeftExtendOffset);
         outtakeSlide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        outtakeSlide2.setPower(0.8);
+        outtakeSlide2.setPower(1);
     }
 
     public void extendSlideRight(){
@@ -313,21 +313,21 @@ public class Outtake {
     public void extendSlideAutoRight(){
         outtakeSlide1.setTargetPosition(fullExtendAutoRight);
         outtakeSlide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        outtakeSlide1.setPower(0.8);
+        outtakeSlide1.setPower(1);
 
         outtakeSlide2.setTargetPosition(fullExtendAutoRight);
         outtakeSlide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        outtakeSlide2.setPower(0.8);
+        outtakeSlide2.setPower(1);
     }
 
     public void extendSlidePreloadRight(){
         outtakeSlide1.setTargetPosition(fullExtendAutoRight + preloadRightExtendOffset);
         outtakeSlide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        outtakeSlide1.setPower(0.8);
+        outtakeSlide1.setPower(1);
 
         outtakeSlide2.setTargetPosition(fullExtendAutoRight + preloadRightExtendOffset);
         outtakeSlide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        outtakeSlide2.setPower(0.8);
+        outtakeSlide2.setPower(1);
     }
 
     public void moreExtendLeft(){

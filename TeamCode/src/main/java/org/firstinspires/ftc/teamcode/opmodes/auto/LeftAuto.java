@@ -80,6 +80,7 @@ public class  LeftAuto extends LinearOpMode {
 
     public static double depositTime = 0.6;
     public static double grabTime = .8;
+    public static double unStackTime = .2;
     public static double flipTime = .8;
     public static double transferTime = .3;
     public static double intakeTime = .25;
@@ -406,7 +407,7 @@ public class  LeftAuto extends LinearOpMode {
                     }
                     break;
                 case UNSTACK:
-                    if (scoreTimer.seconds() >= .1) {
+                    if (scoreTimer.seconds() >= unStackTime) {
 
 
                         intake.transferPosition();
@@ -460,6 +461,16 @@ public class  LeftAuto extends LinearOpMode {
                     break;
 
             }
+
+            // fix intake overshoot
+            if(intake.getIntakeTarget() > 100) {
+                intake.intakeLessP(); // 3.5
+            } else {
+                intake.intakeMoreP(); // 5
+            }
+
+
+
             telemetry.addData("Current Cycle: ", currentCycle);
             telemetry.addData("Cone: ", cones);
             telemetry.addData("Previous Cycle time: ", cycleTime);
