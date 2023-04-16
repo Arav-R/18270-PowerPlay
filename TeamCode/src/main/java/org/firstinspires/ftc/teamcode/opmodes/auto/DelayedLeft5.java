@@ -401,6 +401,8 @@ public class DelayedLeft5 extends LinearOpMode {
 
                         scoreTimer.reset();
                         scoreState = ScoreState.GRAB;
+                    } else {
+                        intake.intakeForward();
                     }
                     break;
                 case GRAB:

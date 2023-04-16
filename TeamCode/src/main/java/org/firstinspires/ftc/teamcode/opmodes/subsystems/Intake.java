@@ -326,6 +326,13 @@ public class Intake {
 
     }
 
+    public void intakeForward(){
+        intakeSlide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        intakeSlide.setPower(0.6);
+    }
+
+
+
 /*
     public void initSlide(){
 
