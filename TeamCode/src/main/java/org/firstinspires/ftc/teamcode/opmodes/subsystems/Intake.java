@@ -234,7 +234,7 @@ public class Intake {
     public void transferPosition (){
         intakeSlide.setPositionPIDFCoefficients(25);
 
-        intakeSlide.setTargetPosition(0);
+        intakeSlide.setTargetPosition(-10);
         intakeSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         intakeSlide.setPower(1);
     }
