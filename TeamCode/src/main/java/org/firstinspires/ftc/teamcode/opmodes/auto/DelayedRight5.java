@@ -469,6 +469,14 @@ public class DelayedRight5 extends LinearOpMode {
                     break;
 
             }
+
+            // Safe Park
+            if (cycleTimer.seconds() > 7) {
+                break;
+            }
+
+
+
             telemetry.addData("PID: ", intake.intakeSlide.getPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION).p);
             telemetry.addData("Current Cycle: ", currentCycle);
             telemetry.addData("Cone: ", cones);
