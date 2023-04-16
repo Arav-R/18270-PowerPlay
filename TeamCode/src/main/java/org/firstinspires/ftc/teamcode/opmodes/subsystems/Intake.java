@@ -208,10 +208,14 @@ public class Intake {
             intakeSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             intakeSlide.setPower(0.7);
         } else if (cone == 5) {
+            intakeSlide.setPositionPIDFCoefficients(7.5);
+
             intakeSlide.setTargetPosition(slideOutAuto2L);
             intakeSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             intakeSlide.setPower(0.85);
         } else if (cone == 6) {
+            intakeSlide.setPositionPIDFCoefficients(7.5);
+
             intakeSlide.setTargetPosition(slideOutAuto1L);
             intakeSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             intakeSlide.setPower(0.95);
