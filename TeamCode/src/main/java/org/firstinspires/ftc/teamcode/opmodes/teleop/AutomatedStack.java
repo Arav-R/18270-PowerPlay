@@ -34,8 +34,8 @@ public class AutomatedStack extends LinearOpMode {
     public static double depositTime = 0.6; //.9
 
     public static double grabTime = .5; //.35
-    public static double flipTime = .5; //.7
-    public static double transferTime = .5; //.35
+    public static double flipTime = .7; //.7
+    public static double transferTime = .75; //.35
     public static double intakeTime = .1; //
     public static double beaconTime = .3; //
 
@@ -737,7 +737,7 @@ public class AutomatedStack extends LinearOpMode {
                 break;
             case FLIP:
 
-                if (clawTimer.seconds() > flipTime && intake.getSlide() < 10) {
+                if (clawTimer.seconds() > flipTime && intake.getSlide() < 7) {
 
                     if (beacon) {
                         intake.closeClaw();
