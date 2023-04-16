@@ -400,7 +400,7 @@ public class AutomatedStack extends LinearOpMode {
                     //outtake.transferDeposit();
                     outtake.retractSlideSlow();
                     outtake.setTurretMiddle();
-                    //outtake.guideDown();
+                    outtake.guideUpLeft();
                 }
 
 

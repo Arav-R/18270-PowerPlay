@@ -6,6 +6,7 @@ import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -26,6 +27,7 @@ import java.util.ArrayList;
  * This is an example of a more complex path to really test the tuning.
  */
 
+@Disabled
 @Config
 @Autonomous(group = "drive")
 public class LeftAutoStraight4 extends LinearOpMode {

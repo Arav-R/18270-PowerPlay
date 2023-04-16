@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
-@Disabled
+//@Disabled
 
 @Config
 @TeleOp
@@ -17,7 +17,7 @@ public class MotorSpeedTest extends LinearOpMode {
 //    public static int motorPos = 0;
 //    public static double motorSpeed = 0.7;
 
-    public static String motorName = "outtake1";
+    public static String motorName = "intakeslide";
 
 
     @Override
