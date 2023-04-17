@@ -32,8 +32,8 @@ public class KookyCode extends OpMode{
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
         motor = hardwareMap.get(DcMotorEx.class, "intakeslide");
-        motor.setDirection(DcMotor.Direction.REVERSE);
-        motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motor.setDirection(DcMotorEx.Direction.REVERSE);
+        motor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
 
 
     }
