@@ -140,6 +140,10 @@ public class Intake {
         
     }
 
+    public void intakePositionPID (){
+        target = slideOut;
+    }
+
     public void intakePositionCircuit (){
         intakeSlide.setPositionPIDFCoefficients(3.5);
 
@@ -233,6 +237,10 @@ public class Intake {
         intakeSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         intakeSlide.setPower(0.7);
 
+    }
+
+    public void readyPositionPID (){
+        target = slideOut - 250;
     }
 
     public void transferPosition (){
@@ -525,6 +533,14 @@ public class Intake {
 
         intakeSlide.setPower(power);
 
+    }
+
+    public void intakePositionCircuitPID (){
+        target = slideOutExtend;
+    }
+
+    public void transferPID (){
+        target = 0;
     }
 
 
