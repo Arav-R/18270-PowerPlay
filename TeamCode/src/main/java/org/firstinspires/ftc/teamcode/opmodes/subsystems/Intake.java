@@ -229,6 +229,22 @@ public class Intake {
 
     }
 
+    public void autoStackPositionLeftPID(int cone){
+
+        if (cone == 2) { // Top cone starting stack
+            target = slideOutAuto5L;
+        } else if (cone == 3) {
+            target = slideOutAuto4L;
+        } else if (cone == 4) {
+            target = slideOutAuto3L;
+        } else if (cone == 5) {
+            target = slideOutAuto2L;
+        } else if (cone == 6) {
+            target = slideOutAuto1L;
+        }
+
+    }
+
 
     public void readyPosition (){
         intakeSlide.setPositionPIDFCoefficients(3.5);
@@ -279,6 +295,10 @@ public class Intake {
         intakeSlide.setTargetPosition(-15);
         intakeSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         intakeSlide.setPower(0.7);
+    }
+
+    public void zeroPositionPID (){
+        target = -15;
     }
 
     public int intakeOutDiff(){
@@ -515,6 +535,8 @@ public class Intake {
 
     // PID
     public void initPID(){
+        intakeSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
         controller = new PIDController(p, i , d);
     }
 

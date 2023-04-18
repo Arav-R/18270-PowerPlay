@@ -232,6 +232,7 @@ public class PIDtele extends LinearOpMode {
         outtake.zeroOuttake();
 
         // runon init
+        intake.initPID();
 
         outtake.transferDeposit();
         outtake.retractSlide();
@@ -242,6 +243,15 @@ public class PIDtele extends LinearOpMode {
         intake.openClaw();
 //        intake.holdIntakeSlide();
         intake.transferPID();
+
+        /*
+         * The INIT-loop:
+         * This REPLACES waitForStart!
+         */
+        while (!isStarted() && !isStopRequested())
+        {
+            intake.powerPID();
+        }
 
         if (isStopRequested()) return;
 

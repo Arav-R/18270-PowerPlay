@@ -28,7 +28,7 @@ public class Outtake {
 
     // deposit
     public static  double transferPos = 0.19; //0.18
-    public static  double capturePos = 0.21; //0.18
+    public static  double capturePos = 0.25; //0.18
     public static double midPos = 0.38; //0.37
     public static double scorePosLeft = 0.81; //.82
     public static double scorePosRight = .85; //.82

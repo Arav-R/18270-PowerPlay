@@ -29,7 +29,7 @@ import java.util.ArrayList;
 
 @Config
 @Autonomous(group = "drive")
-public class DelayedLeft5 extends LinearOpMode {
+public class DelayedLeft5PID extends LinearOpMode {
 
 
     // APRILTAG STUFF
@@ -138,6 +138,7 @@ public class DelayedLeft5 extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
+
         //PhotonCore.enable(); // Enable PhotonCore
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
@@ -182,6 +183,8 @@ public class DelayedLeft5 extends LinearOpMode {
         // Make sure your ID's match your configuration
         intake.init(hardwareMap);
         outtake.init(hardwareMap);
+
+        intake.initPID();
 
 
 
@@ -228,7 +231,7 @@ public class DelayedLeft5 extends LinearOpMode {
                 .lineToLinearHeading(new Pose2d(7, -12, Math.toRadians(180)))
                 .build();
         Trajectory midApril = drive.trajectoryBuilder(placement.end())
-                .lineToLinearHeading(new Pose2d(32.7, -12.5, Math.toRadians(180)))
+                .lineToLinearHeading(new Pose2d(34, -12.5, Math.toRadians(180)))
                 .build();
         Trajectory rightApril = drive.trajectoryBuilder(placement.end())
                 .lineToLinearHeading(new Pose2d(56, -16, Math.toRadians(180)))
@@ -338,10 +341,14 @@ public class DelayedLeft5 extends LinearOpMode {
             drive.followTrajectorySequence(trajSeq);
 
 
+        intake.initPID();
+
         scoreTimer.reset();
         while (scoreTimer.seconds() <= expansionDelay && opModeIsActive()) {
             // Expand
-            intake.autoStackPositionLeft(2);
+            //intake.autoStackPositionLeft(2);
+            intake.autoStackPositionLeftPID(2);
+
             intake.openClaw();
             intake.dropArmAutoL(2); //5 cone
 
@@ -349,6 +356,8 @@ public class DelayedLeft5 extends LinearOpMode {
             outtake.setTurretMiddle();
             outtake.midDeposit();
             outtake.guideUpLeft();
+
+            intake.powerPID();
         }
 
 
@@ -402,7 +411,7 @@ public class DelayedLeft5 extends LinearOpMode {
                         scoreTimer.reset();
                         scoreState = ScoreState.GRAB;
                     } else {
-                        //intake.intakeForward();
+                        intake.intakeForward();
                     }
                     break;
                 case GRAB:
@@ -429,8 +438,6 @@ public class DelayedLeft5 extends LinearOpMode {
                 case RETRACT_INTAKE:
                     if (scoreTimer.seconds() >= flipTime && intake.intakeInDiff() < 7) {
                         intake.openClaw();
-                        outtake.captureDeposit(); // goes up a little
-
 
                         outtake.zeroOuttake();
                         scoreTimer.reset();
@@ -478,6 +485,9 @@ public class DelayedLeft5 extends LinearOpMode {
             if (cycleTimer.seconds() > 7) {
                 break;
             }
+
+            // update pid
+            intake.powerPID();
 
 
 

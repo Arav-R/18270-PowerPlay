@@ -35,6 +35,8 @@ public class KookyCode extends OpMode{
         motor.setDirection(DcMotorEx.Direction.REVERSE);
         motor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
 
+        motor.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+
 
     }
 
