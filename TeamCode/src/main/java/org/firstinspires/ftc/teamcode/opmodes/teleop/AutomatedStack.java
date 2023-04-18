@@ -277,6 +277,10 @@ public class AutomatedStack extends LinearOpMode {
 
                         clawTimer.reset();
                         clawState = ClawState.BEACON;
+                    } else if (intake.getSlide() > 100 && gamepad1.x && !intakeToggle) {
+
+                    } else if (intake.getSlide() < 50 && gamepad1.a && !intakeToggle) {
+
                     } else {
                         // This will set intakeToggle to true if it was previously false
                         // and intakeToggle to false if it was previously true,
