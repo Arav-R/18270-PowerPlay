@@ -416,6 +416,7 @@ public class AutomatedStack extends LinearOpMode {
                     if (scoreState != ScoreState.UNGUIDE && scoreState != ScoreState.DEPOSIT) {
                         if (outtake.getExtend() < 100) {
                             outtake.guideUpLow();
+                            outtake.midDeposit();
                         } else {
                             outtake.guideUpLeft();
                         }
