@@ -129,7 +129,7 @@ public class Intake {
     public void intakePositionCircuit (){
         intakeSlide.setTargetPosition(slideOutExtend);
         intakeSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        intakeSlide.setPower(1);
+        intakeSlide.setPower(.9);
 
     }
 /*
