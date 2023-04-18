@@ -88,7 +88,7 @@ public class Intake {
 
         intakeSlide.setDirection(DcMotor.Direction.REVERSE);
 
-        flip1Servo.setDirection(Servo.Direction.REVERSE);
+        flip2Servo.setDirection(Servo.Direction.REVERSE);
 
         intakeSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         intakeSlide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
