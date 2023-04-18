@@ -28,7 +28,7 @@ import java.util.ArrayList;
 
 @Config
 @Autonomous(group = "drive")
-public class LeftAutoStraight4 extends LinearOpMode {
+public class DelayedLeft5 extends LinearOpMode {
 
 
     // APRILTAG STUFF
@@ -62,9 +62,9 @@ public class LeftAutoStraight4 extends LinearOpMode {
 
     // ROBOT STUFF
 
-    public static double expansionDelay = 0.8;
+    public static double expansionDelay = 0.6;
 
-    public static int cones = 5;
+    public static int cones = 6;
     public static double cycleDelay = 0;
 
     public static double forwardDistance  = 46.5;
@@ -78,12 +78,12 @@ public class LeftAutoStraight4 extends LinearOpMode {
 
 
 
-    public static double depositTime = 0.6;
-    public static double grabTime = .8;
+    public static double depositTime = 0.55;
+    public static double grabTime = .5;
     public static double flipTime = .8;
     public static double transferTime = .3;
-    public static double intakeTime = .25;
-    public static int depBuffer = 300;
+    public static double intakeTime = .05;
+    public static int depBuffer = 550;
 
 
     // States
@@ -192,7 +192,7 @@ public class LeftAutoStraight4 extends LinearOpMode {
         TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(startPose)
 
 
-                .waitSeconds(3)
+                .waitSeconds(2.5)
 
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     intake.zeroPosition();
@@ -205,7 +205,7 @@ public class LeftAutoStraight4 extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(armFlipTime, () -> {
                     intake.flipArm();
                 })
-                .turn(Math.toRadians(85))
+                .turn(Math.toRadians(84))
                 .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
                     outtake.transferDeposit();
                     outtake.setTurretMiddle();
@@ -226,7 +226,7 @@ public class LeftAutoStraight4 extends LinearOpMode {
                 .lineToLinearHeading(new Pose2d(34, -12.5, Math.toRadians(180)))
                 .build();
         Trajectory rightApril = drive.trajectoryBuilder(placement.end())
-                .lineToLinearHeading(new Pose2d(59, -14, Math.toRadians(180)))
+                .lineToLinearHeading(new Pose2d(57.5, -14, Math.toRadians(180)))
                 .build();
 
 
@@ -336,7 +336,7 @@ public class LeftAutoStraight4 extends LinearOpMode {
         scoreTimer.reset();
         while (scoreTimer.seconds() <= expansionDelay && opModeIsActive()) {
             // Expand
-            intake.readyPosition();
+            intake.autoStackPositionLeft(2);
             intake.openClaw();
             intake.dropArmAutoL(2); //5 cone
 
@@ -373,7 +373,7 @@ public class LeftAutoStraight4 extends LinearOpMode {
                         outtake.transferDeposit();
                         outtake.retractSlide();
                         outtake.setTurretMiddle();
-                        outtake.guideDown();
+                        //outtake.guideDown();
 
                         intake.openClaw();
                         intake.autoStackPositionLeft(currentCycle + 1);
@@ -383,14 +383,14 @@ public class LeftAutoStraight4 extends LinearOpMode {
                     }
                     break;
                 case PREPARE:
-                    if (intake.intakeOutAutoDiffL(currentCycle + 1) < 20 || intake.getDistanceCM() < 2) {
+                    if (intake.intakeOutAutoDiffL(currentCycle + 1) < 20 || intake.getDistanceCM() < 2.2) {
                         intake.closeClawAuto(currentCycle + 1);
 
 
                         if (currentCycle == 2) {
-                            grabTime = 1;
+                            grabTime = .75;
                         } else {
-                            grabTime = .8;
+                            grabTime = .5;
                         }
 
                         scoreTimer.reset();
@@ -513,6 +513,8 @@ public class LeftAutoStraight4 extends LinearOpMode {
 
         // PARK
         drive.followTrajectory(placement);
+
+        outtake.guideDown();
 
         if(tagOfInterest == null || tagOfInterest.id == LEFT){
             //trajectory
