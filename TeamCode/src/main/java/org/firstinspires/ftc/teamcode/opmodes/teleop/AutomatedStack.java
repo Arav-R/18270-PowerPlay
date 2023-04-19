@@ -90,9 +90,9 @@ public class AutomatedStack extends LinearOpMode {
     public static double grabTime = .3;
     public static double flipTime = .8; //.95
     public static double transferTime = .2; //.5
-    public static double intakeTime = .25;
-    public static int depBuffer = 350;
-    public static double depositTime2 = 0.6; //.9
+    public static double intakeTime = .05;
+    public static int depBuffer = 500;
+    public static double depositTime2 = 0.5; //.9
 
     public enum RobotState {
         CONTRACT,
@@ -230,7 +230,12 @@ public class AutomatedStack extends LinearOpMode {
 
                 intake.contractArm();
                 intake.openClaw();
-                intake.holdIntakeSlide();
+
+                if (intake.getSlide() < 10) {
+                    intake.holdIntakeSlide();
+                } else {
+                    intake.transferPosition(); // fast retraction
+                }
 
 
                 // Circuit
@@ -246,6 +251,7 @@ public class AutomatedStack extends LinearOpMode {
 
 
 
+                haveCone = true;
                 circuitToggle = !circuitToggle;
             }
 
@@ -872,8 +878,8 @@ public class AutomatedStack extends LinearOpMode {
         switch (retractState) {
             case OUTTAKE:
                 outtake.setTurretMiddle();
-                outtake.transferDeposit();
-                outtake.moveSlide(35, 0.5);
+                //outtake.transferDeposit();
+                outtake.moveSlide(-5, .2);
                 outtake.guideDown();
 
                 scoreTimer.reset();
@@ -882,7 +888,7 @@ public class AutomatedStack extends LinearOpMode {
             case INTAKE:
 
                 if (scoreTimer.seconds() >= .7) {
-                    intake.moveToPos(5, 0.5);
+                    intake.moveToPos(-5, 0.5);
                     intake.openClaw();
                     intake.contractArm();
 
@@ -1103,7 +1109,7 @@ public class AutomatedStack extends LinearOpMode {
                 }
                 break;
             case EXTEND_OUTTAKE:
-                if (outtake.slideOutDiffRight() < 40) {
+                if (outtake.slideOutDiffRight() < depBuffer) {
 
                     cycleState = CycleState.READY;
                 }

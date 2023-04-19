@@ -34,16 +34,16 @@ public class Intake {
     public static double flipStartingPosition = 0.51;
     public static double flipLowPole = .23;
 
-    public static double flip5 = 0.077; //.095
-    public static double flip4 = 0.061; //.075
-    public static double flip3 = 0.037; //.06
-    public static double flip2 = .015; //0.03
+    public static double flip5 = 0.0885; //.095
+    public static double flip4 = 0.071; //.075
+    public static double flip3 = 0.049; //.06
+    public static double flip2 = .025; //0.03
     public static double flip1 = 0; //0.015
 
-    public static double flip5L = 0.082; //.0.077
-    public static double flip4L = 0.064; //.0.061
-    public static double flip3L = 0.043; //.0.037
-    public static double flip2L = .021; //0..015
+    public static double flip5L = 0.088; //.0.077
+    public static double flip4L = 0.071; //.0.061
+    public static double flip3L = 0.049; //.0.037
+    public static double flip2L = .025; //0..015
     public static double flip1L = 0; //0.015
 
 
@@ -57,18 +57,18 @@ public class Intake {
     public static int slideInAuto = 0; //235
     public static int slideOutAuto = 417; //65
 
-    public static int slideOutAuto5R = 423; //65
-    public static int slideOutAuto4R = 425; //65
-    public static int slideOutAuto3R = 425; //65
-    public static int slideOutAuto2R = 432; //65
-    public static int slideOutAuto1R = 432; //65
+    public static int slideOutAuto5R = 412; //65
+    public static int slideOutAuto4R = 415; //65
+    public static int slideOutAuto3R = 415; //65
+    public static int slideOutAuto2R = 423; //65
+    public static int slideOutAuto1R = 423; //65
 
 
-    public static int slideOutAuto5L = 467; //457
-    public static int slideOutAuto4L = 472; //462
-    public static int slideOutAuto3L = 484; //470
-    public static int slideOutAuto2L = 495; //470
-    public static int slideOutAuto1L = 510; //505
+    public static int slideOutAuto5L = 473; //467
+    public static int slideOutAuto4L = 478; //472
+    public static int slideOutAuto3L = 490; //484
+    public static int slideOutAuto2L = 501; //495
+    public static int slideOutAuto1L = 516; //510
 
 
     public void init(HardwareMap hardwareMap){

@@ -67,7 +67,7 @@ public class DelayedRight5 extends LinearOpMode {
     public static int cones = 6;
     public static double cycleDelay = 0;
 
-    public static double forwardDistance  = 46.5;
+    public static double forwardDistance  = 36.5;
 
     public static double armFlipTime  = -0.8;
 
@@ -205,7 +205,7 @@ public class DelayedRight5 extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(armFlipTime, () -> {
                     intake.flipArm();
                 })
-                .turn(Math.toRadians(-84))
+                .turn(Math.toRadians(-72))
                 .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
                     outtake.transferDeposit();
                     outtake.setTurretMiddle();
