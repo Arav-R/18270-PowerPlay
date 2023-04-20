@@ -245,7 +245,7 @@ public class AutomatedStack extends LinearOpMode {
 
                 // Cycle
                 RobotState robotState = RobotState.CONTRACT;
-                RetractState retractState = RetractState.OUTTAKE;
+                RetractState retractState = RetractState.DONE;
                 CycleState cycleState = CycleState.READY;
 
 
@@ -615,6 +615,10 @@ public class AutomatedStack extends LinearOpMode {
             telemetry.addData("Intake Slide Target: ", intake.getIntakeTarget());
 
             telemetry.addData("coneHeight: ", coneHeight);
+
+            telemetry.addData("Robot State: ", robotState);
+            telemetry.addData("Retract State: ", retractState);
+            telemetry.addData("Cycle State: ", cycleState);
 
 
 
