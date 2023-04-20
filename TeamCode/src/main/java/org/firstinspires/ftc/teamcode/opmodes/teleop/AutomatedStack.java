@@ -239,14 +239,14 @@ public class AutomatedStack extends LinearOpMode {
 
 
                 // Circuit
-                ClawState clawState = ClawState.READY;
-                ScoreState scoreState = ScoreState.READY;
+                clawState = ClawState.READY;
+                scoreState = ScoreState.READY;
 
 
                 // Cycle
-                RobotState robotState = RobotState.CONTRACT;
-                RetractState retractState = RetractState.DONE;
-                CycleState cycleState = CycleState.READY;
+                robotState = RobotState.CONTRACT;
+                retractState = RetractState.DONE;
+                cycleState = CycleState.READY;
 
 
 
