@@ -67,7 +67,7 @@ public class DelayedLeft5 extends LinearOpMode {
     public static int cones = 6;
     public static double cycleDelay = 0;
 
-    public static double forwardDistance  = 46.5;
+    public static double forwardDistance  = 45.85;
 
     public static double armFlipTime  = -0.8;
 
@@ -81,7 +81,7 @@ public class DelayedLeft5 extends LinearOpMode {
     public static double depositTime = 0.55;
     public static double grabTime = .5;
     public static double flipTime = .8;
-    public static double transferTime = .3;
+    public static double transferTime = .35;
     public static double intakeTime = .05;
     public static int depBuffer = 550;
 
@@ -205,7 +205,7 @@ public class DelayedLeft5 extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(armFlipTime, () -> {
                     intake.flipArm();
                 })
-                .turn(Math.toRadians(82.5))
+                .turn(Math.toRadians(85))
                 .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
                     outtake.transferDeposit();
                     outtake.setTurretMiddle();
@@ -226,7 +226,7 @@ public class DelayedLeft5 extends LinearOpMode {
                 .lineToLinearHeading(new Pose2d(34, -12.5, Math.toRadians(180)))
                 .build();
         Trajectory rightApril = drive.trajectoryBuilder(placement.end())
-                .lineToLinearHeading(new Pose2d(57.5, -14, Math.toRadians(180)))
+                .lineToLinearHeading(new Pose2d(58, -14, Math.toRadians(180)))
                 .build();
 
 

@@ -428,6 +428,9 @@ public class AutomatedStack extends LinearOpMode {
                         }
                     }
                 }else {
+                    if (outtake.getExtend() < 100) {
+                        outtake.transferDeposit();
+                    }
                     outtake.guideDown();
                 }
 
@@ -657,6 +660,7 @@ public class AutomatedStack extends LinearOpMode {
 
                     // beacon
                     if (haveCone) {
+                        //outtake.transferDeposit();
                         intake.contractArm();
 
                         if (intake.getSlide() < 10) {
@@ -695,6 +699,8 @@ public class AutomatedStack extends LinearOpMode {
 
                 if (clawTimer.seconds() > .9 && intake.getSlide() < 10) {
 
+                    outtake.transferDeposit();
+
                     if (beacon) {
                         intake.closeClaw();
                     } else {
@@ -719,6 +725,8 @@ public class AutomatedStack extends LinearOpMode {
             case RELEASE:
 
                 if (clawTimer.seconds() > .35) {
+                    outtake.transferDeposit();
+
                     haveCone = true;
 
                     intake.contractArm();
