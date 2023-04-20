@@ -205,7 +205,7 @@ public class DelayedLeft5 extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(armFlipTime, () -> {
                     intake.flipArm();
                 })
-                .turn(Math.toRadians(85))
+                .turn(Math.toRadians(84.5))
                 .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
                     outtake.transferDeposit();
                     outtake.setTurretMiddle();

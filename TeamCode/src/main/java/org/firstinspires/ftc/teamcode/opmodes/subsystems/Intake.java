@@ -64,11 +64,11 @@ public class Intake {
     public static int slideOutAuto1R = 530; //65
 
 
-    public static int slideOutAuto5L = 473; //467
-    public static int slideOutAuto4L = 478; //472
-    public static int slideOutAuto3L = 490; //484
-    public static int slideOutAuto2L = 501; //495
-    public static int slideOutAuto1L = 516; //510
+    public static int slideOutAuto5L = 480; //467
+    public static int slideOutAuto4L = 485; //472
+    public static int slideOutAuto3L = 497; //484
+    public static int slideOutAuto2L = 508; //495
+    public static int slideOutAuto1L = 523; //510
 
 
     public void init(HardwareMap hardwareMap){

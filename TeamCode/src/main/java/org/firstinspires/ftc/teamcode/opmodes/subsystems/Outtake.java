@@ -72,7 +72,7 @@ public class Outtake {
 
 
     // different junctions left and right positions Outtake
-    public static int leftMid = 380; // 390
+    public static int leftMid = 382; // 390
     public static int rightMid = 410; // 410
 
     public static int leftlow = 0;
@@ -171,7 +171,7 @@ public class Outtake {
     public void setTurretLeftMid(){
         turret.setTargetPosition(leftMidTurret);
         turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        turret.setPower(0.7);
+        turret.setPower(0.85);
     }
 
     public void setTurretAutoLeft (){
