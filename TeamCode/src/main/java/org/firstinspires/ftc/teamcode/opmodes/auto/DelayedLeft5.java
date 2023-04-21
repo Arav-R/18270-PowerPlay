@@ -69,7 +69,7 @@ public class DelayedLeft5 extends LinearOpMode {
 
     public static double forwardDistance  = 45.85;
 
-    public static double armFlipTime  = -0.8;
+    public static double armFlipTime  = -0.75;
 
 
     int currentCycle = 0;
@@ -205,7 +205,7 @@ public class DelayedLeft5 extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(armFlipTime, () -> {
                     intake.flipArm();
                 })
-                .turn(Math.toRadians(84.5))
+                .turn(Math.toRadians(85.5))
                 .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
                     outtake.transferDeposit();
                     outtake.setTurretMiddle();
@@ -226,7 +226,7 @@ public class DelayedLeft5 extends LinearOpMode {
                 .lineToLinearHeading(new Pose2d(34, -12.5, Math.toRadians(180)))
                 .build();
         Trajectory rightApril = drive.trajectoryBuilder(placement.end())
-                .lineToLinearHeading(new Pose2d(58, -14, Math.toRadians(180)))
+                .lineToLinearHeading(new Pose2d(56, -16.5, Math.toRadians(180)))
                 .build();
 
 
