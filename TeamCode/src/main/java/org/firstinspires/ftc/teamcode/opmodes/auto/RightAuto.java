@@ -220,13 +220,13 @@ public class RightAuto extends LinearOpMode {
 
 
         Trajectory leftApril = drive.trajectoryBuilder(trajSeq.end())
-                .lineToLinearHeading(new Pose2d(11.5, -12, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(12.5, -12, Math.toRadians(0)))
                 .build();
         Trajectory midApril = drive.trajectoryBuilder(trajSeq.end())
                 .lineToLinearHeading(new Pose2d(36, -12.5, Math.toRadians(0)))
                 .build();
         Trajectory rightApril = drive.trajectoryBuilder(trajSeq.end())
-                .lineToLinearHeading(new Pose2d(59, -13, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(60, -13, Math.toRadians(0)))
                 .build();
 
 
@@ -501,6 +501,8 @@ public class RightAuto extends LinearOpMode {
                 case OUTTAKE:
                     outtake.transferDeposit();
                     outtake.moveSlide(-25, 0.5); // zero outtake slide
+
+                    outtake.guideDown();
 
                     scoreTimer.reset();
                     retractState = RetractState.INTAKE;

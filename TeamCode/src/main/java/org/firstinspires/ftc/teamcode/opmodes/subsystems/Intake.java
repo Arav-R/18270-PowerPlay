@@ -57,18 +57,18 @@ public class Intake {
     public static int slideInAuto = 0; //235
     public static int slideOutAuto = 417; //65
 
-    public static int slideOutAuto5R = 410; //430
-    public static int slideOutAuto4R = 410; //430
-    public static int slideOutAuto3R = 425; //445
-    public static int slideOutAuto2R = 440; //460
-    public static int slideOutAuto1R = 460; //480
+    public static int slideOutAuto5R = 445; //430
+    public static int slideOutAuto4R = 445; //430
+    public static int slideOutAuto3R = 460; //445
+    public static int slideOutAuto2R = 475; //460
+    public static int slideOutAuto1R = 495; //480
 
 
-    public static int slideOutAuto5L = 480; //467
-    public static int slideOutAuto4L = 485; //472
-    public static int slideOutAuto3L = 497; //484
-    public static int slideOutAuto2L = 508; //495
-    public static int slideOutAuto1L = 523; //510
+    public static int slideOutAuto5L = 470; //467
+    public static int slideOutAuto4L = 475; //472
+    public static int slideOutAuto3L = 485; //484
+    public static int slideOutAuto2L = 495; //495
+    public static int slideOutAuto1L = 506; //510
 
 
     public void init(HardwareMap hardwareMap){
