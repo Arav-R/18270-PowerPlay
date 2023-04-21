@@ -456,6 +456,13 @@ public class RightAuto extends LinearOpMode {
                     break;
 
             }
+
+            // Safe Park
+            if (cycleTimer.seconds() > 7) {
+                break;
+            }
+
+
             telemetry.addData("Current Cycle: ", currentCycle);
             telemetry.addData("Cone: ", cones);
             telemetry.addData("Previous Cycle time: ", cycleTime);

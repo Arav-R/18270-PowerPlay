@@ -34,10 +34,10 @@ public class Intake {
     public static double flipStartingPosition = 0.51;
     public static double flipLowPole = .23;
 
-    public static double flip5 = 0.0885; //.095
-    public static double flip4 = 0.071; //.075
-    public static double flip3 = 0.049; //.06
-    public static double flip2 = .025; //0.03
+    public static double flip5 = 0.092; //.095
+    public static double flip4 = 0.0715; //.075
+    public static double flip3 = 0.050; //.06
+    public static double flip2 = .027; //0.03
     public static double flip1 = 0; //0.015
 
     public static double flip5L = 0.090; //.0.077
@@ -57,11 +57,11 @@ public class Intake {
     public static int slideInAuto = 0; //235
     public static int slideOutAuto = 417; //65
 
-    public static int slideOutAuto5R = 480; //65
-    public static int slideOutAuto4R = 480; //65
-    public static int slideOutAuto3R = 495; //65
-    public static int slideOutAuto2R = 510; //65
-    public static int slideOutAuto1R = 530; //65
+    public static int slideOutAuto5R = 410; //430
+    public static int slideOutAuto4R = 410; //430
+    public static int slideOutAuto3R = 425; //445
+    public static int slideOutAuto2R = 440; //460
+    public static int slideOutAuto1R = 460; //480
 
 
     public static int slideOutAuto5L = 480; //467
