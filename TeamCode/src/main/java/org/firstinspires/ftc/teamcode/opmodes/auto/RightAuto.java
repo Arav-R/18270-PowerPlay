@@ -118,6 +118,8 @@ public class RightAuto extends LinearOpMode {
 
     ElapsedTime cycleTimer = new ElapsedTime();
 
+    ElapsedTime autoTimer = new ElapsedTime();
+
     double cycleTime = 0;
     //ElapsedTime readyTimer = new ElapsedTime();
 
@@ -326,6 +328,8 @@ public class RightAuto extends LinearOpMode {
 
 
 
+        autoTimer.reset();
+
 
         if (!isStopRequested())
             drive.followTrajectorySequence(trajSeq);
@@ -413,6 +417,11 @@ public class RightAuto extends LinearOpMode {
                     break;
                 case RETRACT_INTAKE:
                     if (scoreTimer.seconds() >= flipTime && intake.intakeInDiff() < 10) {
+
+                        if (intake.getDistanceCM() > 4) {
+                            currentCycle--;
+                        }
+
                         intake.openClaw();
 
                         outtake.zeroOuttake();
@@ -459,6 +468,10 @@ public class RightAuto extends LinearOpMode {
 
             // Safe Park
             if (cycleTimer.seconds() > 7) {
+                break;
+            }
+
+            if (autoTimer.seconds() > 26) {
                 break;
             }
 

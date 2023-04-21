@@ -69,7 +69,7 @@ public class DelayedLeft5 extends LinearOpMode {
 
     public static double forwardDistance  = 45.85;
 
-    public static double armFlipTime  = -0.75;
+    public static double armFlipTime  = -0.8;
 
 
     int currentCycle = 0;
@@ -117,6 +117,8 @@ public class DelayedLeft5 extends LinearOpMode {
     ElapsedTime scoreTimer = new ElapsedTime();
 
     ElapsedTime cycleTimer = new ElapsedTime();
+
+    ElapsedTime autoTimer = new ElapsedTime();
 
     double cycleTime = 0;
     //ElapsedTime readyTimer = new ElapsedTime();
@@ -324,6 +326,7 @@ public class DelayedLeft5 extends LinearOpMode {
 
         /* Actually do something useful */
 
+        autoTimer.reset();
 
 
 
@@ -420,6 +423,11 @@ public class DelayedLeft5 extends LinearOpMode {
                     break;
                 case RETRACT_INTAKE:
                     if (scoreTimer.seconds() >= flipTime && intake.intakeInDiff() < 10) {
+
+                        if (intake.getDistanceCM() > 4) {
+                            currentCycle--;
+                        }
+
                         intake.openClaw();
 
                         outtake.zeroOuttake();
@@ -466,6 +474,10 @@ public class DelayedLeft5 extends LinearOpMode {
 
             // Safe Park
             if (cycleTimer.seconds() > 7) {
+                break;
+            }
+
+            if (autoTimer.seconds() > 26) {
                 break;
             }
 

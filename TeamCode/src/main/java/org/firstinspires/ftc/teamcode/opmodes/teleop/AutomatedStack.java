@@ -337,8 +337,17 @@ public class AutomatedStack extends LinearOpMode {
 
                 if (currentGamepad1.dpad_down && !previousGamepad1.dpad_down &&    coneHeight < 6){
                     coneHeight++;
+                    if (intake.isArmDown()) {
+                        intake.dropArmAutoR(coneHeight);
+                    }
+
+
                 } else if (currentGamepad1.dpad_right && !previousGamepad1.dpad_right &&    coneHeight > 2){
                     coneHeight--;
+                    if (intake.isArmDown()) {
+                        intake.dropArmAutoR(coneHeight);
+                    }
+
                 }
 
                 // Velocity auto zero outtake
