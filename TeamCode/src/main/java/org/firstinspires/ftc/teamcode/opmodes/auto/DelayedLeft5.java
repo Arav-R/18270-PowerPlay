@@ -67,7 +67,7 @@ public class DelayedLeft5 extends LinearOpMode {
     public static int cones = 6;
     public static double cycleDelay = 0;
 
-    public static double forwardDistance  = 45.2;
+    public static double forwardDistance  = 45.5;
 
     public static double armFlipTime  = -0.8;
 
