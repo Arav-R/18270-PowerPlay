@@ -202,6 +202,7 @@ public class AutomatedStack extends LinearOpMode {
 
         while (opModeIsActive()) {
             currentGamepad1.copy(gamepad1);
+            currentGamepad2.copy(gamepad2);
 
 
             // Drive
@@ -267,11 +268,8 @@ public class AutomatedStack extends LinearOpMode {
 
                 // toggle
                 // Rising edge detector
-                if ((currentGamepad1.x && !previousGamepad1.x) || (currentGamepad1.a && !previousGamepad1.a) || (currentGamepad1.share && !previousGamepad1.share)){
+                if ((currentGamepad1.x && !previousGamepad1.x) || (currentGamepad1.a && !previousGamepad1.a)){
 
-                    if (currentGamepad1.share && !previousGamepad1.share) {
-                        beacon = true;
-                    }
 
                     if (intakeToggle && intake.getDistanceCM() < 3) { // fsm and have cone on press
                         intake.flipArm();
