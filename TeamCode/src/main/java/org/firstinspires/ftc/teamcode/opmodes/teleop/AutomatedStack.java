@@ -268,7 +268,7 @@ public class AutomatedStack extends LinearOpMode {
 
                 // toggle
                 // Rising edge detector
-                if ((currentGamepad1.x && !previousGamepad1.x) || (currentGamepad1.a && !previousGamepad1.a)){
+                if ((currentGamepad1.x && !previousGamepad1.x) || (currentGamepad1.a && !previousGamepad1.a) || (currentGamepad2.x && !previousGamepad2.x) || (currentGamepad2.a && !previousGamepad2.a)){
 
 
                     if (intakeToggle && intake.getDistanceCM() < 3) { // fsm and have cone on press
@@ -302,7 +302,7 @@ public class AutomatedStack extends LinearOpMode {
 
                 }
                 else { // arm down
-                    if (gamepad1.x) {
+                    if (gamepad1.x || gamepad2.x) {
                         intake.dropArmAutoR(coneHeight);
                         intake.openClaw();
 
@@ -311,7 +311,7 @@ public class AutomatedStack extends LinearOpMode {
                         } else {
                             intake.transferPosition(); // fast retraction
                         }
-                    } else if (gamepad1.a) {
+                    } else if (gamepad1.a || gamepad2.a) {
                         intake.dropArmAutoR(coneHeight);
                         intake.openClaw();
 
@@ -375,13 +375,13 @@ public class AutomatedStack extends LinearOpMode {
 
                     // left outtake positions
 
-                    if (gamepad1.dpad_up) { // left High
+                    if (gamepad1.dpad_up || gamepad2.dpad_up) { // left High
                         outtake.setTurretLeftHigh();
                         outtake.extendSlideLeft();
                         outtake.midDeposit();
 
                         scoreState = ScoreState.READY;
-                    } else if (gamepad1.dpad_left) { // left Medium
+                    } else if (gamepad1.dpad_left || gamepad2.dpad_left) { // left Medium
                         outtake.setTurretLeftMid();
                         outtake.slideLeftMid();
                         outtake.midDeposit();
@@ -399,13 +399,13 @@ public class AutomatedStack extends LinearOpMode {
                     // right outtake positions
 
 
-                    if (gamepad1.y) { // right High
+                    if (gamepad1.y || gamepad2.y) { // right High
                         outtake.setTurretRightHigh();
                         outtake.extendSlideRight();
                         outtake.midDeposit();
 
                         scoreState = ScoreState.READY;
-                    } else if (gamepad1.b) { // right Medium
+                    } else if (gamepad1.b || gamepad2.b) { // right Medium
                         outtake.setTurretRightMid();
                         outtake.slideRightMid();
                         outtake.midDeposit();
