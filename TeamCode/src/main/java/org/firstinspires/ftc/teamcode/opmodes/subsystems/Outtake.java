@@ -54,7 +54,7 @@ public class Outtake {
     public static double guideUpPosLeft = .48;
     public static double guideUpPosRight = .5;
     public static double guideScorePos = .52;
-    public static double guideDownPos = .75;
+    public static double guideDownPos = .78;
 
     public static double guideUpLow = .45;
 
