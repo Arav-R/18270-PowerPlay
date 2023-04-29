@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.Testing;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -15,7 +14,7 @@ import org.firstinspires.ftc.teamcode.opmodes.subsystems.Outtake;
 //@Disabled
 
 @TeleOp()
-public class Gamepad extends LinearOpMode {
+public class GamepadTest extends LinearOpMode {
     Drivetrain drive = new Drivetrain();
     Intake intake = new Intake();
     Outtake outtake = new Outtake();
@@ -30,8 +29,8 @@ public class Gamepad extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        Gamepad currentGamepad1 = new Gamepad();
-        Gamepad previousGamepad1 = new Gamepad();
+        GamepadTest currentGamepad1Test = new GamepadTest();
+        GamepadTest previousGamepad1Test = new GamepadTest();
 
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
