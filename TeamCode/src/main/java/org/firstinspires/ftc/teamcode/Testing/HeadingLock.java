@@ -82,9 +82,9 @@ public class HeadingLock extends LinearOpMode {
         imu.initialize(parameters);
 
 
-        targetAngle = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
 
         waitForStart();
+        targetAngle = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
         lockTimer.reset();
 
         if (isStopRequested()) return;
