@@ -29,6 +29,7 @@ public class HeadingLock extends LinearOpMode {
     public static double f = 0;
 
     public static double targetAngle;
+    double currAngle;
 
     boolean lock = true;
 
@@ -114,24 +115,28 @@ public class HeadingLock extends LinearOpMode {
             // heading lock pid
 
 
-            controller.setPID(p, i, d);
-            double currAngle = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
-            double pid = controller.calculate(currAngle, targetAngle);
 
-            double power = pid + f;
 
 
 
             if (currentGamepad1.right_trigger != 0) {
                 lock = false;
             } else if (currentGamepad1.right_trigger == 0 && previousGamepad1.right_trigger != 0) { // falling edge
-                lock = true;
                 lockTimer.reset();
+            } else if (lockTimer.seconds() > lockTime) {
+                targetAngle = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
+                lock = true;
             }
+
+            controller.setPID(p, i, d);
+            currAngle = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
+            double pid = controller.calculate(currAngle, targetAngle);
+
+            double power = pid + f;
 
 
             // Using the toggle variable to control the robot.
-            if (lock && lockTimer.seconds() > lockTime) { // PID
+            if (lock) { // PID
                 motorFrontLeft.setPower(frontLeftPower + power); // positive power = clockwise
                 motorBackLeft.setPower(backLeftPower + power);
                 motorFrontRight.setPower(frontRightPower - power);
@@ -149,9 +154,15 @@ public class HeadingLock extends LinearOpMode {
 
             //motor.setPower(power);
 
+            telemetry.addData("Heading Lock: ", lock);
+            telemetry.addData("Lock Timer: ", lockTimer.seconds());
+
+            telemetry.addLine("////////////////////////////");
 
             telemetry.addData("Current Angle: ", currAngle);
             telemetry.addData("target angle: ", targetAngle);
+
+            telemetry.addLine("////////////////////////////");
 
             telemetry.addData("p: ", p);
             telemetry.addData("i: ", i);
