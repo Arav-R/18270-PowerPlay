@@ -67,6 +67,7 @@ public class HeadingLock extends LinearOpMode {
         // Reverse the right side motors
         // Reverse left motors if you are using NeveRests
         motorFrontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        motorBackLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 
 
 
@@ -138,10 +139,10 @@ public class HeadingLock extends LinearOpMode {
             if (lock) { // PID
 
                 double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx) + Math.abs(power), 1);
-                double frontLeftPower = (y + x + rx + power) / denominator;
-                double backLeftPower = (y - x + rx + power) / denominator;
-                double frontRightPower = (y - x - rx - power) / denominator;
-                double backRightPower = (y + x - rx - power) / denominator;
+                double frontLeftPower = (-y - x + rx + power) / denominator;
+                double backLeftPower = (-y + x + rx + power) / denominator;
+                double frontRightPower = (-y + x - rx - power) / denominator;
+                double backRightPower = (-y - x - rx - power) / denominator;
 
                 motorFrontLeft.setPower(frontLeftPower); // positive power = clockwise
                 motorBackLeft.setPower(backLeftPower);

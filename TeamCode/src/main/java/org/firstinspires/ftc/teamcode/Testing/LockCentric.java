@@ -54,10 +54,10 @@ public class LockCentric extends LinearOpMode {
 
         // Declare our motors
         // Make sure your ID's match your configuration
-        DcMotor motorFrontLeft = hardwareMap.dcMotor.get("frontleft");
-        DcMotor motorBackLeft = hardwareMap.dcMotor.get("backleft");
-        DcMotor motorFrontRight = hardwareMap.dcMotor.get("frontright");
-        DcMotor motorBackRight = hardwareMap.dcMotor.get("backright");
+        DcMotor motorFrontLeft = hardwareMap.dcMotor.get("backright");
+        DcMotor motorBackLeft = hardwareMap.dcMotor.get("frontright");
+        DcMotor motorFrontRight = hardwareMap.dcMotor.get("backleft");
+        DcMotor motorBackRight = hardwareMap.dcMotor.get("frontleft");
 
         motorFrontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motorBackLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -66,7 +66,8 @@ public class LockCentric extends LinearOpMode {
 
         // Reverse the right side motors
         // Reverse left motors if you are using NeveRests
-        motorFrontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        motorFrontLeft.setDirection(DcMotor.Direction.REVERSE);
+        motorBackLeft.setDirection(DcMotor.Direction.REVERSE);
 
 
 
