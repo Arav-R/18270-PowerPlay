@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Testing;
 
 import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.arcrobotics.ftclib.controller.PIDController;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
@@ -16,7 +17,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.DriveConstants;
 
-@Disabled
+//@Disabled
+@Config
 @TeleOp
 public class HeadingLock extends LinearOpMode {
     private PIDController controller;
@@ -113,11 +115,11 @@ public class HeadingLock extends LinearOpMode {
 
 
 
-            if (currentGamepad1.right_trigger != 0) {
+            if (currentGamepad1.right_stick_x != 0) {
                 lock = false;
-            } else if (currentGamepad1.right_trigger == 0 && previousGamepad1.right_trigger != 0) { // falling edge
+            } else if (currentGamepad1.right_stick_x == 0 && previousGamepad1.right_stick_x != 0) { // falling edge
                 lockTimer.reset();
-            } else if (lockTimer.seconds() > lockTime) {
+            } else if (lockTimer.seconds() > lockTime && !lock) {
                 targetAngle = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
                 lock = true;
             }
@@ -139,10 +141,10 @@ public class HeadingLock extends LinearOpMode {
             if (lock) { // PID
 
                 double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx) + Math.abs(power), 1);
-                double frontLeftPower = (-y - x + rx + power) / denominator;
-                double backLeftPower = (-y + x + rx + power) / denominator;
-                double frontRightPower = (-y + x - rx - power) / denominator;
-                double backRightPower = (-y - x - rx - power) / denominator;
+                double frontLeftPower = (y + x + rx - power) / denominator;
+                double backLeftPower = (y - x + rx - power) / denominator;
+                double frontRightPower = (y - x - rx + power) / denominator;
+                double backRightPower = (y + x - rx + power) / denominator;
 
                 motorFrontLeft.setPower(frontLeftPower); // positive power = clockwise
                 motorBackLeft.setPower(backLeftPower);
@@ -169,6 +171,7 @@ public class HeadingLock extends LinearOpMode {
 
             telemetry.addData("Heading Lock: ", lock);
             telemetry.addData("Lock Timer: ", lockTimer.seconds());
+            telemetry.addData("Lock Time: ", lockTime);
 
             telemetry.addLine("////////////////////////////");
 
