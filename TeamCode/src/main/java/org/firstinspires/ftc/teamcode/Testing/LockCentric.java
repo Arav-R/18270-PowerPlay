@@ -136,8 +136,8 @@ public class LockCentric extends LinearOpMode {
 
 
             // Rotate the movement direction counter to the bot's rotation
-            double rotX = x * Math.cos(-headingError) - y * Math.sin(-headingError);
-            double rotY = x * Math.sin(-headingError) + y * Math.cos(-headingError);
+            double rotX = x * Math.cos(headingError) - y * Math.sin(headingError);
+            double rotY = x * Math.sin(headingError) + y * Math.cos(headingError);
 
 
 
