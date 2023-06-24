@@ -201,6 +201,7 @@ public class LeftPhantom extends LinearOpMode {
                     intake.dropArm();
                     intake.openClaw();
                 })
+                .waitSeconds(.3)
                 .lineTo(new Vector2d(-35, -37))
 
                 .UNSTABLE_addTemporalMarkerOffset(armFlipTime, () -> {
@@ -208,9 +209,8 @@ public class LeftPhantom extends LinearOpMode {
                 })
                 .turn(Math.PI/2) // turn left 90
 
-                .lineToLinearHeading(new Pose2d(-34, -15, Math.toRadians(177)))
+                .lineToLinearHeading(new Pose2d(-34, -10, Math.toRadians(170)))
 
-                .turn(Math.toRadians(84))
                 .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
                     outtake.transferDeposit();
                     outtake.setTurretMiddle();
@@ -221,17 +221,17 @@ public class LeftPhantom extends LinearOpMode {
 
 
         Trajectory placement = drive.trajectoryBuilder(trajSeq.end())
-                .lineToLinearHeading(new Pose2d(35, -12, Math.toRadians(180)))
+                .lineToLinearHeading(new Pose2d(35, -5, Math.toRadians(180)))
                 .build();
 
         Trajectory leftApril = drive.trajectoryBuilder(placement.end())
-                .lineToLinearHeading(new Pose2d(7, -12, Math.toRadians(180)))
+                .lineToLinearHeading(new Pose2d(7, -5, Math.toRadians(180)))
                 .build();
         Trajectory midApril = drive.trajectoryBuilder(placement.end())
-                .lineToLinearHeading(new Pose2d(34, -12.5, Math.toRadians(180)))
+                .lineToLinearHeading(new Pose2d(34, -5, Math.toRadians(180)))
                 .build();
         Trajectory rightApril = drive.trajectoryBuilder(placement.end())
-                .lineToLinearHeading(new Pose2d(56, -16.5, Math.toRadians(180)))
+                .lineToLinearHeading(new Pose2d(56, -5, Math.toRadians(180)))
                 .build();
 
 
