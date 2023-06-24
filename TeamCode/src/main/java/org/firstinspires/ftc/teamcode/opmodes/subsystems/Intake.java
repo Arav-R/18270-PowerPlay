@@ -132,6 +132,13 @@ public class Intake {
         intakeSlide.setPower(.9);
 
     }
+
+    public void intakePositionFar (){
+        intakeSlide.setTargetPosition(slideOutExtend + 200);
+        intakeSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        intakeSlide.setPower(.9);
+
+    }
 /*
     public void autoStackPosition(){
         intakeSlide.setTargetPosition(slideOutAuto);
