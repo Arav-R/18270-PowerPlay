@@ -4,6 +4,7 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -28,7 +29,7 @@ import java.util.ArrayList;
 
 @Config
 @Autonomous(group = "drive")
-public class DelayedLeft5 extends LinearOpMode {
+public class RightPhantom extends LinearOpMode {
 
 
     // APRILTAG STUFF
@@ -67,7 +68,7 @@ public class DelayedLeft5 extends LinearOpMode {
     public static int cones = 6;
     public static double cycleDelay = 0;
 
-    public static double forwardDistance  = 45.5;
+    public static double forwardDistance  = 36.5;
 
     public static double armFlipTime  = -0.8;
 
@@ -81,7 +82,7 @@ public class DelayedLeft5 extends LinearOpMode {
     public static double depositTime = 0.55;
     public static double grabTime = .5;
     public static double flipTime = .8;
-    public static double transferTime = .35;
+    public static double transferTime = .3;
     public static double intakeTime = .05;
     public static int depBuffer = 550;
 
@@ -117,8 +118,6 @@ public class DelayedLeft5 extends LinearOpMode {
     ElapsedTime scoreTimer = new ElapsedTime();
 
     ElapsedTime cycleTimer = new ElapsedTime();
-
-    ElapsedTime autoTimer = new ElapsedTime();
 
     double cycleTime = 0;
     //ElapsedTime readyTimer = new ElapsedTime();
@@ -186,28 +185,26 @@ public class DelayedLeft5 extends LinearOpMode {
 
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
-        Pose2d startPose = new Pose2d(35, -63, Math.toRadians(90));
+        Pose2d startPose = new Pose2d(35, -62, Math.toRadians(90));
 
 
         drive.setPoseEstimate(startPose);
 
         TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(startPose)
 
-
-                .waitSeconds(2.5)
-
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     intake.zeroPosition();
                     intake.dropArm();
                     intake.openClaw();
                 })
+                .waitSeconds(.2)
 
-                .waitSeconds(0.2)
-                .forward(forwardDistance)
+                .lineTo(new Vector2d(35, -37))
                 .UNSTABLE_addTemporalMarkerOffset(armFlipTime, () -> {
                     intake.flipArm();
                 })
-                .turn(Math.toRadians(84))
+                .turn(-Math.PI/2)
+                .lineToLinearHeading(new Pose2d(34, -18, Math.toRadians(3)))
                 .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
                     outtake.transferDeposit();
                     outtake.setTurretMiddle();
@@ -218,17 +215,17 @@ public class DelayedLeft5 extends LinearOpMode {
 
 
         Trajectory placement = drive.trajectoryBuilder(trajSeq.end())
-                .lineToLinearHeading(new Pose2d(35, -12, Math.toRadians(180)))
+                .lineToLinearHeading(new Pose2d(35, -12, Math.toRadians(0)))
                 .build();
 
         Trajectory leftApril = drive.trajectoryBuilder(placement.end())
-                .lineToLinearHeading(new Pose2d(7, -12, Math.toRadians(180)))
+                .lineToLinearHeading(new Pose2d(7, -12, Math.toRadians(0)))
                 .build();
         Trajectory midApril = drive.trajectoryBuilder(placement.end())
-                .lineToLinearHeading(new Pose2d(34, -12.5, Math.toRadians(180)))
+                .lineToLinearHeading(new Pose2d(34, -12.5, Math.toRadians(0)))
                 .build();
         Trajectory rightApril = drive.trajectoryBuilder(placement.end())
-                .lineToLinearHeading(new Pose2d(56, -16.5, Math.toRadians(180)))
+                .lineToLinearHeading(new Pose2d(57.5, -14, Math.toRadians(0)))
                 .build();
 
 
@@ -326,7 +323,6 @@ public class DelayedLeft5 extends LinearOpMode {
 
         /* Actually do something useful */
 
-        autoTimer.reset();
 
 
 
@@ -339,12 +335,12 @@ public class DelayedLeft5 extends LinearOpMode {
         scoreTimer.reset();
         while (scoreTimer.seconds() <= expansionDelay && opModeIsActive()) {
             // Expand
-            intake.autoStackPositionLeft(2);
+            intake.autoStackPositionRight(2);
             intake.openClaw();
             intake.dropArmAutoL(2); //5 cone
 
-            outtake.extendSlidePreloadRight();
-            outtake.setSlightRight();
+            outtake.extendSlidePreloadLeft();
+            outtake.setTurretMiddle();
             outtake.midDeposit();
             outtake.guideUpLeft();
         }
@@ -358,7 +354,7 @@ public class DelayedLeft5 extends LinearOpMode {
                 case READY:
                     if (scoreTimer.seconds() >= cycleDelay) {
 
-                        outtake.scoreDepositRight();
+                        outtake.scoreDepositLeft();
 
                         scoreTimer.reset();
                         scoreState = ScoreState.DEPOSIT;
@@ -379,14 +375,14 @@ public class DelayedLeft5 extends LinearOpMode {
                         //outtake.guideDown();
 
                         intake.openClaw();
-                        intake.autoStackPositionLeft(currentCycle + 1);
+                        intake.autoStackPositionRight(currentCycle + 1);
 
 
                         scoreState = ScoreState.PREPARE;
                     }
                     break;
                 case PREPARE:
-                    if (intake.intakeOutAutoDiffL(currentCycle + 1) < 20 || intake.getDistanceCM() < 2.2) {
+                    if (intake.intakeOutAutoDiffR(currentCycle + 1) < 20 || intake.getDistanceCM() < 2.2) {
                         intake.closeClawAuto(currentCycle + 1);
 
 
@@ -423,11 +419,6 @@ public class DelayedLeft5 extends LinearOpMode {
                     break;
                 case RETRACT_INTAKE:
                     if (scoreTimer.seconds() >= flipTime && intake.intakeInDiff() < 10) {
-
-                        if (intake.getDistanceCM() > 4) {
-                            currentCycle--;
-                        }
-
                         intake.openClaw();
 
                         outtake.zeroOuttake();
@@ -438,8 +429,8 @@ public class DelayedLeft5 extends LinearOpMode {
                 case FLIP:
                     if (scoreTimer.seconds() >= transferTime) {
                         //intake.readyPosition();
-                        intake.autoStackPositionLeft(currentCycle + 2);
-                        intake.dropArmAutoL(currentCycle + 2); // Starts at 2
+                        intake.autoStackPositionRight(currentCycle + 2);
+                        intake.dropArmAutoR(currentCycle + 2); // Starts at 2
 
                         scoreTimer.reset();
                         scoreState = ScoreState.EXTEND_INTAKE;
@@ -448,8 +439,8 @@ public class DelayedLeft5 extends LinearOpMode {
                 case EXTEND_INTAKE:
                     if (scoreTimer.seconds() >= intakeTime) {
                         outtake.midDeposit();
-                        outtake.setSlightRight();
-                        outtake.extendSlideAutoRight();
+                        outtake.setTurretMiddle();
+                        outtake.extendSlideAutoLeft();
                         outtake.guideUpLeft();
 
                         scoreState = ScoreState.EXTEND_OUTTAKE;
@@ -471,16 +462,6 @@ public class DelayedLeft5 extends LinearOpMode {
                     break;
 
             }
-
-            // Safe Park
-            if (cycleTimer.seconds() > 7) {
-                break;
-            }
-
-            if (autoTimer.seconds() > 26) {
-                break;
-            }
-
             telemetry.addData("Current Cycle: ", currentCycle);
             telemetry.addData("Cone: ", cones);
             telemetry.addData("Previous Cycle time: ", cycleTime);

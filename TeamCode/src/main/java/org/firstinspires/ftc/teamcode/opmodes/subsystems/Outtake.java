@@ -46,8 +46,8 @@ public class Outtake {
     public static int fullExtendLeft = 1015; // 935
     public static int fullExtendRight = 1040; // 1030
 
-    public static int fullExtendAutoLeft = 1050; // 934
-    public static int fullExtendAutoRight = 1050; // 990
+    public static int fullExtendAutoLeft = 950; // 934
+    public static int fullExtendAutoRight = 950; // 990
 
 
 
@@ -190,6 +190,17 @@ public class Outtake {
 
     public void setTurretMiddle (){
         turret.setTargetPosition(turretTransfer);
+        turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        turret.setPower(.4);
+    }
+    public void setSlightRight (){
+        turret.setTargetPosition(turretTransfer - 15);
+        turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        turret.setPower(.4);
+    }
+
+    public void setSlightLeft (){
+        turret.setTargetPosition(turretTransfer - 15);
         turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         turret.setPower(.4);
     }
@@ -518,6 +529,21 @@ public class Outtake {
     }
 
 
+    public double getIntakePower1 (){
+        return outtakeSlide1.getPower();
+    }
+
+    public double getIntakeTarget1 (){
+        return outtakeSlide1.getTargetPosition();
+    }
+
+    public double getIntakePower2 (){
+        return outtakeSlide2.getPower();
+    }
+
+    public double getIntakeTarget2 (){
+        return outtakeSlide2.getTargetPosition();
+    }
 
 
 

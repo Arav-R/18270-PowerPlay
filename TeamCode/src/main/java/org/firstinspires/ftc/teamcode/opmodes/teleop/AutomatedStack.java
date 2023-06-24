@@ -617,6 +617,12 @@ public class AutomatedStack extends LinearOpMode {
             telemetry.addData("Outtake Slide 2 Current: ", outtake.getOuttakeSlideCurrent2());
             telemetry.addData("Turret Current: ", outtake.getTurretCurrent());
 
+            telemetry.addData("Outtake1 Slide Power: ", outtake.getIntakePower1());
+            telemetry.addData("Outtake1 Slide Target: ", outtake.getIntakeTarget1());
+
+            telemetry.addData("Outtake2 Slide Power: ", outtake.getIntakePower2());
+            telemetry.addData("Outtake2 Slide Target: ", outtake.getIntakeTarget2());
+
             telemetry.addData("Outtake Velocity: ", outtake.getOuttakeSlideVelocity1());
 
             telemetry.addData("haveCone: ", haveCone);

@@ -4,6 +4,7 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -28,7 +29,7 @@ import java.util.ArrayList;
 
 @Config
 @Autonomous(group = "drive")
-public class DelayedLeft5 extends LinearOpMode {
+public class LeftPhantom extends LinearOpMode {
 
 
     // APRILTAG STUFF
@@ -186,7 +187,7 @@ public class DelayedLeft5 extends LinearOpMode {
 
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
-        Pose2d startPose = new Pose2d(35, -63, Math.toRadians(90));
+        Pose2d startPose = new Pose2d(-35, -62, Math.toRadians(90));
 
 
         drive.setPoseEstimate(startPose);
@@ -194,19 +195,21 @@ public class DelayedLeft5 extends LinearOpMode {
         TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(startPose)
 
 
-                .waitSeconds(2.5)
 
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     intake.zeroPosition();
                     intake.dropArm();
                     intake.openClaw();
                 })
+                .lineTo(new Vector2d(-35, -37))
 
-                .waitSeconds(0.2)
-                .forward(forwardDistance)
                 .UNSTABLE_addTemporalMarkerOffset(armFlipTime, () -> {
                     intake.flipArm();
                 })
+                .turn(Math.PI/2) // turn left 90
+
+                .lineToLinearHeading(new Pose2d(-34, -15, Math.toRadians(177)))
+
                 .turn(Math.toRadians(84))
                 .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
                     outtake.transferDeposit();
@@ -344,7 +347,7 @@ public class DelayedLeft5 extends LinearOpMode {
             intake.dropArmAutoL(2); //5 cone
 
             outtake.extendSlidePreloadRight();
-            outtake.setSlightRight();
+            outtake.setTurretMiddle();
             outtake.midDeposit();
             outtake.guideUpLeft();
         }
@@ -448,7 +451,7 @@ public class DelayedLeft5 extends LinearOpMode {
                 case EXTEND_INTAKE:
                     if (scoreTimer.seconds() >= intakeTime) {
                         outtake.midDeposit();
-                        outtake.setSlightRight();
+                        outtake.setTurretMiddle();
                         outtake.extendSlideAutoRight();
                         outtake.guideUpLeft();
 
