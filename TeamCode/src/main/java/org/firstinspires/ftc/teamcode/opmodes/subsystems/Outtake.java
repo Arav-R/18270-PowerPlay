@@ -27,7 +27,7 @@ public class Outtake {
     public static int turretTransfer = 324;
 
     public static int leftHighTurret = turretTransfer + 171; // 488
-    public static int leftMidTurret = turretTransfer + 322; // 250
+    public static int leftMidTurret = turretTransfer + 331; // 250
 
     public static int rightHighTurret = turretTransfer - 145; // 160
     public static int rightMidTurret = turretTransfer - 260; // 210
@@ -72,7 +72,7 @@ public class Outtake {
 
 
     // different junctions left and right positions Outtake
-    public static int leftMid = 440; // 390
+    public static int leftMid = 445; // 390
     public static int rightMid = 410; // 410
 
     public static int leftlow = 0;
